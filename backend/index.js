@@ -76,6 +76,24 @@ app.get('/recipes/:id', async (req, res) => {
         res.status(500).send('Error fetching recipe: ' + error.message);
     }
 });
+
+app.get('/random-recipe', async (req, res) => {
+    try {
+        const pantryItems = await PantryItems.find();
+        const pantryIngredients = pantryItems.map(item => item.name.toLowerCase());
+        const recipes = await Recipe.find();
+        const matchingRecipes = recipes.filter(recipe => 
+            recipe.ingredients.some(ingredient => pantryIngredients.includes(ingredient.name.toLowerCase()))
+        );
+        if (matchingRecipes.length > 0) {
+            const randomIndex = Math.floor(math.random() * matchingRecipes.length);
+        } else {
+            res.status(404).send({ error: 'No matching recipes found'});
+        }
+    } catch (error) {
+        res.status(500).send({ error: 'Error fetching randomrecipe' });
+    }
+});
  
 app.listen(port, '0.0.0.0', () => {
     console.log(`Server running at http://0.0.0.0${port}`);

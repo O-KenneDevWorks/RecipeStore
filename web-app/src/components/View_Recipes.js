@@ -22,7 +22,6 @@ const ViewRecipes = () => {
     return (
         <div className="recipe-list">
             <h1>All Recipes</h1>
-            <Navigation />
             <ul>
                 {recipes.map((recipe) => (
                     <li key={recipe._id}>

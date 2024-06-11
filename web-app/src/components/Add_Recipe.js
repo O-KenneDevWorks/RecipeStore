@@ -77,7 +77,6 @@ const AddRecipeForm = () => {
 
         <form className="add-recipe=containter" onSubmit={handleSubmit}>
             <h2>Add New Recipe</h2>
-            <Navigation />
             
             <div className='form-goup'>
             <label>Name *</label>

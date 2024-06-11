@@ -4,25 +4,25 @@ import './Styling/NavBar.css'
 
 const NavBar = () => {
     const location = useLocation();
+    const pages = [
+        { path: '/', name: 'Home' },
+        { path: '/add-recipe', name: 'Add Recipe' },
+        { path: '/view-recipes', name: 'View Recipes' },
+        { path: '/pantry', name: 'Pantry' },
+        { path: '/add-pantry-item', name: 'Add Pantry Item' },
+        { path: '/random-recipe', name: 'Random Recipe' },
+    ]
     
     return (
-        <nav className="navbar">
-            <ul>
-                <li>
-                    <Link to="/" className={location.pathname === '/' ? 'active' : ''}>Home</Link>
-                </li>
-                <li>
-                    <Link to="/add-recipe" className={location.pathname === '/add-recipe' ? 'active' : ''}>Add Recipe</Link>
-                </li>
-                <li>
-                    <Link to="/view-recipes" className={location.pathname === '/view-recipes' ? 'active' : ''}>View All</Link>
-                </li>
-                <li>
-                    <Link to="/add-pantry-item" className={location.pathname === '/add-pantry-item' ? 'active' : ''}>Add Pantry Item</Link>
-                </li>
-                <li>
-                    <Link to="/pantry" className={location.pathname === '/pantry' ? 'active' : ''}>Pantry</Link>
-                </li>
+        <nav className="nav-bar">
+            <ul className='navbar-links'>
+                {pages.map(page => (
+                    location.pathname !== page.path && (
+                        <li key={page.name}>
+                            <Link to={page.path}>{page.name}</Link>
+                        </li>
+                    )
+                ))}
             </ul>
         </nav>
     )

@@ -27,7 +27,6 @@ const RecipeDetail = () => {
     return (
         <div className="recipe-details">
             <h2>{recipe.name}</h2>
-            <Navigation />
             <div className="info">
                 <div>Prep Time: {recipe.prepTime}</div>
                 <div>Cook Time: {recipe.cookTime}</div>
