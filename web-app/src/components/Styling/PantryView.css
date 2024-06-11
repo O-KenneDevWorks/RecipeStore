@@ -1,0 +1,27 @@
+.pantry-view {
+    text-align: center;
+    padding: 20px;
+}
+
+.back-to-home {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.back-to-home:hover {
+    text-decoration: underline;
+}
+
+.pantry-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.pantry-list li {
+    background: #f8f9fa;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #dee2e6
+}
