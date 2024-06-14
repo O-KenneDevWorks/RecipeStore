@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import imageCompression from 'browser-image-compression';
 import './Styling/AddRecipeForm.css';
 
 const AddRecipeForm = () => {
@@ -13,7 +14,7 @@ const AddRecipeForm = () => {
         servings: '',
         yield: '',
         image: '',
-        tags: [] // Initialize tags
+        tags: [] 
     });
     const [imagePreview, setImagePreview] = useState('');
 
@@ -22,15 +23,25 @@ const AddRecipeForm = () => {
         setRecipeData({ ...recipeData, [name]: value });
     };
 
-    const handleImageChange = (e) => {
+    const handleImageChange = async (e) => {
         const file = e.target.files[0];
         if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setImagePreview(reader.result);
-                setRecipeData({ ...recipeData, image: reader.result });
+            const options = {
+                maxSizeMB: 1,
+                maxWidthOrHeight: 1920,
+                useWebWorker: true
             };
-            reader.readAsDataURL(file);
+            try {
+                const compressedFile = await imageCompression(file, options);
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    setImagePreview(reader.result);
+                    setRecipeData({ ...recipeData, image: reader.result });
+                };
+                reader.readAsDataURL(compressedFile);
+            } catch (error) {
+                console.error('Error compressing image:', error);
+            }
         }
     };
 
@@ -39,7 +50,6 @@ const AddRecipeForm = () => {
         try {
             const response = await axios.post('http://10.0.0.85:3000/recipes', recipeData);
             console.log('Recipe added:', response.data);
-            // Clear form after successful submission
             setRecipeData({
                 name: '',
                 ingredients: [{ amount: '', unit: '', name: '' }],
