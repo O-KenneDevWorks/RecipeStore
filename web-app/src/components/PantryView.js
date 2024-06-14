@@ -9,7 +9,7 @@ const PantryView = () => {
     useEffect(() => {
         const fetchPantryItems = async () => {
             try{
-                const response = await axios.get('http://localhost:3000/pantry');
+                const response = await axios.get('http://10.0.0.85:3000/pantry');
                 setPantryItem(response.data);
             } catch (error) {
                 console.error('Error fetching pantry items: ', error);
