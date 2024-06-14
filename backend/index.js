@@ -82,24 +82,26 @@ app.get('/recipes/:id', async (req, res) => {
 
 app.get('/random-recipe', async (req, res) => {
     try {
-        const pantryItems = await PantryItems.find();
+        const pantryItems = await PantryItem.find();
         const pantryIngredients = pantryItems.map(item => item.name.toLowerCase());
         const recipes = await Recipe.find();
         const matchingRecipes = recipes.filter(recipe => 
             recipe.ingredients.some(ingredient => pantryIngredients.includes(ingredient.name.toLowerCase()))
         );
         if (matchingRecipes.length > 0) {
-            const randomIndex = Math.floor(math.random() * matchingRecipes.length);
+            const randomIndex = Math.floor(Math.random() * matchingRecipes.length);
+            const randomRecipe = matchingRecipes[randomIndex];
+            res.status(200).send(randomRecipe);
         } else {
-            res.status(404).send({ error: 'No matching recipes found'});
+            res.status(404).send({ error: 'No matching recipes found' });
         }
     } catch (error) {
-        res.status(500).send({ error: 'Error fetching randomrecipe' });
+        res.status(500).send({ error: 'Error fetching random recipe' });
     }
 });
  
 app.listen(port, '0.0.0.0', () => {
-    console.log(`Server running at http://0.0.0.0${port}`);
+    console.log(`Server running at http://0.0.0.0:${port}`);
 });
 
 
