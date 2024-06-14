@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom'
 import AddRecipeForm from './components/Add_Recipe';
 import ViewRecipes from './components/View_Recipes';
 import RecipeDetail from './components/RecipeDetail';
@@ -15,11 +15,11 @@ const Home = () => {
         <div className="home">
             <h1>The Recipe Store</h1>
             <div className='page-links'>
-                <a href='/add-recipe'>Add Recipe</a>
-                <a href='/view-recipes'>View Recipes</a>
-                <a href='/pantry'>Pantry</a>
-                <a href='/add-pantry-item'>Add Pantry Item</a>
-                <a href='/random-recipe'>Random Recipe</a>
+                <Link to='/add-recipe'>Add Recipe</Link>
+                <Link to='/view-recipes'>View Recipes</Link>
+                <Link to='/pantry'>Pantry</Link>
+                <Link to='/add-pantry-item'>Add Pantry Item</Link>
+                <Link to='/random-recipe'>Random Recipe</Link>
             </div>
         </div>
     );
