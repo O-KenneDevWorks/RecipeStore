@@ -1,27 +1,44 @@
-form {
+.add-recipe-form {
     display: flex;
     flex-direction: column;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: var(--background-color);
-    color: var(--text-color);
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    align-items: center;
 }
  
-label {
-    margin-bottom: 5px;
+.add-recipe-form label {
+    margin-top: 10px;
+    font-weight: bold;
 }
  
-input, textarea, select {
-    margin-bottom: 15px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+.add-recipe-form input, .add-recipe-form textarea {
+    margin-top: 5px;
+    padding: 5px;
+    width: 100%;
+    max-width: 500px;
 }
  
-button {
-    background-color: var(--button-background-color);
-    color: var(--button-text-color);
+.ingredient-input, .direction-input {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 500px;
+}
+ 
+.ingredient-input input, .direction-input textarea {
+    flex: 1;
+    margin: 5px;
+}
+ 
+.ingredient-input button, .direction-input button {
+    margin-left: 10px;
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+ 
+.image-preview {
+    margin-top: 10px;
+    max-width: 100%;
+    height: auto;
 }

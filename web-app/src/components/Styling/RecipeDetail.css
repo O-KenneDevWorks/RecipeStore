@@ -15,9 +15,16 @@
     margin-bottom: 10px;
 }
 
-.recipe-detail ul {
-    list-style-type: none;
-    padding: 0;
+.recipe-detail img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.recipe-detail ul, .recipe-detail ol {
+    text-align: left;
+    max-width: 600px;
+    width: 100%;
 }
 
 .recipe-detail ul li {

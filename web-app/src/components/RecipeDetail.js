@@ -1,59 +1,52 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import Navigation from './NavBar';
-
+import './Styling/RecipeDetail.css';
+ 
 const RecipeDetail = () => {
     const { id } = useParams();
     const [recipe, setRecipe] = useState(null);
-
+ 
     useEffect(() => {
         const fetchRecipe = async () => {
             try {
-                const response = await axios.get(`http://10.0.0.85:3000/recipes/${id}`);
+                const response = await axios.get(`http://localhost:3000/recipes/${id}`);
                 setRecipe(response.data);
             } catch (error) {
-                console.error('Error fetching recipe', error);
+                console.error('Error fetching recipe:', error);
             }
         };
-
+ 
         fetchRecipe();
     }, [id]);
-
+ 
     if (!recipe) {
         return <div>Loading...</div>;
     }
-
+ 
     return (
-        <div className="recipe-details">
-            <h2>{recipe.name}</h2>
-            <div className="info">
-                <div>Prep Time: {recipe.prepTime}</div>
-                <div>Cook Time: {recipe.cookTime}</div>
-                <div>Total Time: {recipe.totalTime}</div>
-                <div>Servings: {recipe.servings}</div>
-                <div>Yield: {recipe.yield}</div>
-            </div>
-            <h3>Ingredients</h3>
+        <div className="recipe-detail">
+            <h1>{recipe.name}</h1>
+            {recipe.image && <img src={recipe.image} alt={recipe.name} className="recipe-image" />}
+            <p><strong>Prep Time:</strong> {recipe.prepTime}</p>
+            <p><strong>Cook Time:</strong> {recipe.cookTime}</p>
+            <p><strong>Total Time:</strong> {recipe.totalTime}</p>
+            <p><strong>Servings:</strong> {recipe.servings}</p>
+            <p><strong>Yield:</strong> {recipe.yield}</p>
+            <h2>Ingredients</h2>
             <ul>
                 {recipe.ingredients.map((ingredient, index) => (
-                    <li key={index}>
-                        {ingredient.amount} {ingredient.name} {ingredient.ingredient}
-                    </li>
+                    <li key={index}>{ingredient.amount} {ingredient.unit} {ingredient.name}</li>
                 ))}
             </ul>
-            <h3>Directions</h3>
+            <h2>Directions</h2>
             <ol>
-                {Array.isArray(recipe.directions) ? (
-                    recipe.directions.map((direction, index) => (
-                        <li key={index}>{direction}</li>
-                    ))
-                ) : (
-                    <li>No directions listed</li>
-                )}
+                {recipe.directions.map((direction, index) => (
+                    <li key={index}>{direction}</li>
+                ))}
             </ol>
         </div>
     );
 };
-
+ 
 export default RecipeDetail;
