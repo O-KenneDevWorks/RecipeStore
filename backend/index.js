@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 app.use(cors());
 app.use(bodyParser.json());
  
-mongoose.connect('mongodb://localhost:27017/recipeStore', {
+mongoose.connect('mongodb://10.0.0.85:27017/recipeStore', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
@@ -22,7 +22,7 @@ mongoose.connect('mongodb://localhost:27017/recipeStore', {
 .catch(err => console.error('Failed to connect to MongoDB', err));
  
 app.get('/', (req, res) => {
-    res.send('Server running at http://localhost:3000');
+    res.send('Server running at http://10.0.0.85:3000');
 });
  
 // Route to add a pantry item
