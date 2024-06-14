@@ -7,6 +7,8 @@ const RecipeDetail = () => {
     const { id } = useParams();
     const [recipe, setRecipe] = useState(null);
 
+    console.log('Recipe ID: ', id);
+
     useEffect(() => {
         const fetchRecipe = async () => {
             try {
