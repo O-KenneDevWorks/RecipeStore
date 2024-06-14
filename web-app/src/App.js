@@ -14,13 +14,6 @@ const Home = () => {
     return (
         <div className="home">
             <h1>The Recipe Store</h1>
-            <div className='page-links'>
-                <Link to='/add-recipe'>Add Recipe</Link>
-                <Link to='/view-recipes'>View Recipes</Link>
-                <Link to='/pantry'>Pantry</Link>
-                <Link to='/add-pantry-item'>Add Pantry Item</Link>
-                <Link to='/random-recipe'>Random Recipe</Link>
-            </div>
         </div>
     );
 };
