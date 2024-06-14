@@ -40,6 +40,9 @@ const RecipeSchema = new mongoose.Schema({
     },
     image: {
         type: String        
+    },
+    tags: {
+        type: [String]
     }
 });
  

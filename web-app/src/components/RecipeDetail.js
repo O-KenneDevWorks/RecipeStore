@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import './Styling/RecipeDetail.css';
- 
+
 const RecipeDetail = () => {
     const { id } = useParams();
     const [recipe, setRecipe] = useState(null);
- 
+
     useEffect(() => {
         const fetchRecipe = async () => {
             try {
@@ -16,27 +16,31 @@ const RecipeDetail = () => {
                 console.error('Error fetching recipe:', error);
             }
         };
- 
+
         fetchRecipe();
     }, [id]);
- 
+
     if (!recipe) {
         return <div>Loading...</div>;
     }
- 
+
     return (
         <div className="recipe-detail">
             <h1>{recipe.name}</h1>
-            {recipe.image && <img src={recipe.image} alt={recipe.name} className="recipe-image" />}
-            <p><strong>Prep Time:</strong> {recipe.prepTime}</p>
-            <p><strong>Cook Time:</strong> {recipe.cookTime}</p>
-            <p><strong>Total Time:</strong> {recipe.totalTime}</p>
-            <p><strong>Servings:</strong> {recipe.servings}</p>
-            <p><strong>Yield:</strong> {recipe.yield}</p>
+            {recipe.image && <img src={recipe.image} alt={recipe.name} />}
+            <ul>
+                <li>Prep Time: {recipe.prepTime}</li>
+                <li>Cook Time: {recipe.cookTime}</li>
+                <li>Total Time: {recipe.totalTime}</li>
+                <li>Servings: {recipe.servings}</li>
+                <li>Yield: {recipe.yield}</li>
+            </ul>
             <h2>Ingredients</h2>
             <ul>
                 {recipe.ingredients.map((ingredient, index) => (
-                    <li key={index}>{ingredient.amount} {ingredient.unit} {ingredient.name}</li>
+                    <li key={index}>
+                        {ingredient.amount} {ingredient.unit} {ingredient.name}
+                    </li>
                 ))}
             </ul>
             <h2>Directions</h2>
@@ -45,8 +49,18 @@ const RecipeDetail = () => {
                     <li key={index}>{direction}</li>
                 ))}
             </ol>
+            {recipe.tags && (
+                <div>
+                    <h3>Tags</h3>
+                    <ul>
+                        {recipe.tags.map((tag, index) => (
+                            <li key={index}>{tag}</li>
+                        ))}
+                    </ul>
+                </div>
+            )}
         </div>
     );
 };
- 
+
 export default RecipeDetail;
