@@ -1,7 +1,36 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import imageCompression from 'browser-image-compression';
+import Select from 'react-select';
 import './Styling/AddRecipeForm.css';
+
+const unitOptions = [
+    { value: 'Teaspoon', label: 'Teaspoon (tsp)' },
+    { value: 'Tablespoon', label: 'Tablespoon (tbsp)' },
+    { value: 'Fluid Ounce', label: 'Fluid Ounce (fl oz)' },
+    { value: 'Cup', label: 'Cup' },
+    { value: 'Pint', label: 'Pint (pt)' },
+    { value: 'Quart', label: 'Quart (qt)' },
+    { value: 'Gallon', label: 'Gallon (gal)' },
+    { value: 'Milliliter', label: 'Milliliter (ml)' },
+    { value: 'Liter', label: 'Liter (l)' },
+    { value: 'Deciliter', label: 'Deciliter (dl)' },
+    { value: 'Ounce', label: 'Ounce (oz)' },
+    { value: 'Pound', label: 'Pound (lb)' },
+    { value: 'Gram', label: 'Gram (g)' },
+    { value: 'Kilogram', label: 'Kilogram (kg)' },
+    { value: 'Inch', label: 'Inch (in)' },
+    { value: 'Centimeter', label: 'Centimeter (cm)' },
+    { value: 'Millimeter', label: 'Millimeter (mm)' },
+    { value: 'Each', label: 'Each' },
+    { value: 'Dozen', label: 'Dozen' },
+    { value: 'Pinch', label: 'Pinch' },
+    { value: 'Dash', label: 'Dash' },
+    { value: 'Smidgen', label: 'Smidgen' },
+    { value: 'Handful', label: 'Handful' },
+    { value: 'Bunch', label: 'Bunch' },
+    { value: 'Degrees Fahrenheit', label: 'Degrees Fahrenheit (°F)' },
+    { value: 'Degrees Celsius', label: 'Degrees Celsius (°C)' }
+];
 
 const AddRecipeForm = () => {
     const [recipeData, setRecipeData] = useState({
@@ -14,7 +43,7 @@ const AddRecipeForm = () => {
         servings: '',
         yield: '',
         image: '',
-        tags: [] 
+        tags: []
     });
     const [imagePreview, setImagePreview] = useState('');
 
@@ -75,11 +104,10 @@ const AddRecipeForm = () => {
         });
     };
 
-    const handleIngredientChange = (index, e) => {
-        const { name, value } = e.target;
+    const handleIngredientChange = (index, field, value) => {
         const newIngredients = recipeData.ingredients.map((ingredient, i) => {
             if (i === index) {
-                return { ...ingredient, [name]: value };
+                return { ...ingredient, [field]: value };
             }
             return ingredient;
         });
@@ -145,16 +173,16 @@ const AddRecipeForm = () => {
                         name="amount"
                         placeholder="Amount"
                         value={ingredient.amount}
-                        onChange={(e) => handleIngredientChange(index, e)}
+                        onChange={(e) => handleIngredientChange(index, 'amount', e.target.value)}
                         step="0.01"
                         required
                     />
-                    <input
-                        type="text"
+                    <Select
                         name="unit"
-                        placeholder="Unit"
-                        value={ingredient.unit}
-                        onChange={(e) => handleIngredientChange(index, e)}
+                        options={unitOptions}
+                        value={unitOptions.find(option => option.value === ingredient.unit)}
+                        onChange={(option) => handleIngredientChange(index, 'unit', option.value)}
+                        placeholder="Select Unit"
                         required
                     />
                     <input
@@ -162,7 +190,7 @@ const AddRecipeForm = () => {
                         name="name"
                         placeholder="Ingredient"
                         value={ingredient.name}
-                        onChange={(e) => handleIngredientChange(index, e)}
+                        onChange={(e) => handleIngredientChange(index, 'name', e.target.value)}
                         required
                     />
                     <button type="button" onClick={() => handleRemoveIngredient(index)}>Remove</button>
