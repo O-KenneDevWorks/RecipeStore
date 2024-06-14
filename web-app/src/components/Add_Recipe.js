@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Select from 'react-select';
+import imageCompression from 'browser-image-compression';
 import './Styling/AddRecipeForm.css';
 
 const unitOptions = [
