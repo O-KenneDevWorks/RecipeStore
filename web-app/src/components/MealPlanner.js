@@ -36,8 +36,8 @@ const MealPlanner = () => {
         ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].forEach(day => {
             plan[day] = {
                 mainCourse: getRandomRecipeByCourse('Main Course'),
-                side1: getRandomRecipeByCourse('Salad') || getRandomRecipeByCourse('Soup') || getRandomRecipeByCourse('Appetizer'),
-                side2: getRandomRecipeByCourse('Salad') || getRandomRecipeByCourse('Soup') || getRandomRecipeByCourse('Appetizer')
+                side1: getRandomRecipeByCourse('Salad') || getRandomRecipeByCourse('Soup') || getRandomRecipeByCourse('Side'),
+                side2: getRandomRecipeByCourse('Salad') || getRandomRecipeByCourse('Soup') || getRandomRecipeByCourse('Side')
             };
 
             if (!plan[day].mainCourse) {
@@ -58,8 +58,8 @@ const MealPlanner = () => {
             ...prevPlan,
             [day]: {
                 mainCourse: getRandomRecipeByCourse('Main Course'),
-                side1: getRandomRecipeByCourse('Salad') || getRandomRecipeByCourse('Soup') || getRandomRecipeByCourse('Appetizer'),
-                side2: getRandomRecipeByCourse('Salad') || getRandomRecipeByCourse('Soup') || getRandomRecipeByCourse('Appetizer')
+                side1: getRandomRecipeByCourse('Salad') || getRandomRecipeByCourse('Soup') || getRandomRecipeByCourse('Side'),
+                side2: getRandomRecipeByCourse('Salad') || getRandomRecipeByCourse('Soup') || getRandomRecipeByCourse('Side')
             }
         }));
     };
