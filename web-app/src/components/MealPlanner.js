@@ -80,7 +80,7 @@ const MealPlanner = () => {
                         {weeklyPlan[day].mainCourse && <p>Main Course: {weeklyPlan[day].mainCourse.name}</p>}
                         {weeklyPlan[day].side1 && <p>Side 1: {weeklyPlan[day].side1.name}</p>}
                         {weeklyPlan[day].side2 && <p>Side 2: {weeklyPlan[day].side2.name}</p>}
-                        {console.log({day})}
+                        {console.log({weeklyPlan})}
                         <button onClick={() => regenerateDayPlan(day)}>Regenerate {day}</button>
                     </div>
                 ))}
