@@ -21,6 +21,10 @@ const MealPlanner = () => {
 
     const getRandomRecipeByCourse = (course) => {
         const filteredRecipes = recipes.filter(recipe => recipe.course === course);
+        if (filteredRecipes.length === 0) {
+            console.error(`No recipes found for course: ${course}`);
+            return null;
+        }
         const randomIndex = Math.floor(Math.random() * filteredRecipes.length);
         return filteredRecipes[randomIndex];
     };
@@ -30,9 +34,19 @@ const MealPlanner = () => {
         ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].forEach(day => {
             plan[day] = {
                 mainCourse: getRandomRecipeByCourse('Main Course'),
-                side1: getRandomRecipeByCourse('Salad') || getRandomRecipeByCourse('Soup') || getRandomRecipeByCourse('Side'),
-                side2: getRandomRecipeByCourse('Salad') || getRandomRecipeByCourse('Soup') || getRandomRecipeByCourse('Side')
+                side1: getRandomRecipeByCourse('Salad') || getRandomRecipeByCourse('Soup') || getRandomRecipeByCourse('Appetizer'),
+                side2: getRandomRecipeByCourse('Salad') || getRandomRecipeByCourse('Soup') || getRandomRecipeByCourse('Appetizer')
             };
+
+            if (!plan[day].mainCourse) {
+                console.error(`No main course found for ${day}`);
+            }
+            if (!plan[day].side1) {
+                console.error(`No side 1 found for ${day}`);
+            }
+            if (!plan[day].side2) {
+                console.error(`No side 2 found for ${day}`);
+            }
         });
         setWeeklyPlan(plan);
     };
@@ -42,8 +56,8 @@ const MealPlanner = () => {
             ...prevPlan,
             [day]: {
                 mainCourse: getRandomRecipeByCourse('Main Course'),
-                side1: getRandomRecipeByCourse('Salad') || getRandomRecipeByCourse('Soup') || getRandomRecipeByCourse('Side'),
-                side2: getRandomRecipeByCourse('Salad') || getRandomRecipeByCourse('Soup') || getRandomRecipeByCourse('Side')
+                side1: getRandomRecipeByCourse('Salad') || getRandomRecipeByCourse('Soup') || getRandomRecipeByCourse('Appetizer'),
+                side2: getRandomRecipeByCourse('Salad') || getRandomRecipeByCourse('Soup') || getRandomRecipeByCourse('Appetizer')
             }
         }));
     };
@@ -85,14 +99,21 @@ const MealPlanner = () => {
                     </div>
                 ))}
             </div>
-            <h2>Shopping List</h2>
-            <ul>
-                {Object.keys(shoppingList).map(key => (
-                    <li key={key}>
-                        {shoppingList[key].amount} {shoppingList[key].unit} {shoppingList[key].name}
-                    </li>
-                ))}
-            </ul>
+            <button onClick={generateShoppingList}>Generate Shopping List</button>
+            <div className="shopping-list">
+                <h2>Shopping List</h2>
+                <ul>
+                    {shoppingList.map((item, index) => (
+                        <li key={index}>
+                            {item.amount} {item.unit} {item.name}
+                            <button onClick={() => handleRemoveFromShoppingList(index)}>Remove</button>
+                        </li>
+                    ))}
+                </ul>
+                <button onClick={() => handleAddToShoppingList({ name: 'New Item', amount: 1, unit: 'unit' })}>
+                    Add Item
+                </button>
+            </div>
         </div>
     );
 };
