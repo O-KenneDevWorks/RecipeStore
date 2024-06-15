@@ -170,6 +170,7 @@ const AddRecipeForm = () => {
             <select name="course" value={recipeData.course} onChange={handleChange} required>
                 <option value="">Select Course</option>
                 <option value="Main Course">Main Course</option>
+                <option value="Side">Side</option>
                 <option value="Salad">Salad</option>
                 <option value="Soup">Soup</option>
                 <option value="Appetizer">Appetizer</option>

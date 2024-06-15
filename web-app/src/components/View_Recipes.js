@@ -35,7 +35,7 @@ const ViewRecipes = () => {
     );
 
     const uniqueTags = [...new Set(recipes.flatMap(recipe => recipe.tags))];
-    const uniqueCourses = ['Main Course', 'Salad', 'Soup', 'Appetizer', 'Dessert', 'Breakfast'];
+    const uniqueCourses = ['Main Course', 'Side', 'Salad', 'Soup', 'Appetizer', 'Dessert', 'Breakfast'];
 
     return (
         <div className="view-recipes">
