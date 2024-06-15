@@ -79,6 +79,19 @@ app.get('/recipes/:id', async (req, res) => {
     }
 });
 
+// Route to update a recipe by ID
+app.put('/recipes/:id', async (req, res) => {
+    try {
+        const recipe = await Recipe.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+        if (!recipe) {
+            return res.status(404).send('Recipe not found');
+        }
+        res.status(200).send(recipe);
+    } catch (error) {
+        res.status(400).send('Error updating recipe: ' + error.message);
+    }
+});
+
 app.get('/random-recipe', async (req, res) => {
     try {
         const pantryItems = await PantryItem.find();

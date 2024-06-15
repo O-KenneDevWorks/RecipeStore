@@ -29,6 +29,7 @@ const RecipeDetail = () => {
     return (
         <div className="recipe-detail">
             <h1>{recipe.name}</h1>
+            <Link to={`/edit-recipe/${recipe._id}`}>Edit Recipe</Link>
             {recipe.image && <img src={recipe.image} alt={recipe.name} />}
             <ul>
                 <li>Prep Time: {recipe.prepTime}</li>

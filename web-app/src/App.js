@@ -46,6 +46,7 @@ const App = () => {
                     <Route path="/pantry" element={<PantryView/>} />
                     <Route path="/random-recipe" element={<RandomRecipe />} />
                     <Route path="/meal-planner" element={<MealPlanner />} />
+                    <Route path="/edit-recipe/:id" element={<EditRecipe />} />
                 </Routes>
             </div>
         </Router>
