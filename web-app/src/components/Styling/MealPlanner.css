@@ -1,0 +1,35 @@
+.meal-planner {
+    padding: 20px;
+}
+
+.meal-plan {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.day-plan {
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 5px;
+    width: 30%;
+}
+
+.shopping-list {
+    margin-top: 20px;
+}
+
+.shopping-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.shopping-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+}
+
+.shopping-list button {
+    margin-left: 10px;
+}
