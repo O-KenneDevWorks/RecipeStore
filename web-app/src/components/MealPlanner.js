@@ -81,7 +81,42 @@ const MealPlanner = () => {
         return ingredients;
     };
 
-    const shoppingList = generateShoppingList();
+    const createShoppingList = () => {
+        const list = {};
+        mealPlan.forEach(day => {
+            if (day.main) {
+                day.main.ingredients.forEach(ingredient => {
+                    const key = `${ingredient.name}-${ingredient.unit}`;
+                    if (!list[key]) {
+                        list[key] = { ...ingredient };
+                    } else {
+                        list[key].amount += ingredient.amount;
+                    }
+                });
+            }
+            day.sides.forEach(side => {
+                side.ingredients.forEach(ingredient => {
+                    const key = `${ingredient.name}-${ingredient.unit}`;
+                    if (!list[key]) {
+                        list[key] = { ...ingredient };
+                    } else {
+                        list[key].amount += ingredient.amount;
+                    }
+                });
+            });
+        });
+        setShoppingList(Object.values(list));
+    };
+
+    const handleAddToShoppingList = (item) => {
+        setShoppingList([...shoppingList, item]);
+    };
+
+    const handleRemoveFromShoppingList = (index) => {
+        setShoppingList(shoppingList.filter((_, i) => i !== index));
+    };
+
+    const shoppingList = createShoppingList();
 
     return (
         <div className="meal-planner">
@@ -99,7 +134,7 @@ const MealPlanner = () => {
                     </div>
                 ))}
             </div>
-            <button onClick={generateShoppingList}>Generate Shopping List</button>
+            <button onClick={createShoppingList}>Generate Shopping List</button>
             <div className="shopping-list">
                 <h2>Shopping List</h2>
                 <ul>
