@@ -51,6 +51,26 @@ const EditRecipe = () => {
         setRecipe(prev => ({ ...prev, tags }));
     };
 
+    const addIngredient = () => {
+        setRecipe(prev => ({ ...prev, ingredients: [...prev.ingredients, { amount: '', unit: '', name: '' }] }));
+    };
+
+    const removeIngredient = (index) => {
+        const newIngredients = [...recipe.ingredients];
+        newIngredients.splice(index, 1);
+        setRecipe(prev => ({ ...prev, ingredients: newIngredients }));
+    };
+
+    const addDirection = () => {
+        setRecipe(prev => ({ ...prev, directions: [...prev.directions, ''] }));
+    };
+
+    const removeDirection = (index) => {
+        const newDirections = [...recipe.directions];
+        newDirections.splice(index, 1);
+        setRecipe(prev => ({ ...prev, directions: newDirections }));
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         axios.put(`http://10.0.0.85:3000/recipes/${id}`, recipe)
@@ -94,15 +114,21 @@ const EditRecipe = () => {
                             Name:
                             <input type="text" name="name" value={ingredient.name} onChange={(e) => handleIngredientChange(index, e)} required />
                         </label>
+                        <button type="button" onClick={() => removeIngredient(index)}>Remove Ingredient</button>
                     </div>
                 ))}
+                <button type="button" onClick={addIngredient}>Add Ingredient</button>
                 <h2>Directions</h2>
                 {recipe.directions.map((direction, index) => (
-                    <label key={index}>
-                        Step {index + 1}:
-                        <input type="text" value={direction} onChange={(e) => handleDirectionChange(index, e)} required />
-                    </label>
+                    <div className="direction" key={index}>
+                        <label>
+                            Step {index + 1}:
+                            <input type="text" value={direction} onChange={(e) => handleDirectionChange(index, e)} required />
+                        </label>
+                        <button type="button" onClick={() => removeDirection(index)}>Remove Direction</button>
+                    </div>
                 ))}
+                <button type="button" onClick={addDirection}>Add Direction</button>
                 <label>
                     Prep Time:
                     <input type="text" name="prepTime" value={recipe.prepTime} onChange={handleChange} />
