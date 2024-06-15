@@ -3,67 +3,59 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import './Styling/EditRecipeForm.css';
 
-const EditRecipeForm = () => {
-    const { id } = useParams();
-    const navigate = useNavigate();
+const EditRecipe = () => {
     const [recipe, setRecipe] = useState({
         name: '',
-        ingredients: [],
-        directions: [],
+        ingredients: [{ amount: '', unit: '', name: '' }],
+        directions: [''],
         prepTime: '',
         cookTime: '',
         totalTime: '',
-        servings: 0,
+        servings: '',
         yield: '',
         image: '',
         tags: [],
         course: ''
     });
+    const { id } = useParams();
+    const navigate = useNavigate(); // Hook to navigate programmatically
 
     useEffect(() => {
-        const fetchRecipe = async () => {
-            try {
-                const response = await axios.get(`http://10.0.0.85:3000/recipes/${id}`);
+        axios.get(`http://10.0.0.85:3000/recipes/${id}`)
+            .then(response => {
                 setRecipe(response.data);
-            } catch (error) {
-                console.error('Error fetching recipe:', error);
-            }
-        };
-
-        fetchRecipe();
+            })
+            .catch(error => console.error('Error fetching recipe:', error));
     }, [id]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setRecipe({ ...recipe, [name]: value });
+        setRecipe(prev => ({ ...prev, [name]: value }));
     };
 
     const handleIngredientChange = (index, e) => {
         const { name, value } = e.target;
-        const updatedIngredients = [...recipe.ingredients];
-        updatedIngredients[index] = { ...updatedIngredients[index], [name]: value };
-        setRecipe({ ...recipe, ingredients: updatedIngredients });
+        const newIngredients = [...recipe.ingredients];
+        newIngredients[index][name] = value;
+        setRecipe(prev => ({ ...prev, ingredients: newIngredients }));
     };
 
     const handleDirectionChange = (index, e) => {
-        const { value } = e.target;
-        const updatedDirections = [...recipe.directions];
-        updatedDirections[index] = value;
-        setRecipe({ ...recipe, directions: updatedDirections });
+        const newDirections = [...recipe.directions];
+        newDirections[index] = e.target.value;
+        setRecipe(prev => ({ ...prev, directions: newDirections }));
     };
 
     const handleTagChange = (e) => {
-        setRecipe({ ...recipe, tags: e.target.value.split(',').map(tag => tag.trim()) });
+        const tags = e.target.value.split(',').map(tag => tag.trim());
+        setRecipe(prev => ({ ...prev, tags }));
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        try {
-            await axios.put(`http://10.0.0.85:3000/recipes/${id}`, recipe);
-            navigate(`/recipe/${id}`);
-        } catch (error) {
-            console.error('Error updating recipe:', error);
-        }
+        axios.put(`http://10.0.0.85:3000/recipes/${id}`, recipe)
+            .then(() => navigate(`/recipes/${id}`)) // Redirect to the recipe detail page
+            .catch(error => console.error('Error updating recipe:', error));
     };
 
     return (
@@ -89,7 +81,7 @@ const EditRecipeForm = () => {
                 </label>
                 <h2>Ingredients</h2>
                 {recipe.ingredients.map((ingredient, index) => (
-                    <div key={index}>
+                    <div className="ingredient" key={index}>
                         <label>
                             Amount:
                             <input type="number" name="amount" value={ingredient.amount} onChange={(e) => handleIngredientChange(index, e)} required />
@@ -139,10 +131,12 @@ const EditRecipeForm = () => {
                     Tags:
                     <input type="text" value={recipe.tags.join(', ')} onChange={handleTagChange} />
                 </label>
-                <button type="submit">Update Recipe</button>
+                <div className="buttons">
+                    <button type="submit">Update Recipe</button>
+                </div>
             </form>
         </div>
     );
 };
 
-export default EditRecipeForm;
+export default EditRecipe;

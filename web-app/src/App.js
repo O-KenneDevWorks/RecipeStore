@@ -7,6 +7,7 @@ import AddPantryItem from './components/AddPantryItem';
 import PantryView from './components/PantryView';
 import RandomRecipe from './components/RandomRecipe'
 import MealPlanner from './components/MealPlanner';
+import EditRecipeForm from './components/EditRecipeForm';
 import NavBar from './components/NavBar';
 import './components/Styling/Global.css'
 import './components/Styling/theme.css'
@@ -46,7 +47,7 @@ const App = () => {
                     <Route path="/pantry" element={<PantryView/>} />
                     <Route path="/random-recipe" element={<RandomRecipe />} />
                     <Route path="/meal-planner" element={<MealPlanner />} />
-                    <Route path="/edit-recipe/:id" element={<EditRecipe />} />
+                    <Route path="/edit-recipe/:id" element={<EditRecipeForm />} />
                 </Routes>
             </div>
         </Router>
