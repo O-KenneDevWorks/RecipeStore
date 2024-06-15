@@ -5,6 +5,8 @@ import './Styling/MealPlanner.css';
 const MealPlanner = () => {
     const [recipes, setRecipes] = useState([]);
     const [weeklyPlan, setWeeklyPlan] = useState({});
+    const [mealPlan, setMealPlan] = useState(Array(7).fill({ main: null, sides: [] }));
+    const [shoppingList, setShoppingList] = useState([]);
 
     useEffect(() => {
         const fetchRecipes = async () => {
@@ -62,24 +64,24 @@ const MealPlanner = () => {
         }));
     };
 
-    const generateShoppingList = () => {
-        const ingredients = {};
-        Object.values(weeklyPlan).forEach(dayPlan => {
-            ['mainCourse', 'side1', 'side2'].forEach(course => {
-                if (dayPlan[course] && dayPlan[course].ingredients) {
-                    dayPlan[course].ingredients.forEach(ingredient => {
-                        const key = `${ingredient.amount} ${ingredient.unit} ${ingredient.name}`;
-                        if (ingredients[key]) {
-                            ingredients[key].amount += ingredient.amount;
-                        } else {
-                            ingredients[key] = { ...ingredient };
-                        }
-                    });
-                }
-            });
-        });
-        return ingredients;
-    };
+    // const generateShoppingList = () => {
+    //     const ingredients = {};
+    //     Object.values(weeklyPlan).forEach(dayPlan => {
+    //         ['mainCourse', 'side1', 'side2'].forEach(course => {
+    //             if (dayPlan[course] && dayPlan[course].ingredients) {
+    //                 dayPlan[course].ingredients.forEach(ingredient => {
+    //                     const key = `${ingredient.amount} ${ingredient.unit} ${ingredient.name}`;
+    //                     if (ingredients[key]) {
+    //                         ingredients[key].amount += ingredient.amount;
+    //                     } else {
+    //                         ingredients[key] = { ...ingredient };
+    //                     }
+    //                 });
+    //             }
+    //         });
+    //     });
+    //     return ingredients;
+    // };
 
     const createShoppingList = () => {
         const list = {};
@@ -116,7 +118,7 @@ const MealPlanner = () => {
         setShoppingList(shoppingList.filter((_, i) => i !== index));
     };
 
-    const shoppingList = createShoppingList();
+    // const shoppingList = generateShoppingList();
 
     return (
         <div className="meal-planner">
