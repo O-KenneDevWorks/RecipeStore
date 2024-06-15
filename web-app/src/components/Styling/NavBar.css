@@ -1,27 +1,30 @@
 .nav-bar {
-    background-color: #333;
-    padding: 10px;
+    background-color: var(--background-color);
+    overflow: hidden;
+    border-bottom: 1px solid #ccc;
 }
 
 .nav-bar ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
-    overflow: hidden;
+    display: flex;
+    justify-content: space-around;
 }
 
-.nav-bar ul li {
+.nav-bar li {
     float: left;
 }
 
-.nav-bar ul li a {
+.nav-bar li a {
     display: block;
-    color: white;
+    color: var(--text-color);
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
 }
 
-.nav-bar ul li a:hover {
-    background-color: #111;
+.nav-bar li a:hover {
+    background-color: var(--link-color);
+    color: var(--button-text-color);
 }

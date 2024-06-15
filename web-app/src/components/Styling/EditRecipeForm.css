@@ -4,7 +4,8 @@
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    background-color: #f9f9f9;
+    background-color: var(--background-color);
+    color: var(--text-color);
 }
 
 .edit-recipe-form h1 {
@@ -15,6 +16,7 @@
 .edit-recipe-form label {
     display: block;
     margin-bottom: 10px;
+    color: var(--text-color);
 }
 
 .edit-recipe-form label input,
@@ -24,12 +26,14 @@
     margin-top: 5px;
     border: 1px solid #ccc;
     border-radius: 3px;
+    background-color: var(--background-color);
+    color: var(--text-color);
 }
 
 .edit-recipe-form h2 {
     margin-top: 20px;
     margin-bottom: 10px;
-    color: #333;
+    color: var(--text-color);
 }
 
 .edit-recipe-form .ingredient,
@@ -47,6 +51,8 @@
 .edit-recipe-form .ingredient label input,
 .edit-recipe-form .direction label input {
     width: calc(100% - 10px);
+    background-color: var(--background-color);
+    color: var(--text-color);
 }
 
 .edit-recipe-form .ingredient label:last-child,
@@ -67,8 +73,8 @@
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    background-color: #007bff;
-    color: white;
+    background-color: var(--button-background-color);
+    color: var(--button-text-color);
     font-size: 16px;
     cursor: pointer;
 }
@@ -76,7 +82,7 @@
 .edit-recipe-form .buttons button:hover,
 .edit-recipe-form .ingredient button:hover,
 .edit-recipe-form .direction button:hover {
-    background-color: #0056b3;
+    background-color: var(--link-color);
 }
 
 .edit-recipe-form .buttons button:disabled,
