@@ -46,9 +46,6 @@ const MealPlanner = () => {
                 side2: getRandomRecipeByCourse('Salad') || getRandomRecipeByCourse('Soup') || getRandomRecipeByCourse('Side')
             }
         }));
-        console.log("mainCourse: ", day['mainCourse']);
-        console.log("side1: ", day['side1']);
-        console.log("side2: ", day['side2']);
     };
 
     const generateShoppingList = () => {
