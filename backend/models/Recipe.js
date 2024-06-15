@@ -43,6 +43,11 @@ const RecipeSchema = new mongoose.Schema({
     },
     tags: {
         type: [String]
+    },
+    course: {
+        type: String,
+        enum: ['Main Course', 'Salad', 'Soup', 'Appetizer', 'Dessert', 'Breakfast'],
+        required: true
     }
 });
  

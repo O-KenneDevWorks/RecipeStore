@@ -90,7 +90,8 @@ const AddRecipeForm = () => {
                 servings: '',
                 yield: '',
                 image: '',
-                tags: []
+                tags: [],
+                course: ''
             });
             setImagePreview('');
         } catch (error) {
@@ -166,6 +167,25 @@ const AddRecipeForm = () => {
             <label>Yield</label>
             <input type="text" name="yield" value={recipeData.yield} onChange={handleChange} />
 
+            <select name="course" value={formData.course} onChange={handleChange} required>
+                <option value="">Select Course</option>
+                <option value="Main Course">Main Course</option>
+                <option value="Salad">Salad</option>
+                <option value="Soup">Soup</option>
+                <option value="Appetizer">Appetizer</option>
+                <option value="Dessert">Dessert</option>
+                <option value="Breakfast">Breakfast</option>
+            </select>
+
+            <label>Tags</label>
+            <input
+                type="text"
+                name="tags"
+                value={recipeData.tags.join(', ')}
+                onChange={handleTagChange}
+                placeholder="Enter tags separated by commas"
+            />
+
             <label>Ingredients *</label>
             {recipeData.ingredients.map((ingredient, index) => (
                 <div key={index} className="ingredient-input">
@@ -217,15 +237,6 @@ const AddRecipeForm = () => {
             <label>Image</label>
             <input type="file" name="image" accept="image/*" onChange={handleImageChange} />
             {imagePreview && <img src={imagePreview} alt="Recipe Preview" className="image-preview" />}
-
-            <label>Tags</label>
-            <input
-                type="text"
-                name="tags"
-                value={recipeData.tags.join(', ')}
-                onChange={handleTagChange}
-                placeholder="Enter tags separated by commas"
-            />
 
             <button type="submit">Add Recipe</button>
         </form>

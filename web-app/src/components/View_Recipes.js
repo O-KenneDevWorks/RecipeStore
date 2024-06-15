@@ -24,11 +24,17 @@ const ViewRecipes = () => {
         setSelectedTag(e.target.value);
     };
 
-    const filteredRecipes = selectedTag
-        ? recipes.filter(recipe => recipe.tags.includes(selectedTag))
-        : recipes;
+    const handleCourseChange = (e) => {
+        setSelectedCourse(e.target.value);
+    };
+
+    const filteredRecipes = recipes.filter(recipe => 
+        (selectedTag ? recipe.tags.includes(selectedTag) : true) &&
+        (selectedCourse ? recipe.course === selectedCourse : true)
+    );
 
     const uniqueTags = [...new Set(recipes.flatMap(recipe => recipe.tags))];
+    const uniqueCourses = ['Main Course', 'Salad', 'Soup', 'Appetizer', 'Dessert', 'Breakfast'];
 
     return (
         <div className="view-recipes">
@@ -38,6 +44,13 @@ const ViewRecipes = () => {
                 <option value="">All</option>
                 {uniqueTags.map((tag, index) => (
                     <option key={index} value={tag}>{tag}</option>
+                ))}
+            </select>
+            <label>Filter by course:</label>
+            <select onChange={handleCourseChange} value={selectedCourse}>
+                <option value="">All</option>
+                {uniqueCourses.map((course, index) => (
+                    <option key={index} value={course}>{course}</option>
                 ))}
             </select>
             <ul>

@@ -36,7 +36,18 @@ const RecipeDetail = () => {
                 <li>Total Time: {recipe.totalTime}</li>
                 <li>Servings: {recipe.servings}</li>
                 <li>Yield: {recipe.yield}</li>
+                <li>Course: {recipe.course}</li>
             </ul>
+            {recipe.tags && (
+                <div>
+                    <h3>Tags</h3>
+                    <ul>
+                        {recipe.tags.map((tag, index) => (
+                            <li key={index}>{tag}</li>
+                        ))}
+                    </ul>
+                </div>
+            )}
             <h2>Ingredients</h2>
             <ul>
                 {recipe.ingredients.map((ingredient, index) => (
@@ -51,16 +62,6 @@ const RecipeDetail = () => {
                     <li key={index}>{direction}</li>
                 ))}
             </ol>
-            {recipe.tags && (
-                <div>
-                    <h3>Tags</h3>
-                    <ul>
-                        {recipe.tags.map((tag, index) => (
-                            <li key={index}>{tag}</li>
-                        ))}
-                    </ul>
-                </div>
-            )}
         </div>
     );
 };

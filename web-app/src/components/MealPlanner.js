@@ -1,97 +1,117 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './Styling/MealPlanner.css';
 
 const MealPlanner = () => {
     const [recipes, setRecipes] = useState([]);
     const [pantryItems, setPantryItems] = useState([]);
-    const [mealPlan, setMealPlan] = useState({});
+    const [mealPlan, setMealPlan] = useState(Array(7).fill({ main: null, sides: [] }));
     const [shoppingList, setShoppingList] = useState([]);
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchRecipesAndPantry = async () => {
             try {
-                const recipesResponse = await axios.get('http://10.0.0.85:3000/recipes');
-                const pantryResponse = await axios.get('http://10.0.0.85:3000/pantry');
-                setRecipes(recipesResponse.data);
+                const [recipeResponse, pantryResponse] = await Promise.all([
+                    axios.get('http://10.0.0.85:3000/recipes'),
+                    axios.get('http://10.0.0.85:3000/pantry')
+                ]);
+                setRecipes(recipeResponse.data);
                 setPantryItems(pantryResponse.data);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
         };
-        fetchData();
+
+        fetchRecipesAndPantry();
     }, []);
 
-    const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-
-    const randomizeMeal = () => {
-        const randomIndex = Math.floor(Math.random() * recipes.length);
-        return recipes[randomIndex];
+    const getRandomRecipeByCourse = (course) => {
+        const filteredRecipes = recipes.filter(recipe => recipe.course === course);
+        if (filteredRecipes.length === 0) return null;
+        return filteredRecipes[Math.floor(Math.random() * filteredRecipes.length)];
     };
 
-    const randomizeWeek = () => {
-        const newMealPlan = {};
-        daysOfWeek.forEach(day => {
-            newMealPlan[day] = { main: randomizeMeal(), sides: [randomizeMeal(), randomizeMeal()] };
-        });
+    const generateMealPlan = () => {
+        const newMealPlan = Array(7).fill(null).map(() => ({
+            main: getRandomRecipeByCourse('Main Course'),
+            sides: [getRandomRecipeByCourse('Side'), getRandomRecipeByCourse('Side')].filter(Boolean)
+        }));
         setMealPlan(newMealPlan);
     };
 
-    const randomizeDay = (day) => {
-        setMealPlan({
-            ...mealPlan,
-            [day]: { main: randomizeMeal(), sides: [randomizeMeal(), randomizeMeal()] }
-        });
+    const randomizeDay = (dayIndex) => {
+        const newMealPlan = [...mealPlan];
+        newMealPlan[dayIndex] = {
+            main: getRandomRecipeByCourse('Main Course'),
+            sides: [getRandomRecipeByCourse('Side'), getRandomRecipeByCourse('Side')].filter(Boolean)
+        };
+        setMealPlan(newMealPlan);
     };
 
-    const generateShoppingList = () => {
-        const newShoppingList = [];
-        Object.values(mealPlan).forEach(meal => {
-            [meal.main, ...meal.sides].forEach(recipe => {
-                recipe.ingredients.forEach(ingredient => {
-                    const existingItem = newShoppingList.find(item => item.name === ingredient.name);
-                    if (existingItem) {
-                        existingItem.amount += ingredient.amount;
+    const createShoppingList = () => {
+        const list = {};
+        mealPlan.forEach(day => {
+            if (day.main) {
+                day.main.ingredients.forEach(ingredient => {
+                    const key = `${ingredient.name}-${ingredient.unit}`;
+                    if (!list[key]) {
+                        list[key] = { ...ingredient };
                     } else {
-                        newShoppingList.push({ ...ingredient });
+                        list[key].amount += ingredient.amount;
+                    }
+                });
+            }
+            day.sides.forEach(side => {
+                side.ingredients.forEach(ingredient => {
+                    const key = `${ingredient.name}-${ingredient.unit}`;
+                    if (!list[key]) {
+                        list[key] = { ...ingredient };
+                    } else {
+                        list[key].amount += ingredient.amount;
                     }
                 });
             });
         });
-        setShoppingList(newShoppingList);
-    };
-
-    const handleAddToShoppingList = (item) => {
-        setShoppingList([...shoppingList, item]);
+        setShoppingList(Object.values(list));
     };
 
     const handleRemoveFromShoppingList = (index) => {
-        setShoppingList(shoppingList.filter((_, i) => i !== index));
+        const newList = [...shoppingList];
+        newList.splice(index, 1);
+        setShoppingList(newList);
+    };
+
+    const handleAddToShoppingList = (ingredient) => {
+        setShoppingList([...shoppingList, ingredient]);
     };
 
     return (
         <div className="meal-planner">
-            <h1>Weekly Meal Planner</h1>
-            <button onClick={randomizeWeek}>Randomize Week</button>
+            <h1>Meal Planner</h1>
+            <button onClick={generateMealPlan}>Randomize Week</button>
             <div className="meal-plan">
-                {daysOfWeek.map(day => (
-                    <div key={day} className="day-plan">
-                        <h2>{day}</h2>
-                        <button onClick={() => randomizeDay(day)}>Randomize Day</button>
-                        <div>
-                            <h3>Main Course</h3>
-                            {mealPlan[day]?.main?.name || 'None'}
-                        </div>
-                        <div>
-                            <h3>Sides</h3>
-                            <ul>
-                                {mealPlan[day]?.sides?.map((side, index) => (
-                                    <li key={index}>{side.name}</li>
-                                )) || 'None'}
-                            </ul>
-                        </div>
+                {mealPlan.map((day, index) => (
+                    <div key={index} className="meal-day">
+                        <h2>Day {index + 1}</h2>
+                        {day.main && <p>Main Course: {day.main.name}</p>}
+                        {day.sides.map((side, idx) => (
+                            <p key={idx}>Side: {side.name}</p>
+                        ))}
+                        <button onClick={() => randomizeDay(index)}>Randomize Day</button>
                     </div>
                 ))}
+            </div>
+            <button onClick={createShoppingList}>Create Shopping List</button>
+            <div className="shopping-list">
+                <h2>Shopping List</h2>
+                <ul>
+                    {shoppingList.map((item, index) => (
+                        <li key={index}>
+                            {item.amount} {item.unit} {item.name}
+                            <button onClick={() => handleRemoveFromShoppingList(index)}>Remove</button>
+                        </li>
+                    ))}
+                </ul>
             </div>
             <button onClick={generateShoppingList}>Generate Shopping List</button>
             <div className="shopping-list">
