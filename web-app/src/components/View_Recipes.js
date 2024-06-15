@@ -6,6 +6,7 @@ import './Styling/ViewRecipes.css';
 const ViewRecipes = () => {
     const [recipes, setRecipes] = useState([]);
     const [selectedTag, setSelectedTag] = useState('');
+    const [selectedCourse, setSelectedCourse] = useState('');
 
     useEffect(() => {
         const fetchRecipes = async () => {

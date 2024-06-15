@@ -167,7 +167,7 @@ const AddRecipeForm = () => {
             <label>Yield</label>
             <input type="text" name="yield" value={recipeData.yield} onChange={handleChange} />
 
-            <select name="course" value={formData.course} onChange={handleChange} required>
+            <select name="course" value={recipeData.course} onChange={handleChange} required>
                 <option value="">Select Course</option>
                 <option value="Main Course">Main Course</option>
                 <option value="Salad">Salad</option>

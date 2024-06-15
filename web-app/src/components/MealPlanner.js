@@ -113,21 +113,6 @@ const MealPlanner = () => {
                     ))}
                 </ul>
             </div>
-            <button onClick={generateShoppingList}>Generate Shopping List</button>
-            <div className="shopping-list">
-                <h2>Shopping List</h2>
-                <ul>
-                    {shoppingList.map((item, index) => (
-                        <li key={index}>
-                            {item.amount} {item.unit} {item.name}
-                            <button onClick={() => handleRemoveFromShoppingList(index)}>Remove</button>
-                        </li>
-                    ))}
-                </ul>
-                <button onClick={() => handleAddToShoppingList({ name: 'New Item', amount: 1, unit: 'unit' })}>
-                    Add Item
-                </button>
-            </div>
         </div>
     );
 };
