@@ -2,7 +2,7 @@
     padding: 20px;
 }
 
-.meal-plan {
+.weekly-plan {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
@@ -10,9 +10,12 @@
 
 .day-plan {
     border: 1px solid #ccc;
-    padding: 20px;
-    border-radius: 5px;
-    width: 30%;
+    padding: 10px;
+    width: 200px;
+}
+
+.day-plan h2 {
+    margin-top: 0;
 }
 
 .shopping-list {
@@ -25,11 +28,5 @@
 }
 
 .shopping-list li {
-    display: flex;
-    justify-content: space-between;
-    padding: 5px 0;
-}
-
-.shopping-list button {
-    margin-left: 10px;
+    margin-bottom: 5px;
 }
