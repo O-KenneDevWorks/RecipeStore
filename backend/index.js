@@ -2,9 +2,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+
 const PantryItem = require('./models/PantryItem'); // Import the PantryItem model
 const Recipe = require('./models/Recipe'); // Import the Recipe model
- 
+const MealPlan = require('./models/MealPlan');
+
 const app = express();
 const port = 3000;
 
@@ -109,6 +111,25 @@ app.get('/random-recipe', async (req, res) => {
         }
     } catch (error) {
         res.status(500).send({ error: 'Error fetching random recipe' });
+    }
+});
+
+app.post('/mealPlans', async (req, res) => {
+    try {
+        const mealPlan = new MealPlan(req.body);
+        await mealPlan.save();
+        res.status(201).send(mealPlan);
+    } catch (error) {
+        res.status(500).send('Error creating meal plan: ' + error.message);
+    }
+});
+
+app.get('/mealPlans', async (req, res) => {
+    try {
+        const mealPlans = await MealPlan.find().populate('days.mainCourse days.sides');
+        res.status(200).send(mealPlans);
+    } catch (error) {
+        res.status(500).send('Error fetching meal plans: ' + error.message);
     }
 });
  
