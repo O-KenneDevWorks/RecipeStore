@@ -142,25 +142,4 @@ const MealPlanner = () => {
     );
 };
 
-const AddRecipeForm = ({ initialRecipeName, onSuccess }) => {
-    const [recipeName, setRecipeName] = useState(initialRecipeName);
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            await axios.post('http://10.0.0.85:3000/recipes', { name: recipeName /* other recipe data */ });
-            onSuccess(); // Close the modal and refresh recipes
-        } catch (error) {
-            console.error('Error adding new recipe:', error);
-        }
-    };
-
-    return (
-        <form onSubmit={handleSubmit}>
-            <input type="text" value={recipeName} onChange={e => setRecipeName(e.target.value)} />
-            <button type="submit">Save Recipe</button>
-        </form>
-    );
-};
-
 export default MealPlanner;
