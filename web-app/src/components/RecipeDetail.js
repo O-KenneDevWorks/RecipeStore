@@ -38,6 +38,7 @@ const RecipeDetail = () => {
                 <li>Servings: {recipe.servings}</li>
                 <li>Yield: {recipe.yield}</li>
                 <li>Course: {recipe.course}</li>
+                <li>Cuisine: {recipe.cuisine}</li>
             </ul>
             {recipe.tags && (
                 <div>

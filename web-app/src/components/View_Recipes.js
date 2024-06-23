@@ -7,6 +7,7 @@ const ViewRecipes = () => {
     const [recipes, setRecipes] = useState([]);
     const [selectedTag, setSelectedTag] = useState('');
     const [selectedCourse, setSelectedCourse] = useState('');
+    const [selectedCuisine, setSelectedCuisine] = useState('');
 
     useEffect(() => {
         const fetchRecipes = async () => {
@@ -29,6 +30,10 @@ const ViewRecipes = () => {
         setSelectedCourse(e.target.value);
     };
 
+    const handleCuisineChange = (e) => {
+        setSelectedCuisine(e.target.value);
+    };
+
     const filteredRecipes = recipes.filter(recipe => 
         (selectedTag ? recipe.tags.includes(selectedTag) : true) &&
         (selectedCourse ? recipe.course === selectedCourse : true)
@@ -36,6 +41,7 @@ const ViewRecipes = () => {
 
     const uniqueTags = [...new Set(recipes.flatMap(recipe => recipe.tags))];
     const uniqueCourses = ['Main Course', 'Side', 'Salad', 'Soup', 'Appetizer', 'Dessert', 'Breakfast'];
+    const uniqueCuisine = ['Italian', 'Mexican', 'Chinese', 'Indian', 'French', 'Japanese', 'American', 'Thai'];
 
     return (
         <div className="view-recipes">
@@ -52,6 +58,13 @@ const ViewRecipes = () => {
                 <option value="">All</option>
                 {uniqueCourses.map((course, index) => (
                     <option key={index} value={course}>{course}</option>
+                ))}
+            </select>
+            <label>Filter by cuisine:</label>
+            <select onChange={handleCuisineChange} value={selectedCourse}>
+                <option value="">All</option>
+                {uniqueCuisine.map((cuisine, index) => (
+                    <option key={index} value={cuisine}>{cuisine}</option>
                 ))}
             </select>
             <ul>

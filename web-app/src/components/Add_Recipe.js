@@ -44,7 +44,9 @@ const AddRecipeForm = () => {
         servings: '',
         yield: '',
         image: '',
-        tags: []
+        tags: [],
+        course: '',
+        cuisine: ''
     });
     const [imagePreview, setImagePreview] = useState('');
 
@@ -91,7 +93,8 @@ const AddRecipeForm = () => {
                 yield: '',
                 image: '',
                 tags: [],
-                course: ''
+                course: '',
+                cuisine: ''
             });
             setImagePreview('');
         } catch (error) {
@@ -177,6 +180,21 @@ const AddRecipeForm = () => {
                 <option value="Dessert">Dessert</option>
                 <option value="Breakfast">Breakfast</option>
             </select>
+
+            <label>
+                Cuisine:
+                <select name="cuisine" value={recipe.cuisine} onChange={handleChange} required>
+                    <option value="">Select Cuisine</option>
+                    <option value="Italian">Italian</option>
+                    <option value="Mexican">Mexican</option>
+                    <option value="Chinese">Chinese</option>
+                    <option value="Indian">Indian</option>
+                    <option value="French">French</option>
+                    <option value="Japanese">Japanese</option>
+                    <option value="American">American</option>
+                    <option value="Thai">Thai</option>
+                </select>
+            </label>
 
             <label>Tags</label>
             <input
