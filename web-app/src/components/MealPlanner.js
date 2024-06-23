@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Modal from 'react-modal';
+import AddRecipeForm from './AddRecipeForm';
 import './Styling/MealPlanner.css';
 
 const MealPlanner = () => {
@@ -20,6 +22,15 @@ const MealPlanner = () => {
         } catch (error) {
             console.error('Error fetching recipes:', error);
         }
+    };
+
+    const handleAddNewRecipeClick = () => {
+        setNewRecipeName("Suggested Recipe Name"); // Set based on user input or other logic
+        setShowAddRecipe(true);
+    };
+
+    const closeAddRecipeModal = () => {
+        setShowAddRecipe(false);
     };
 
     const getRandomRecipeByCourse = (course) => {
