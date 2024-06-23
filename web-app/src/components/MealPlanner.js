@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Modal from 'react-modal';
-import AddRecipeForm from './AddRecipeForm';
+import AddRecipeForm from './Add_Recipe';
 import './Styling/MealPlanner.css';
 
 const MealPlanner = () => {
