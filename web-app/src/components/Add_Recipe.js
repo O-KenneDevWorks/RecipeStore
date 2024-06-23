@@ -183,7 +183,7 @@ const AddRecipeForm = () => {
 
             <label>
                 Cuisine:
-                <select name="cuisine" value={recipe.cuisine} onChange={handleChange} required>
+                <select name="cuisine" value={recipeData.cuisine} onChange={handleChange} required>
                     <option value="">Select Cuisine</option>
                     <option value="Italian">Italian</option>
                     <option value="Mexican">Mexican</option>

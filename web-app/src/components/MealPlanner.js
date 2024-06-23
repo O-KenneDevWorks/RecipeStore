@@ -84,6 +84,13 @@ const MealPlanner = () => {
         }
     };
 
+    const handleRemoveFromShoppingList = (index) => {
+        // Create a new array excluding the item at the provided index
+        const updatedShoppingList = shoppingList.filter((item, itemIndex) => itemIndex !== index);
+        // Update the state with the new shopping list
+        setShoppingList(updatedShoppingList);
+    };
+
     return (
         <div className="meal-planner">
             <h1>Weekly Meal Planner</h1>
@@ -101,6 +108,10 @@ const MealPlanner = () => {
                         <button onClick={() => regenerateMealComponent(index, 'side2')}>Randomize Side 2</button>
                     </p>
                     <button onClick={() => regenerateDayPlan(index)}>Randomize Day</button>
+                    <button onClick={handleAddNewRecipeClick}>Add New Recipe</button>
+                    <Modal isOpen={showAddRecipe} onRequestClose={closeAddRecipeModal}>
+                        <AddRecipeForm initialRecipeName={newRecipeName} onSuccess={closeAddRecipeModal} />
+                    </Modal>
                 </div>
             ))}
             <button onClick={createShoppingList}>Generate Shopping List</button>
@@ -117,6 +128,27 @@ const MealPlanner = () => {
             </div>
             <button onClick={saveMealPlan}>Save Meal Plan</button>
         </div>
+    );
+};
+
+const AddRecipeForm = ({ initialRecipeName, onSuccess }) => {
+    const [recipeName, setRecipeName] = useState(initialRecipeName);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            await axios.post('http://10.0.0.85:3000/recipes', { name: recipeName /* other recipe data */ });
+            onSuccess(); // Close the modal and refresh recipes
+        } catch (error) {
+            console.error('Error adding new recipe:', error);
+        }
+    };
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <input type="text" value={recipeName} onChange={e => setRecipeName(e.target.value)} />
+            <button type="submit">Save Recipe</button>
+        </form>
     );
 };
 

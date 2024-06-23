@@ -36,7 +36,8 @@ const ViewRecipes = () => {
 
     const filteredRecipes = recipes.filter(recipe => 
         (selectedTag ? recipe.tags.includes(selectedTag) : true) &&
-        (selectedCourse ? recipe.course === selectedCourse : true)
+        (selectedCourse ? recipe.course === selectedCourse : true) &&
+        (selectedCuisine ? recipe.course === selectedCuisine : true)
     );
 
     const uniqueTags = [...new Set(recipes.flatMap(recipe => recipe.tags))];
@@ -61,7 +62,7 @@ const ViewRecipes = () => {
                 ))}
             </select>
             <label>Filter by cuisine:</label>
-            <select onChange={handleCuisineChange} value={selectedCourse}>
+            <select onChange={handleCuisineChange} value={selectedCuisine}>
                 <option value="">All</option>
                 {uniqueCuisine.map((cuisine, index) => (
                     <option key={index} value={cuisine}>{cuisine}</option>
