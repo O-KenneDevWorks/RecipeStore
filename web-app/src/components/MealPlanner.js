@@ -12,8 +12,13 @@ const MealPlanner = () => {
     const [newRecipeName, setNewRecipeName] = useState("");
 
     useEffect(() => {
+        loadMealPlan();
+    }, []);
+    
+    useEffect(() => {
         fetchRecipes();
     }, []);
+
 
     const fetchRecipes = async () => {
         try {
@@ -89,9 +94,11 @@ const MealPlanner = () => {
 
     const saveMealPlan = async () => {
         try {
-            await axios.post('http://10.0.0.85:3000/mealPlans', { plan: weeklyPlan });
+            await axios.post('http://10.0.0.85:3000/mealPlan', { plan: weeklyPlan });
+            alert('Meal plan saved successfully!');
         } catch (error) {
             console.error('Error saving meal plan:', error);
+            alert('Failed to save meal plan.');
         }
     };
 

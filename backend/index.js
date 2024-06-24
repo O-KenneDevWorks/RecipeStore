@@ -114,13 +114,16 @@ app.get('/random-recipe', async (req, res) => {
     }
 });
 
-app.post('/mealPlans', async (req, res) => {
+app.post('/mealPlan', async (req, res) => {
+    const filter = {}; // Adjust this if you have specific criteria for the meal plan (e.g., by user or week)
+    const update = req.body;
+    const options = { upsert: true, new: true };
+
     try {
-        const mealPlan = new MealPlan(req.body);
-        await mealPlan.save();
+        const mealPlan = await MealPlan.findOneAndUpdate(filter, update, options);
         res.status(201).send(mealPlan);
     } catch (error) {
-        res.status(500).send('Error creating meal plan: ' + error.message);
+        res.status(500).send('Error saving meal plan: ' + error.message);
     }
 });
 
