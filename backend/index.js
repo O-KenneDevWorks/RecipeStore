@@ -114,7 +114,7 @@ app.get('/random-recipe', async (req, res) => {
     }
 });
 
-app.post('/mealPlan', async (req, res) => {
+app.post('/mealPlans', async (req, res) => {
     const filter = {}; // Adjust this if you have specific criteria for the meal plan (e.g., by user or week)
     const update = req.body;
     const options = { upsert: true, new: true };
