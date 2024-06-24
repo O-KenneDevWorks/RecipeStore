@@ -11,6 +11,11 @@ const MealPlanner = () => {
     const [showAddRecipe, setShowAddRecipe] = useState(false);
     const [newRecipeName, setNewRecipeName] = useState("");
 
+    const userId = '1234567890abcdef12345678'; // This should be dynamically set based on logged-in user info
+    const currentYear = new Date().getFullYear();
+    const currentWeek = getWeekNumber(new Date()); // Function to calculate the current week number
+
+
     useEffect(() => {
         loadMealPlan();
     }, []);
@@ -94,7 +99,12 @@ const MealPlanner = () => {
 
     const saveMealPlan = async () => {
         try {
-            await axios.post('http://10.0.0.85:3000/mealPlans', { plan: weeklyPlan });
+            await axios.post('http://localhost:3000/mealPlan', {
+                userId,
+                year: currentYear,
+                weekOfYear: currentWeek,
+                meals: mealPlan
+            });
             alert('Meal plan saved successfully!');
         } catch (error) {
             console.error('Error saving meal plan:', error);
@@ -104,11 +114,8 @@ const MealPlanner = () => {
 
     const loadMealPlan = async () => {
         try {
-            const response = await axios.get('http://10.0.0.85:3000/mealPlans');
-            if (response.data && response.data.plan) {
-                setWeeklyPlan(response.data.plan);
-            }
-            console.log(weeklyPlan)
+            const response = await axios.get(`http://localhost:3000/mealPlan/${userId}/${currentYear}/${currentWeek}`);
+            setMealPlan(response.data.meals);
         } catch (error) {
             console.error('Error loading meal plan:', error);
         }
@@ -163,3 +170,15 @@ const MealPlanner = () => {
 };
 
 export default MealPlanner;
+
+function getWeekNumber(d) {
+    // Implementation to determine the ISO week number
+    d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+    d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+    var yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+    var weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+    return weekNo;
+}
+
+const { year, weekOfYear } = getWeekNumber(new Date());
+console.log(year, weekOfYear);

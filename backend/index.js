@@ -5,10 +5,13 @@ const bodyParser = require('body-parser');
 
 const PantryItem = require('./models/PantryItem'); // Import the PantryItem model
 const Recipe = require('./models/Recipe'); // Import the Recipe model
-const MealPlan = require('./models/MealPlan');
+const MealPlan = require('./models/MealPlan'); // Import the Meal Plan Model
+const WeekMealPlan = require('./models/WeekMealPlan');  // Import the meal plan model
 
 const app = express();
 const port = 3000;
+
+const TEST_USER_ID = '1234567890abcdef12345678'; // Example ObjectId
 
 app.use(bodyParser.json({ limit: '10mb' }));
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
@@ -114,147 +117,36 @@ app.get('/random-recipe', async (req, res) => {
     }
 });
 
-app.post('/mealPlans', async (req, res) => {
-    const filter = {}; // Adjust this if you have specific criteria for the meal plan (e.g., by user or week)
-    const update = req.body;
-    const options = { upsert: true, new: true };
+
+// Save or update a meal plan
+app.post('/mealPlan', async (req, res) => {
+    const { meals, year, weekOfYear } = req.body;
+    const filter = { userId: TEST_USER_ID, year, weekOfYear }; // Filter includes userId, year, and weekOfYear
+    const update = { userId: TEST_USER_ID, meals, year, weekOfYear };
+    const options = { upsert: true, new: true, setDefaultsOnInsert: true };
 
     try {
-        const mealPlan = await MealPlan.findOneAndUpdate(filter, update, options);
+        const mealPlan = await WeekMealPlan.findOneAndUpdate(filter, update, options);
         res.status(201).send(mealPlan);
     } catch (error) {
         res.status(500).send('Error saving meal plan: ' + error.message);
     }
 });
 
-app.get('/mealPlans', async (req, res) => {
+// Retrieve a meal plan
+app.get('/mealPlan/:userId/:year/:weekOfYear', async (req, res) => {
     try {
-        const mealPlans = await MealPlan.find().populate('days.mainCourse days.sides');
-        res.status(200).send(mealPlans);
+        const { userId, year, weekOfYear } = req.params;
+        const mealPlan = await WeekMealPlan.findOne({ userId, year, weekOfYear });
+        if (!mealPlan) {
+            return res.status(404).send('Meal plan not found.');
+        }
+        res.send(mealPlan);
     } catch (error) {
-        res.status(500).send('Error fetching meal plans: ' + error.message);
+        res.status(500).send('Error fetching meal plan: ' + error.message);
     }
 });
  
 app.listen(port, '0.0.0.0', () => {
     console.log(`Server running at http://0.0.0.0:${port}`);
 });
-
-
-
-
-
-
-
-/* 
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const PantryItem = require('./models/PantryItem');
-
-const { MongoClient, ObjectId } = require('mongodb');
-
-const app = express();
-const port = 3000;
-
-const url = 'mongodb://localhost:27017'
-const dbName = 'recipeStore'
-
-app.use(cors());
-app.use(express.json());
-
-async function connectToMongoDB() {
-    try {
-        console.log('connecting to mongoDB...');
-        const client = await MongoClient.connect(url);
-        console.log('connected to mongoDB');
-        const db = client.db(dbName);
-        console.log(`connected to database: ${dbName}`);
-
-        // Routes
-
-        // Add new recipe
-        app.post('/recipes', async (req, res) => {
-            try {
-                const { name, ingredients, directions, prepTime, cookTime, totalTime, servings, yield} = req.body;
-
-                // Validate required fields
-                if (!name || !ingredients || !directions) {
-                    return res.status(400).json({ error: 'Name, Ingredients, and Directions are required fields'});
-                }
-                
-                // Create recipe object
-                const recipe = {
-                    name,
-                    ingredients,
-                    directions,
-                    prepTime: prepTime || '',
-                    cookTime: cookTime || '',
-                    totalTime: totalTime || '',
-                    servings: servings || '',
-                    yield: yield || ''
-                };
-                
-                // Insert recipe into MongoDB
-                const result = await db.collection('recipes').insertOne(recipe);
-
-                // Log the entire result object for debugging
-                // console.log('Insert result: ', result)
-
-                // Check the insert result
-                if (!result.acknowledged) {
-                    throw new Error('Failed to insert recipe')
-                }
-
-                // Fetch the inserted recipe by ID to return the response
-                const insertedRecipe = await db.collection('recipes').findOne({ _id: result.insertedId})
-
-                res.status(201).json(insertedRecipe);
-
-            } catch (error) {
-                console.error('Error inserting recipe: ', error);
-                res.status(500).send('Error inserting recipe');
-            }
-        });
-        
-        // Get a list of all recipes
-        app.get('/recipes', async (req, res) => {
-            try {
-                const collection = db.collection('recipes')
-                console.log('collections reference: ', collection)
-                const recipes = await collection.find().toArray();
-                res.status(200).json(recipes);
-            } catch (error) {
-                console.error('Error fetching recipes: ', error);
-                res.status(500).send('Error fetching recipes');
-            }
-        });
-
-        // Get single recipe
-        app.get('/recipes/:id', async (req, res) => {
-            try {
-                const collection = db.collection('recipes')
-                console.log('collections reference: ', collection)
-                const recipe = await collection.findOne({ _id: new ObjectId(req.params.id) });
-                res.status(200).json(recipe);
-            } catch (error) {
-                console.error('Error fetching recipe: ', error);
-                res.status(500).send('Error fetching recipe')
-            }
-        });
-
-        // Start the server
-        app.listen(port, '0.0.0.0', () => {
-            console.log(`Server running at http://0.0.0.0:${port}`);
-        });
-
-    } catch (err) {
-        console.error('failed to connect to mongo', err);
-    }
-};
-
-// Connect to MongoDB and start server
-connectToMongoDB();
-
-*/
