@@ -14,7 +14,7 @@ const MealPlanner = () => {
     useEffect(() => {
         loadMealPlan();
     }, []);
-    
+
     useEffect(() => {
         fetchRecipes();
     }, []);
@@ -102,6 +102,18 @@ const MealPlanner = () => {
         }
     };
 
+    const loadMealPlan = async () => {
+        try {
+            const response = await axios.get('http://10.0.0.85:3000/mealPlan');
+            if (response.data && response.data.plan) {
+                setWeeklyPlan(response.data.plan);
+            }
+            console.log(weeklyPlan)
+        } catch (error) {
+            console.error('Error loading meal plan:', error);
+        }
+    };
+
     const handleRemoveFromShoppingList = (index) => {
         // Create a new array excluding the item at the provided index
         const updatedShoppingList = shoppingList.filter((item, itemIndex) => itemIndex !== index);
@@ -145,6 +157,7 @@ const MealPlanner = () => {
                 </ul>
             </div>
             <button onClick={saveMealPlan}>Save Meal Plan</button>
+            <button onClick={loadMealPlan}>Load Meal Plan</button>
         </div>
     );
 };
