@@ -11,6 +11,7 @@ const MealPlanner = () => {
     const [showAddRecipe, setShowAddRecipe] = useState(false);
     const [newRecipeName, setNewRecipeName] = useState("");
 
+    const [mealPlan, setMealPlan] = useState([]);
     const userId = '1234567890abcdef12345678'; // This should be dynamically set based on logged-in user info
     const currentYear = new Date().getFullYear();
     const currentWeek = getWeekNumber(new Date()); // Function to calculate the current week number
@@ -18,7 +19,7 @@ const MealPlanner = () => {
 
     useEffect(() => {
         loadMealPlan();
-    }, []);
+    }, [loadMealPlan]);
 
     useEffect(() => {
         fetchRecipes();
@@ -112,14 +113,14 @@ const MealPlanner = () => {
         }
     };
 
-    const loadMealPlan = async () => {
+    const loadMealPlan = useCallback(async () => {
         try {
             const response = await axios.get(`http://localhost:3000/mealPlan/${userId}/${currentYear}/${currentWeek}`);
             setMealPlan(response.data.meals);
         } catch (error) {
             console.error('Error loading meal plan:', error);
         }
-    };
+    }, [userId, currentYear, currentWeek]);
 
     const handleRemoveFromShoppingList = (index) => {
         // Create a new array excluding the item at the provided index
