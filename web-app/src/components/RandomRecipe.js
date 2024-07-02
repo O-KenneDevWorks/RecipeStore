@@ -32,6 +32,8 @@ const RandomRecipe = () => {
                     <li>Total Time: {recipe.totalTime}</li>
                     <li>Servings: {recipe.servings}</li>
                     <li>Yield: {recipe.yield}</li>
+                    <li>Course: {recipe.course}</li>
+                    <li>Cuisine: {recipe.cuisine}</li>
                 </ul>
                 <h2>Ingredients</h2>
                 <ul>
