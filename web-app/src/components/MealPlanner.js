@@ -16,16 +16,6 @@ const MealPlanner = () => {
     const currentYear = new Date().getFullYear();
     const currentWeek = getWeekNumber(new Date()); // Function to calculate the current week number
 
-
-    useEffect(() => {
-        loadMealPlan();
-    }, [loadMealPlan]);
-
-    useEffect(() => {
-        fetchRecipes();
-    }, []);
-
-
     const fetchRecipes = async () => {
         try {
             const response = await axios.get('http://10.0.0.85:3000/recipes');
@@ -128,6 +118,14 @@ const MealPlanner = () => {
         // Update the state with the new shopping list
         setShoppingList(updatedShoppingList);
     };
+
+    useEffect(() => {
+        loadMealPlan();
+    }, [loadMealPlan]);
+
+    useEffect(() => {
+        fetchRecipes();
+    }, []);
 
     return (
         <div className="meal-planner">
