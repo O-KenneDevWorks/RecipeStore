@@ -87,6 +87,34 @@ const EditRecipe = () => {
                     <input type="text" name="name" value={recipe.name} onChange={handleChange} required />
                 </label>
                 <label>
+                    Prep Time:
+                    <input type="text" name="prepTime" value={recipe.prepTime} onChange={handleChange} />
+                </label>
+                <label>
+                    Cook Time:
+                    <input type="text" name="cookTime" value={recipe.cookTime} onChange={handleChange} />
+                </label>
+                <label>
+                    Total Time:
+                    <input type="text" name="totalTime" value={recipe.totalTime} onChange={handleChange} />
+                </label>
+                <label>
+                    Servings:
+                    <input type="number" name="servings" value={recipe.servings} onChange={handleChange} />
+                </label>
+                <label>
+                    Yield:
+                    <input type="text" name="yield" value={recipe.yield} onChange={handleChange} />
+                </label>
+                <label>
+                    Image:
+                    <input type="text" name="image" value={recipe.image} onChange={handleChange} />
+                </label>
+                <label>
+                    Tags:
+                    <input type="text" value={recipe.tags.join(', ')} onChange={handleTagChange} />
+                </label>
+                <label>
                     Course:
                     <select name="course" value={recipe.course} onChange={handleChange} required>
                         <option value="">Select Course</option>
@@ -99,6 +127,21 @@ const EditRecipe = () => {
                         <option value="Breakfast">Breakfast</option>
                     </select>
                 </label>
+                <label>
+                Cuisine:
+                <select name="cuisine" value={recipeData.cuisine} onChange={handleChange} required>
+                    <option value="">Select Cuisine</option>
+                    <option value="Italian">Italian</option>
+                    <option value="Mexican">Mexican</option>
+                    <option value="Chinese">Chinese</option>
+                    <option value="Indian">Indian</option>
+                    <option value="French">French</option>
+                    <option value="Japanese">Japanese</option>
+                    <option value="American">American</option>
+                    <option value="Thai">Thai</option>
+                </select>
+            </label>
+
                 <h2>Ingredients</h2>
                 {recipe.ingredients.map((ingredient, index) => (
                     <div className="ingredient" key={index}>
@@ -129,34 +172,7 @@ const EditRecipe = () => {
                     </div>
                 ))}
                 <button type="button" onClick={addDirection}>Add Direction</button>
-                <label>
-                    Prep Time:
-                    <input type="text" name="prepTime" value={recipe.prepTime} onChange={handleChange} />
-                </label>
-                <label>
-                    Cook Time:
-                    <input type="text" name="cookTime" value={recipe.cookTime} onChange={handleChange} />
-                </label>
-                <label>
-                    Total Time:
-                    <input type="text" name="totalTime" value={recipe.totalTime} onChange={handleChange} />
-                </label>
-                <label>
-                    Servings:
-                    <input type="number" name="servings" value={recipe.servings} onChange={handleChange} />
-                </label>
-                <label>
-                    Yield:
-                    <input type="text" name="yield" value={recipe.yield} onChange={handleChange} />
-                </label>
-                <label>
-                    Image:
-                    <input type="text" name="image" value={recipe.image} onChange={handleChange} />
-                </label>
-                <label>
-                    Tags:
-                    <input type="text" value={recipe.tags.join(', ')} onChange={handleTagChange} />
-                </label>
+                
                 <div className="buttons">
                     <button type="submit">Update Recipe</button>
                 </div>
