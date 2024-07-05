@@ -2,6 +2,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const passport = require('passport');
+
+const users = require('./routes/users');
 
 const PantryItem = require('./models/PantryItem'); // Import the PantryItem model
 const Recipe = require('./models/Recipe'); // Import the Recipe model
@@ -18,12 +21,30 @@ app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
  
 app.use(cors());
 app.use(bodyParser.json());
+
+// DB Config
+const db = require('./config/keys').mongoURI;
  
 mongoose.connect('mongodb://10.0.0.85:27017/recipeStore', {
 
 })
 .then(() => console.log('Connected to MongoDB'))
 .catch(err => console.error('Failed to connect to MongoDB', err));
+
+// Passport middleware
+app.use(passport.initialize());
+
+// Passport config
+require('./config/passport')(passport);
+
+// Routes
+app.use('/api/users', users);
+
+// HTTPS server setup
+const httpsOptions = {
+    key: fs.readFileSync(path.join(__dirname, 'server.key')),
+    cert: fs.readFileSync(path.join(__dirname, 'server.cert'))
+};
  
 app.get('/', (req, res) => {
     res.send('Server running at http://10.0.0.85:3000');
@@ -145,6 +166,10 @@ app.get('/mealPlan/:userId/:year/:weekOfYear', async (req, res) => {
     } catch (error) {
         res.status(500).send('Error fetching meal plan: ' + error.message);
     }
+});
+
+https.createServer(httpsOptions, app).listen(5000, () => {
+    console.log('HTTPS Server running on port 5000');
 });
  
 app.listen(port, '0.0.0.0', () => {
