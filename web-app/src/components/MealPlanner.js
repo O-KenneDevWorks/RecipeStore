@@ -1,183 +1,70 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Modal from 'react-modal';
-import AddRecipeForm from './Add_Recipe';
-import './Styling/MealPlanner.css';
 
-const MealPlanner = () => {
+const MealPlanner = ({ userId }) => {
+    const [weekPlan, setWeekPlan] = useState(Array(7).fill([]));
     const [recipes, setRecipes] = useState([]);
-    const [weeklyPlan, setWeeklyPlan] = useState(Array(7).fill({ main: null, sides: [null, null] }));
-    const [shoppingList, setShoppingList] = useState([]);
-    const [showAddRecipe, setShowAddRecipe] = useState(false);
-    const [newRecipeName, setNewRecipeName] = useState("");
+    const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
-    const [mealPlan, setMealPlan] = useState([]);
-    const userId = '1234567890abcdef12345678'; // This should be dynamically set based on logged-in user info
-    const currentYear = new Date().getFullYear();
-    const currentWeek = getWeekNumber(new Date()); // Function to calculate the current week number
-
-    const fetchRecipes = async () => {
-        try {
-            const response = await axios.get('http://10.0.0.85:3000/recipes');
+    useEffect(() => {
+        // Fetch recipes at component mount
+        const fetchRecipes = async () => {
+            const response = await axios.get(`/api/recipes/${userId}`);
             setRecipes(response.data);
-        } catch (error) {
-            console.error('Error fetching recipes:', error);
-        }
-    };
-
-    const handleAddNewRecipeClick = () => {
-        setNewRecipeName("Suggested Recipe Name"); // Set based on user input or other logic
-        setShowAddRecipe(true);
-    };
-
-    const closeAddRecipeModal = () => {
-        setShowAddRecipe(false);
-    };
-
-    const getRandomRecipeByCourse = (course) => {
-        const filteredRecipes = recipes.filter(recipe => recipe.course === course);
-        return filteredRecipes.length > 0 ? filteredRecipes[Math.floor(Math.random() * filteredRecipes.length)] : null;
-    };
-
-    const handleSetRecipe = (dayIndex, type, recipeId) => {
-        const newPlan = [...weeklyPlan];
-        const recipe = recipes.find(r => r._id === recipeId) || { name: newRecipeName };
-        if (type === 'main') {
-            newPlan[dayIndex].main = recipe;
-        } else {
-            const sideIndex = type === 'side1' ? 0 : 1;
-            newPlan[dayIndex].sides[sideIndex] = recipe;
-        }
-        setWeeklyPlan(newPlan);
-    };
-
-    const regenerateDayPlan = (dayIndex) => {
-        const newPlan = [...weeklyPlan];
-        newPlan[dayIndex] = {
-            main: getRandomRecipeByCourse('Main Course'),
-            sides: [getRandomRecipeByCourse('Side'), getRandomRecipeByCourse('Side')]
         };
-        setWeeklyPlan(newPlan);
-    };
-
-    const regenerateMealComponent = (dayIndex, type) => {
-        const recipe = getRandomRecipeByCourse(type.includes('main') ? 'Main Course' : 'Side');
-        handleSetRecipe(dayIndex, type, recipe ? recipe._id : null);
-    };
-
-    const generateWeeklyPlan = () => {
-        const newPlan = weeklyPlan.map(() => ({
-            main: getRandomRecipeByCourse('Main Course'),
-            sides: [getRandomRecipeByCourse('Side'), getRandomRecipeByCourse('Side')]
-        }));
-        setWeeklyPlan(newPlan);
-    };
-
-    const createShoppingList = () => {
-        const list = {};
-        weeklyPlan.forEach(day => {
-            [day.main, ...day.sides].forEach(recipe => {
-                if (recipe) {
-                    recipe.ingredients.forEach(ingredient => {
-                        const key = `${ingredient.name}-${ingredient.unit}`;
-                        list[key] = list[key] ? { ...ingredient, amount: list[key].amount + ingredient.amount } : { ...ingredient };
-                    });
-                }
-            });
-        });
-        setShoppingList(Object.values(list));
-    };
-
-    const saveMealPlan = async () => {
-        try {
-            await axios.post('http://localhost:3000/mealPlan', {
-                userId,
-                year: currentYear,
-                weekOfYear: currentWeek,
-                meals: mealPlan
-            });
-            alert('Meal plan saved successfully!');
-        } catch (error) {
-            console.error('Error saving meal plan:', error);
-            alert('Failed to save meal plan.');
-        }
-    };
-
-    const loadMealPlan = useCallback(async () => {
-        try {
-            const response = await axios.get(`http://localhost:3000/mealPlan/${userId}/${currentYear}/${currentWeek}`);
-            setMealPlan(response.data.meals);
-        } catch (error) {
-            console.error('Error loading meal plan:', error);
-        }
-    }, [userId, currentYear, currentWeek]);
-
-    const handleRemoveFromShoppingList = (index) => {
-        // Create a new array excluding the item at the provided index
-        const updatedShoppingList = shoppingList.filter((item, itemIndex) => itemIndex !== index);
-        // Update the state with the new shopping list
-        setShoppingList(updatedShoppingList);
-    };
-
-    useEffect(() => {
-        loadMealPlan();
-    }, [loadMealPlan]);
-
-    useEffect(() => {
         fetchRecipes();
-    }, []);
+    }, [userId]);
+
+    const handleAddRecipe = (dayIndex, recipeId) => {
+        const updatedDay = [...weekPlan[dayIndex], recipeId];
+        const updatedWeekPlan = [...weekPlan];
+        updatedWeekPlan[dayIndex] = updatedDay;
+        setWeekPlan(updatedWeekPlan);
+    };
+
+    const handleRemoveRecipe = (dayIndex, recipeIndex) => {
+        const updatedDay = [...weekPlan[dayIndex]];
+        updatedDay.splice(recipeIndex, 1);
+        const updatedWeekPlan = [...weekPlan];
+        updatedWeekPlan[dayIndex] = updatedDay;
+        setWeekPlan(updatedWeekPlan);
+    };
+
+    const handleRandomRecipe = (dayIndex) => {
+        const randomRecipe = recipes[Math.floor(Math.random() * recipes.length)];
+        handleAddRecipe(dayIndex, randomRecipe._id);
+    };
 
     return (
         <div className="meal-planner">
-            <h1>Weekly Meal Planner</h1>
-            <button onClick={generateWeeklyPlan}>Generate Whole Week</button>
-            {weeklyPlan.map((day, index) => (
+            <h1>Meal Planner</h1>
+            {daysOfWeek.map((day, index) => (
                 <div key={index} className="day-plan">
-                    <h2>Day {index + 1}</h2>
-                    <p>Main Course: {day.main ? day.main.name : 'None'}
-                        <button onClick={() => regenerateMealComponent(index, 'main')}>Randomize Main</button>
-                    </p>
-                    <p>Side 1: {day.sides[0] ? day.sides[0].name : 'None'}
-                        <button onClick={() => regenerateMealComponent(index, 'side1')}>Randomize Side 1</button>
-                    </p>
-                    <p>Side 2: {day.sides[1] ? day.sides[1].name : 'None'}
-                        <button onClick={() => regenerateMealComponent(index, 'side2')}>Randomize Side 2</button>
-                    </p>
-                    <button onClick={() => regenerateDayPlan(index)}>Randomize Day</button>
-                    <button onClick={handleAddNewRecipeClick}>Add New Recipe</button>
-                    <Modal isOpen={showAddRecipe} onRequestClose={closeAddRecipeModal}>
-                        <AddRecipeForm initialRecipeName={newRecipeName} onSuccess={closeAddRecipeModal} />
-                    </Modal>
+                    <h2>{day}</h2>
+                    <ul>
+                        {weekPlan[index].map((recipeId, idx) => {
+                            const recipe = recipes.find(r => r._id === recipeId);
+                            return (
+                                <li key={idx}>
+                                    {recipe ? recipe.name : 'Recipe not found'}
+                                    <button onClick={() => handleRemoveRecipe(index, idx)}>Remove</button>
+                                </li>
+                            );
+                        })}
+                    </ul>
+                    <div>
+                        <button onClick={() => handleRandomRecipe(index)}>Add Random Recipe</button>
+                        <select onChange={(e) => handleAddRecipe(index, e.target.value)} value="">
+                            <option value="">Select a Recipe</option>
+                            {recipes.map(recipe => (
+                                <option key={recipe._id} value={recipe._id}>{recipe.name}</option>
+                            ))}
+                        </select>
+                    </div>
                 </div>
             ))}
-            <button onClick={createShoppingList}>Generate Shopping List</button>
-            <div className="shopping-list">
-                <h2>Shopping List</h2>
-                <ul>
-                    {shoppingList.map((item, index) => (
-                        <li key={index}>
-                            {item.amount} {item.unit} {item.name}
-                            <button onClick={() => handleRemoveFromShoppingList(index)}>Remove</button>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-            <button onClick={saveMealPlan}>Save Meal Plan</button>
-            <button onClick={loadMealPlan}>Load Meal Plan</button>
         </div>
     );
 };
 
 export default MealPlanner;
-
-function getWeekNumber(d) {
-    // Implementation to determine the ISO week number
-    d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
-    d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
-    var yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-    var weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
-    return weekNo;
-}
-
-const { year, weekOfYear } = getWeekNumber(new Date());
-console.log(year, weekOfYear);
