@@ -13,7 +13,8 @@ const MealPlan = require('./models/MealPlan'); // Import the Meal Plan Model
 const WeekMealPlan = require('./models/WeekMealPlan');  // Import the meal plan model
 
 const app = express();
-const port = 3000;
+// const port = 3000;
+const port = process.env.PORT || 3000;
 
 const TEST_USER_ID = '1234567890abcdef12345678'; // Example ObjectId
 
@@ -169,10 +170,10 @@ app.get('/mealPlan/:userId/:year/:weekOfYear', async (req, res) => {
     }
 });
 
-https.createServer(httpsOptions, app).listen(5000, () => {
-    console.log('HTTPS Server running on port 5000');
+https.createServer(httpsOptions, app).listen(3000, () => {
+    console.log('HTTPS Server running on port 3000');
 });
  
-app.listen(port, '0.0.0.0', () => {
-    console.log(`Server running at http://0.0.0.0:${port}`);
-});
+// app.listen(port, '0.0.0.0', () => {
+//     console.log(`Server running at http://0.0.0.0:${port}`);
+// });
