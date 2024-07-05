@@ -9,7 +9,7 @@ const MealPlanner = ({ userId }) => {
     useEffect(() => {
         // Fetch recipes at component mount
         const fetchRecipes = async () => {
-            const response = await axios.get(`/api/recipes/${userId}`);
+            const response = await axios.get(`/recipes/${userId}`);
             setRecipes(response.data);
         };
         fetchRecipes();
