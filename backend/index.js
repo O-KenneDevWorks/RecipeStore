@@ -23,13 +23,13 @@ const TEST_USER_ID = '1234567890abcdef12345678'; // Example ObjectId
 
 app.use(bodyParser.json({ limit: '10mb' }));
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
- 
+
 app.use(cors());
 app.use(bodyParser.json());
 
 // DB Config
 const db = require('./config/keys').mongoURI;
- 
+
 mongoose.connect('mongodb://10.0.0.85:27017/recipeStore', {
 
 })
@@ -50,11 +50,11 @@ const httpsOptions = {
     key: fs.readFileSync(path.join(__dirname, 'server.key')),
     cert: fs.readFileSync(path.join(__dirname, 'server.cert'))
 };
- 
+
 app.get('/', (req, res) => {
     res.send('Server running at http://10.0.0.85:3000');
 });
- 
+
 // Route to add a pantry item
 app.post('/pantry', async (req, res) => {
     try {
@@ -65,7 +65,7 @@ app.post('/pantry', async (req, res) => {
         res.status(400).send('Error adding pantry item: ' + error.message);
     }
 });
- 
+
 // Route to get all pantry items
 app.get('/pantry', async (req, res) => {
     try {
@@ -75,7 +75,7 @@ app.get('/pantry', async (req, res) => {
         res.status(500).send('Error fetching pantry items: ' + error.message);
     }
 });
- 
+
 // Route to add a recipe
 app.post('/recipes', async (req, res) => {
     try {
@@ -86,7 +86,7 @@ app.post('/recipes', async (req, res) => {
         res.status(400).send('Error adding recipe: ' + error.message);
     }
 });
- 
+
 // Route to get all recipes
 app.get('/recipes', async (req, res) => {
     try {
@@ -96,7 +96,18 @@ app.get('/recipes', async (req, res) => {
         res.status(500).send('Error fetching recipes: ' + error.message);
     }
 });
- 
+
+// Route to get recipe previews for the homepage
+app.get('/recipes/previews', async (req, res) => {
+    try {
+        // Select only the fields needed for the recipe previews: name, imageUrl, and _id
+        const recipes = await Recipe.find({}, 'name imageUrl _id');
+        res.status(200).json(recipes);
+    } catch (error) {
+        res.status(500).send('Error fetching recipe previews: ' + error.message);
+    }
+});
+
 // Route to get a specific recipe by ID
 app.get('/recipes/:id', async (req, res) => {
     try {

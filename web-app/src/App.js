@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom'
+import axios from 'axios';
 import AddRecipeForm from './components/Add_Recipe';
 import ViewRecipes from './components/View_Recipes';
 import RecipeDetail from './components/RecipeDetail';
@@ -13,9 +14,33 @@ import './components/Styling/Global.css'
 import './components/Styling/theme.css'
 
 const Home = () => {
+    const [recipes, setRecipes] = useState([]);
+
+    useEffect(() => {
+        const fetchRecipes = async () => {
+            try {
+                const response = await axios.get('/api/recipes/previews');  // Updated endpoint
+                setRecipes(response.data);  // Set the fetched recipes to state
+            } catch (error) {
+                console.error('Failed to fetch recipe previews:', error);
+            }
+        };
+
+        fetchRecipes();
+    }, []);
+
     return (
-        <div className="home">
+        <div className="recipe-grid">
             <h1>The Recipe Store</h1>
+            <H2>Your Personal Digital Cookbook</H2>
+            {recipes.map((recipe) => (
+                <div key={recipe._id} className="recipe-preview">
+                    <Link to={`/recipe/${recipe._id}`}>
+                        <img src={recipe.imageUrl} alt={recipe.name} style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
+                        <h3>{recipe.name}</h3>
+                    </Link>
+                </div>
+            ))}
         </div>
     );
 };
