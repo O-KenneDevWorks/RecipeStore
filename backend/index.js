@@ -101,7 +101,7 @@ app.get('/recipes', async (req, res) => {
 app.get('/recipes/previews', async (req, res) => {
     try {
         // Select only the fields needed for the recipe previews: name, imageUrl, and _id
-        const recipes = await Recipe.find({}, 'name imageUrl _id');
+        const recipes = await Recipe.find({}, 'name image _id');
         res.status(200).json(recipes);
     } catch (error) {
         res.status(500).send('Error fetching recipe previews: ' + error.message);
