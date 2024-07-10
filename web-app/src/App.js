@@ -32,7 +32,7 @@ const Home = () => {
     return (
         <div className="recipe-grid">
             <h1>The Recipe Store</h1>
-            <H2>Your Personal Digital Cookbook</H2>
+            <h2>Your Personal Digital Cookbook</h2>
             {recipes.map((recipe) => (
                 <div key={recipe._id} className="recipe-preview">
                     <Link to={`/recipe/${recipe._id}`}>
