@@ -98,7 +98,7 @@ app.get('/recipes', async (req, res) => {
 });
 
 // Route to get recipe previews for the homepage
-app.get('/recipes/previews', async (req, res) => {
+app.get('/api/recipes/previews', async (req, res) => {
     try {
         // Select only the fields needed for the recipe previews: name, imageUrl, and _id
         const recipes = await Recipe.find({}, 'name image _id');
