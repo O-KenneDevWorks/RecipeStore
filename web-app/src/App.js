@@ -19,7 +19,7 @@ const Home = () => {
     useEffect(() => {
         const fetchRecipes = async () => {
             try {
-                const response = await axios.get('/recipes/previews');  // Updated endpoint
+                const response = await axios.get('http://10.0.0.85:3000/recipes/previews');  // Updated endpoint
                 setRecipes(response.data);  // Set the fetched recipes to state
             } catch (error) {
                 console.error('Failed to fetch recipe previews:', error);
