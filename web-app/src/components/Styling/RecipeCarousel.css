@@ -1,50 +1,68 @@
+/* Base styling for the carousel container */
 .carousel-container {
     overflow: hidden;
-    white-space: nowrap;
     position: relative;
     width: 100%;
-    height: 250px; /* Adjust based on your design */
+    padding: 20px 0;  /* Adds padding around the carousel for better spacing */
+    background-color: #f8f9fa; /* Light background for the carousel area */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow for depth */
 }
 
+/* Styling for the track that holds the items */
 .carousel-track {
     display: flex;
     flex-wrap: nowrap;
     animation: scroll-left 30s linear infinite;
 }
 
+/* Individual item styling */
 .carousel-item {
-    display: inline-block;
-    width: 200px; /* Ensure square by making height equal */
-    height: 200px;
-    margin-right: 20px;
-    position: relative;
     flex: 0 0 auto;
+    width: 200px; /* Fixed width for each item */
+    margin: 0 15px; /* Space between items */
+    overflow: hidden; /* Ensures no overflow of content */
+    border-radius: 10px; /* Rounded corners for a softer look */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15); /* Shadow for each item for 3D effect */
+    transition: transform 0.3s ease; /* Smooth transition for hover effects */
 }
 
+/* Styling for images within each item */
 .carousel-item img {
     width: 100%;
-    height: 100%;
-    object-fit: cover; /* Ensures the image covers the square completely */
-    vertical-align: middle;
+    height: 150px;
+    object-fit: cover; /* Ensures images cover the area properly */
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px; /* Rounded corners for the top of the image */
 }
 
+/* Styling for titles within each item */
 .carousel-item h3 {
-    white-space: nowrap;       /* Keeps the text on one line */
-    overflow: hidden;          /*  Prevents text from flowing out of the container */
-    text-overflow: ellipsis;   /*  Adds an ellipsis (...) if the text overflows */
-    margin-top: 10px;          /*  Adds space above the title */
+    padding: 8px;
+    text-align: center;
+    background-color: white;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px; /* Rounded corners for the bottom of the item */
+    color: #333; /* Darker text for better readability */
+    font-size: 16px;
+    margin: 0; /* Remove default margin */
 }
 
+.carousel-item:hover {
+    transform: scale(1.05); /* Slightly enlarge items on hover */
+    cursor: pointer;
+}
 
 @keyframes scroll-left {
-    /* 0% {
-        transform: translateX(0);
-    }
-    100% {
-        transform: translateX(calc(-250px * 5)); // Adjust based on total width
-    } 
-    */
     from { transform: translateX(0); }
-    to { transform: translateX(-100%); } /* Ensure this matches the actual content width */
+    to { transform: translateX(-100%); } /* Ensure this matches the actual content width for seamless looping */
+}
 
+@media (max-width: 768px) {
+    .carousel-item {
+        width: 150px; /* Smaller width for smaller screens */
+    }
+
+    .carousel-item img {
+        height: 100px; /* Smaller height for images on smaller screens */
+    }
 }
