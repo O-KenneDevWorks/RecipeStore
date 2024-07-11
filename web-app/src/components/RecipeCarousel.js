@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import './components/Styling/RecipeCarousel.css';  // Assuming you have the CSS in a separate file
+import './Styling/RecipeCarousel.css';  // Assuming you have the CSS in a separate file
 
 const RecipeCarousel = () => {
     const [recipes, setRecipes] = useState([]);
