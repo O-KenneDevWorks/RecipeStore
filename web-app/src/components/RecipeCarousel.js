@@ -23,7 +23,7 @@ const RecipeCarousel = () => {
         <div className="carousel-container">
             <div className="carousel-track">
                 {recipes.map((recipe) => (
-                    <Link key={recipe._id} to={`/recipe/${recipe._id}`} className="carousel-item">
+                    <Link key={recipe._id} to={`http://10.0.0.85:3000/recipe/${recipe._id}`} className="carousel-item">
                         <img src={recipe.image} alt={recipe.name} />
                         <h3>{recipe.name}</h3>
                     </Link>
