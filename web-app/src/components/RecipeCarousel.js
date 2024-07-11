@@ -8,7 +8,7 @@ const RecipeCarousel = () => {
     useEffect(() => {
         const fetchRecipes = async () => {
             try {
-                const response = await axios.get('/api/recipes/previews');  // Make sure this endpoint is correctly set up
+                const response = await axios.get('http://10.0.0.85:3000/recipes/previews');  // Make sure this endpoint is correctly set up
                 setRecipes(response.data);
             } catch (error) {
                 console.error('Failed to fetch recipes:', error);
