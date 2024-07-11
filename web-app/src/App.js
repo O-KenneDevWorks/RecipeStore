@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom'
-import axios from 'axios';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import AddRecipeForm from './components/Add_Recipe';
 import ViewRecipes from './components/View_Recipes';
 import RecipeDetail from './components/RecipeDetail';
@@ -10,8 +9,9 @@ import RandomRecipe from './components/RandomRecipe'
 import MealPlanner from './components/MealPlanner';
 import EditRecipeForm from './components/EditRecipeForm';
 import NavBar from './components/NavBar';
-import './components/Styling/Global.css'
-import './components/Styling/theme.css'
+import Home from './components/Home';
+import './components/Styling/Global.css';
+import './components/Styling/theme.css';
 
 // const Home = () => {
 //     const [recipes, setRecipes] = useState([]);
