@@ -13,37 +13,37 @@ import NavBar from './components/NavBar';
 import './components/Styling/Global.css'
 import './components/Styling/theme.css'
 
-const Home = () => {
-    const [recipes, setRecipes] = useState([]);
+// const Home = () => {
+//     const [recipes, setRecipes] = useState([]);
 
-    useEffect(() => {
-        const fetchRecipes = async () => {
-            try {
-                const response = await axios.get('http://10.0.0.85:3000/recipes/previews');  // Updated endpoint
-                setRecipes(response.data);  // Set the fetched recipes to state
-            } catch (error) {
-                console.error('Failed to fetch recipe previews:', error);
-            }
-        };
+//     useEffect(() => {
+//         const fetchRecipes = async () => {
+//             try {
+//                 const response = await axios.get('http://10.0.0.85:3000/recipes/previews');  // Updated endpoint
+//                 setRecipes(response.data);  // Set the fetched recipes to state
+//             } catch (error) {
+//                 console.error('Failed to fetch recipe previews:', error);
+//             }
+//         };
 
-        fetchRecipes();
-    }, []);
+//         fetchRecipes();
+//     }, []);
 
-    return (
-        <div className="recipe-grid">
-            <h1>The Recipe Store</h1>
-            <h2>Your Personal Digital Cookbook</h2>
-            {recipes.map((recipe) => (
-                <div key={recipe._id} className="recipe-preview">
-                    <Link to={`/recipe/${recipe._id}`}>
-                        <img src={recipe.image} alt={recipe.name} style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
-                        <h3>{recipe.name}</h3>
-                    </Link>
-                </div>
-            ))}
-        </div>
-    );
-};
+//     return (
+//         <div className="recipe-grid">
+//             <h1>The Recipe Store</h1>
+//             <h2>Your Personal Digital Cookbook</h2>
+//             {recipes.map((recipe) => (
+//                 <div key={recipe._id} className="recipe-preview">
+//                     <Link to={`/recipe/${recipe._id}`}>
+//                         <img src={recipe.image} alt={recipe.name} style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
+//                         <h3>{recipe.name}</h3>
+//                     </Link>
+//                 </div>
+//             ))}
+//         </div>
+//     );
+// };
 
 const App = () => {
     const [theme, setTheme] = useState('light');
