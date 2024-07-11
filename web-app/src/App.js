@@ -36,7 +36,7 @@ const Home = () => {
             {recipes.map((recipe) => (
                 <div key={recipe._id} className="recipe-preview">
                     <Link to={`/recipe/${recipe._id}`}>
-                        <img src={recipe.imageUrl} alt={recipe.name} style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
+                        <img src={recipe.image} alt={recipe.name} style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
                         <h3>{recipe.name}</h3>
                     </Link>
                 </div>
