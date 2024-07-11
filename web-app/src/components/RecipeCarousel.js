@@ -28,7 +28,7 @@ const RecipeCarousel = () => {
                 {recipes.map((recipe) => (
                     <Link key={recipe._id} to={`http://10.0.0.85:3000/recipe/${recipe._id}`} className="carousel-item">
                         <img
-                            src={recipe.image}
+                            src={recipe.image || placeholderImg}
                             alt={recipe.name}
                             onError={(e) => {
                                 e.target.onerror = null; // Prevents recursion if the placeholder image also fails
