@@ -1,22 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import RecipeCarousel from './RecipeCarousel';  // Make sure the path is correct
 
 
 const Home = () => {
     const [recipes, setRecipes] = useState([]);
 
-    useEffect(() => {
-        const fetchRecipes = async () => {
-            try {
-                const response = await axios.get('http://10.0.0.85:3000/recipes/previews');  // Updated endpoint
-                setRecipes(response.data);  // Set the fetched recipes to state
-            } catch (error) {
-                console.error('Failed to fetch recipe previews:', error);
-            }
-        };
+    // useEffect(() => {
+    //     const fetchRecipes = async () => {
+    //         try {
+    //             const response = await axios.get('http://10.0.0.85:3000/recipes/previews');  // Updated endpoint
+    //             setRecipes(response.data);  // Set the fetched recipes to state
+    //         } catch (error) {
+    //             console.error('Failed to fetch recipe previews:', error);
+    //         }
+    //     };
 
-        fetchRecipes();
-    }, []);
+    //     fetchRecipes();
+    // }, []);
 
     // return (
     //     <div className="carousel-container">
