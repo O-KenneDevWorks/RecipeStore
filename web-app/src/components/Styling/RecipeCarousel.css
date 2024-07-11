@@ -26,6 +26,14 @@
     vertical-align: middle;
 }
 
+.carousel-item h3 {
+    white-space: nowrap;       /* Keeps the text on one line */
+    overflow: hidden;          /*  Prevents text from flowing out of the container */
+    text-overflow: ellipsis;   /*  Adds an ellipsis (...) if the text overflows */
+    margin-top: 10px;          /*  Adds space above the title */
+}
+
+
 @keyframes scroll-left {
     0% {
         transform: translateX(0);
