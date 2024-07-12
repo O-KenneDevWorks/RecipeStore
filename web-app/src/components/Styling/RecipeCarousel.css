@@ -15,38 +15,50 @@
     animation: scroll-left 30s linear infinite;
 }
 
+/* Individual item styling */
 .carousel-item {
-    width: 100%; /* Adjust based on the desired width per slide */
-    padding-top: 100%; /* This makes the item square */
+    flex: 0 0 auto;
+    width: 100%; /* Adjust based on the number of slides you show at a time */
+    padding-top: 100%; /* Same as width for square */    
+    margin: 0 15px; /* Space between items */
     position: relative;
-    overflow: hidden;
+    overflow: hidden; /* Ensures no overflow of content */
+    border-radius: 10px; /* Rounded corners for a softer look */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15); /* Shadow for each item for 3D effect */
+    transition: transform 0.3s ease; /* Smooth transition for hover effects */
 }
 
 .carousel-item-inner {
     position: absolute;
     top: 0;
     left: 0;
-    right: 0;
     bottom: 0;
-    display: flex;
-    flex-direction: column; /* Stacks content vertically */
-    align-items: center; /* Center content horizontally */
+    right: 0;
 }
 
+/* Styling for images within each item */
 .carousel-item img {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: auto; /* Adjust height automatically to maintain aspect ratio */
-    flex-shrink: 0; /* Prevents the image from shrinking */
-    z-index: 1; 
+    height: 75%;;
+    object-fit: cover; /* Ensures images cover the area properly */
+    transition: opacity 0.5s ease-in-out;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px; /* Rounded corners for the top of the image */
 }
 
+/* Styling for titles within each item */
 .carousel-item h3 {
-    width: 100%; /* Ensure the title takes full width */
-    text-align: center; /* Center align the text */
-    margin-top: 10px; /* Space between image and text */
-    background-color: #fff; /* Optional: adds background color to text for better readability */
-    padding: 5px 0; /* Padding around text */
-    z-index: 2;
+    padding: 8px;
+    text-align: center;
+    background-color: white;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px; /* Rounded corners for the bottom of the item */
+    color: #333; /* Darker text for better readability */
+    font-size: 16px;
+    margin: 0; /* Remove default margin */
 }
 
 .carousel-item:hover {
