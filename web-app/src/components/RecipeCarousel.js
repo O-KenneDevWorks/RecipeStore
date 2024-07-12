@@ -31,7 +31,7 @@ const RecipeCarousel = () => {
         slidesToShow: 4,
         slidesToScroll: 1,
         autoplay: true,
-        autoplaySpeed: 0,
+        autoplaySpeed: 100,
         cssEase: 'linear',
         responsive: [
             {
@@ -48,15 +48,15 @@ const RecipeCarousel = () => {
         return <div>Loading...</div>;
     }
 
-    const placeholderImg = '../No_Photo.jpg'; // Placeholder image URL
-
     return (
         <div className="carousel-container">
             <Slider {...settings}>
                 {recipes.map((recipe) => (
                     <div key={recipe._id} className="carousel-item">
-                        <img src={recipe.image || placeholderImg} alt={recipe.name} />
-                        <h3>{recipe.name}</h3>
+                        <div className="carousel-item-inner">
+                            <img src={recipe.image || 'https://via.placeholder.com/150'} alt={recipe.name} />
+                            <h3>{recipe.name}</h3>
+                        </div>
                     </div>
                 ))}
             </Slider>
