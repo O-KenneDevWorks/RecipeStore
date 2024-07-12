@@ -34,6 +34,9 @@
     left: 0;
     bottom: 0;
     right: 0;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
 }
 
 /* Styling for images within each item */
@@ -47,6 +50,7 @@
     transition: opacity 0.5s ease-in-out;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px; /* Rounded corners for the top of the image */
+    flex-shrink: 0;
     z-index: 1;
 }
 
