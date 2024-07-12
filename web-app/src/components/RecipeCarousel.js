@@ -1,10 +1,9 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
-import Slider from 'react-slick'; // Import the Slider component
-import "slick-carousel/slick/slick.css"; // Slick carousel CSS
-import "slick-carousel/slick/slick-theme.css"; // Slick carousel theme CSS
-import './Styling/RecipeCarousel.css'; // Assuming you have the CSS in a separate file
+import Slider from 'react-slick';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import './Styling/RecipeCarousel.css'; // Ensure your CSS file path is correct
 
 const RecipeCarousel = () => {
     const [recipes, setRecipes] = useState([]);
@@ -26,21 +25,20 @@ const RecipeCarousel = () => {
     }, [fetchRecipes]);
 
     const settings = {
-        dots: true,
+        dots: false,
         infinite: true,
         speed: 500,
-        slidesToShow: 3,
-        slidesToScroll: 3,
+        slidesToShow: 4,
+        slidesToScroll: 1,
         autoplay: true,
-        autoplaySpeed: 2000,
+        autoplaySpeed: 0,
+        cssEase: 'linear',
         responsive: [
             {
                 breakpoint: 768,
                 settings: {
                     slidesToShow: 1,
                     slidesToScroll: 1,
-                    infinite: true,
-                    dots: true
                 }
             }
         ]
@@ -57,18 +55,8 @@ const RecipeCarousel = () => {
             <Slider {...settings}>
                 {recipes.map((recipe) => (
                     <div key={recipe._id} className="carousel-item">
-                        <Link to={`http://10.0.0.85:3000/recipe/${recipe._id}`}>
-                            <img
-                                src={recipe.image || placeholderImg}
-                                alt={recipe.name}
-                                onError={(e) => {
-                                    if (e.target.src !== placeholderImg) {
-                                        e.target.src = placeholderImg;
-                                    }
-                                }}
-                            />
-                            <h3>{recipe.name}</h3>
-                        </Link>
+                        <img src={recipe.image || placeholderImg} alt={recipe.name} />
+                        <h3>{recipe.name}</h3>
                     </div>
                 ))}
             </Slider>

@@ -18,8 +18,10 @@
 /* Individual item styling */
 .carousel-item {
     flex: 0 0 auto;
-    width: 200px; /* Fixed width for each item */
+    width: 25%; /* Adjust based on the number of slides you show at a time */
+    padding-top: 25%; /* Same as width for square */    
     margin: 0 15px; /* Space between items */
+    position: relative;
     overflow: hidden; /* Ensures no overflow of content */
     border-radius: 10px; /* Rounded corners for a softer look */
     box-shadow: 0 2px 6px rgba(0,0,0,0.15); /* Shadow for each item for 3D effect */
@@ -28,6 +30,9 @@
 
 /* Styling for images within each item */
 .carousel-item img {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 150px;
     object-fit: cover; /* Ensures images cover the area properly */
