@@ -6,19 +6,30 @@ import './Styling/RecipeCarousel.css';  // Assuming you have the CSS in a separa
 const RecipeCarousel = () => {
     const [recipes, setRecipes] = useState([]);
 
-    useEffect(() => {
-        const fetchRecipes = async () => {
-            try {
-                const response = await axios.get('http://10.0.0.85:3000/recipes/previews');  // Make sure this endpoint is correctly set up
-                setRecipes(response.data);
-            } catch (error) {
-                console.error('Failed to fetch recipes:', error);
-            }
-        };
+    const fetchRecipes = useCallback(async () => {
+        try {
+            const response = await axios.get('http://10.0.0.85:3000/recipes/previews');
+            setRecipes(response.data);
+        } catch (error) {
+            console.error('Failed to fetch recipes:', error);
+        }
+    }, []); 
 
+    useEffect(() => {
         fetchRecipes();
     }, []);
 
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        setLoading(true);
+        fetchRecipes().then(() => setLoading(false));
+    }, [fetchRecipes]);
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+    
     // URL to a placeholder image
     const placeholderImg = '../No_Photo.jpg'; // Replace with your actual placeholder image URL
 
@@ -31,8 +42,9 @@ const RecipeCarousel = () => {
                             src={recipe.image || placeholderImg}
                             alt={recipe.name}
                             onError={(e) => {
-                                e.target.onerror = null; // Prevents recursion if the placeholder image also fails
-                                e.target.src = placeholderImg; // Fallback to placeholder image
+                                if (e.target.src !== placeholderImg) {
+                                    e.target.src = placeholderImg; // Only set placeholder if it's not already set
+                                }
                             }}
                         />
                         <h3>{recipe.name}</h3>
