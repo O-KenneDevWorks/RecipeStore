@@ -31,7 +31,7 @@ const RecipeCarousel = () => {
         slidesToShow: 4,
         slidesToScroll: 1,
         autoplay: true,
-        autoplaySpeed: 0,
+        autoplaySpeed: 3000,
         cssEase: 'linear',
         responsive: [
             {
