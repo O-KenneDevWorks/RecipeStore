@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+//import React, { useState, useEffect } from 'react';
 import RecipeCarousel from './RecipeCarousel';  // Make sure the path is correct
 
 
 const Home = () => {
-    const [recipes, setRecipes] = useState([]);
+    // const [recipes, setRecipes] = useState([]);
 
     // useEffect(() => {
     //     const fetchRecipes = async () => {
