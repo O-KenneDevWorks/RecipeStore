@@ -2,10 +2,11 @@
 .carousel-container {
     overflow: hidden;
     position: relative;
-    width: 100%;
+    width: 80%;
+    margin: 0 auto;
     padding: 20px 0;  /* Adds padding around the carousel for better spacing */
     background-color: var(--carousel-background);
-    /* box-shadow: 0 4px 8px var(--carousel-shadow); */
+    box-shadow: 0 4px 8px var(--carousel-shadow);
 }
 
 /* Styling for the track that holds the items */
@@ -28,7 +29,7 @@
     background-color: var(--background-color);
     color: var(--text-color);
     box-shadow: 0 2px 5px var(--carousel-shadow);
-    /* box-sizing: border-box; */
+    box-sizing: border-box;
     transition: transform 0.3s ease; /* Smooth transition for hover effects */
 }
 
@@ -90,6 +91,10 @@
 @media (max-width: 768px) {
     .carousel-item {
         width: 150px; /* Smaller width for smaller screens */
+    }
+
+    .carousel-container {
+        width: 95%;  /* Allow the carousel to take more width on smaller screens */
     }
 
     .carousel-item img {
