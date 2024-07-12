@@ -47,6 +47,7 @@
     transition: opacity 0.5s ease-in-out;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px; /* Rounded corners for the top of the image */
+    z-index: 1;
 }
 
 /* Styling for titles within each item */
@@ -59,6 +60,7 @@
     color: #333; /* Darker text for better readability */
     font-size: 16px;
     margin: 0; /* Remove default margin */
+    z-index: 2;
 }
 
 .carousel-item:hover {
