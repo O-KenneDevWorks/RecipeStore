@@ -7,6 +7,8 @@
     padding: 20px 0;  /* Adds padding around the carousel for better spacing */
     background-color: var(--carousel-background);
     box-shadow: 0 4px 8px var(--carousel-shadow);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 
 /* Styling for the track that holds the items */
