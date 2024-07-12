@@ -19,7 +19,7 @@ const RecipeCarousel = () => {
     //     fetchRecipes();
     // }, []);
 
-    // const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         setLoading(true);
