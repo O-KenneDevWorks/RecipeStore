@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useCallback } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './Styling/RecipeCarousel.css';  // Assuming you have the CSS in a separate file
@@ -29,7 +29,7 @@ const RecipeCarousel = () => {
     if (loading) {
         return <div>Loading...</div>;
     }
-    
+
     // URL to a placeholder image
     const placeholderImg = '../No_Photo.jpg'; // Replace with your actual placeholder image URL
 
