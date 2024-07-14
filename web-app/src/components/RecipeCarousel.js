@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
@@ -54,11 +55,10 @@ const RecipeCarousel = () => {
                 {recipes.map((recipe) => (
                     <div key={recipe._id} className="carousel-item">
                         <div className="carousel-item-inner">
-                            <link to={`http://10.0.0.85:3000/recipe/${recipe._id}`}>
+                            <Link to={`http://10.0.0.85:3000/recipe/${recipe._id}`}>
                                 <img src={recipe.image || 'https://via.placeholder.com/150'} alt={recipe.name} />
-                            </link>
                                 <h3>{recipe.name}</h3>
-                            
+                            </Link>
                         </div>
                     </div>
                 ))}
