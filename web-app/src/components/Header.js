@@ -2,11 +2,16 @@ import React from 'react';
 import './Styling/Header.css'
 
 const Header = () => {
+    const [theme, setTheme] = useState('light');
+
+    useEffect(() => {
+        document.documentElement.setAttribute('data-theme', theme)
+    }, [theme]);
 
     const toggleTheme = () => {
         setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
     };
-    
+
     return (
         <div style={{ height: '50px', backgroundColor: '#f8f9fa' }}> {/* Example styling */}
             <button className='theme-toggle' onClick={toggleTheme}>
