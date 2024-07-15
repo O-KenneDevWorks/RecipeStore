@@ -54,18 +54,11 @@ const App = () => {
         document.documentElement.setAttribute('data-theme', theme)
     }, [theme]);
 
-    const toggleTheme = () => {
-        setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
-    };
-
     return (
         <Router>
             <div className="app">
                 <Header />
                 <NavBar />
-                <button className='theme-toggle' onClick={toggleTheme}>
-                    Switch to {theme === 'light' ? 'Dark' : 'Light'} Mode
-                </button>
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/add-recipe" element={<AddRecipeForm />} />
