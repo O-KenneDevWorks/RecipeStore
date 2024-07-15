@@ -1,4 +1,4 @@
-.footer-space {
+.footer {
     height: 50px; /* Adjust height as needed */
     background-color: #f8f9fa; /* Light grey background */
     display: flex;
@@ -11,7 +11,7 @@
 }
 
 /* Additional styles for text or links within the footer */
-.footer-space p, .footer-space a {
+.footer p, .footer a {
     color: #333;
     text-decoration: none;
     padding: 10px;
