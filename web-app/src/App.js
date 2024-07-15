@@ -9,8 +9,8 @@ import RandomRecipe from './components/RandomRecipe'
 import MealPlanner from './components/MealPlanner';
 import EditRecipeForm from './components/EditRecipeForm';
 import NavBar from './components/NavBar';
-import Header from './componentsHeader';
-import Footer from './componentsFooter';
+import Header from './components/Header';
+import Footer from './components/Footer';
 import Home from './components/Home';
 import './components/Styling/Global.css';
 import './components/Styling/theme.css';
