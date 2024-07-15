@@ -9,6 +9,8 @@ import RandomRecipe from './components/RandomRecipe'
 import MealPlanner from './components/MealPlanner';
 import EditRecipeForm from './components/EditRecipeForm';
 import NavBar from './components/NavBar';
+import Header from './Header';
+import Footer from './Footer';
 import Home from './components/Home';
 import './components/Styling/Global.css';
 import './components/Styling/theme.css';
@@ -59,6 +61,7 @@ const App = () => {
     return (
         <Router>
             <div className="app">
+                <Header />
                 <NavBar />
                 <button className='theme-toggle' onClick={toggleTheme}>
                     Switch to {theme === 'light' ? 'Dark' : 'Light'} Mode
@@ -74,6 +77,7 @@ const App = () => {
                     <Route path="/meal-planner" element={<MealPlanner />} />
                     <Route path="/edit-recipe/:id" element={<EditRecipeForm />} />
                 </Routes>
+                <Footer />
             </div>
         </Router>
     );

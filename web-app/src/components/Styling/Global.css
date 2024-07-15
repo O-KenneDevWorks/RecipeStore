@@ -31,3 +31,7 @@ button.theme-toggle {
 button:hover {
     opacity: 0.8;
 }
+
+.main-content {
+    padding-bottom: 70px; /* Adjust this value based on your footer's height */
+}
