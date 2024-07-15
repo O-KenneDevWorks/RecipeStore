@@ -1,0 +1,18 @@
+.footer-space {
+    height: 50px; /* Adjust height as needed */
+    background-color: #f8f9fa; /* Light grey background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Shadow to give depth, appearing to lift the page content up */
+    position: relative; /* Adjust based on layout needs */
+    z-index: 1000; /* Ensure it stays on top if needed */
+    margin-top: 20px; /* Adds space between the content and footer */
+}
+
+/* Additional styles for text or links within the footer */
+.footer-space p, .footer-space a {
+    color: #333;
+    text-decoration: none;
+    padding: 10px;
+}
