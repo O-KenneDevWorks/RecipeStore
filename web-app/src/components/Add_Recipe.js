@@ -232,6 +232,7 @@ const AddRecipeForm = () => {
                 placeholder="Enter tags separated by commas"
             />
 
+            <label>Ingredients *</label>
             <DragDropContext onDragEnd={onDragEnd}>
                 <Droppable droppableId="droppable-ingredients" type="ingredients">
                     {(provided) => (
@@ -278,7 +279,11 @@ const AddRecipeForm = () => {
                         </div>
                     )}
                 </Droppable>
+            </DragDropContext>
+            <button type="button" onClick={handleAddIngredient}>Add Ingredient</button>
 
+            <label>Directions *</label>
+            <DragDropContext onDragEnd={onDragEnd}>
                 <Droppable droppableId="droppable-directions" type="directions">
                     {(provided) => (
                         <div ref={provided.innerRef} {...provided.droppableProps}>
@@ -307,6 +312,7 @@ const AddRecipeForm = () => {
                     )}
                 </Droppable>
             </DragDropContext>
+            <button type="button" onClick={handleAddDirection}>Add Step</button>
 
             <label>Image</label>
             <input type="file" name="image" accept="image/*" onChange={handleImageChange} />
