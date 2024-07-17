@@ -4,10 +4,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Shadow to give depth, appearing to lift the page content up */
-    position: relative; /* Adjust based on layout needs */
-    z-index: 1000; /* Ensure it stays on top if needed */
-    margin-top: 20px; /* Adds space between the content and footer */
+    width: 100%; /* Ensure it spans the entire width of the viewport */
+    position: fixed; /* Fixed positioning to keep it relative to the viewport */
+    left: 0; /* Align to the left edge of the viewport */
+    bottom: -60px; /* Start just below the viewport */
+    transition: bottom 0.3s ease-in-out; /* Smooth transition for moving into view */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Shadow for aesthetics */
+    z-index: 1000; /* High z-index to ensure it's above other content */
 }
 
 /* Additional styles for text or links within the footer */
