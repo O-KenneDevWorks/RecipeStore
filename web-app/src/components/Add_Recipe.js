@@ -279,8 +279,9 @@ const AddRecipeForm = () => {
                         </div>
                     )}
                 </Droppable>
+                <button type="button" onClick={handleAddIngredient}>Add Ingredient</button>
             </DragDropContext>
-            <button type="button" onClick={handleAddIngredient}>Add Ingredient</button>
+            
 
             <label>Directions *</label>
             <DragDropContext onDragEnd={onDragEnd}>
