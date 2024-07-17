@@ -109,35 +109,7 @@ const AddRecipeForm = () => {
         });
     };
 
-    const parseFraction = (input) => {
-        if (input.includes('/')) {
-            const parts = input.split('/');
-            if (parts.length === 2 && parts.every(part => !isNaN(part.trim()) && part.trim() !== '')) {
-                const [numerator, denominator] = parts.map(Number);
-                if (denominator === 0) {
-                    return { error: "Denominator cannot be zero" };
-                }
-                return { value: numerator / denominator };
-            } else {
-                return { error: "Invalid fraction format" };
-            }
-        } else if (!isNaN(input) && input.trim() !== '') {
-            return { value: Number(input) };
-        } else {
-            return { error: "Please enter a valid number or fraction" };
-        }
-    };
-
     const handleIngredientChange = (index, field, value) => {
-        if (field === 'amount') {
-            const parsed = parseFraction(value);
-            if (parsed.error) {
-                alert(parsed.error); // Display the error to the user
-                return; // Stop the update process if there's an error
-            }
-            value = parsed.value; // Use the parsed value if no error
-        }
-    
         const newIngredients = recipeData.ingredients.map((ingredient, i) => {
             if (i === index) {
                 return { ...ingredient, [field]: value };
@@ -241,7 +213,7 @@ const AddRecipeForm = () => {
                     <input
                         type="text"
                         name="amount"
-                        placeholder="Amount(e.g., 1/2)"
+                        placeholder="Amount (e.g., 1/2, 2.5, 3)"
                         value={ingredient.amount}
                         onChange={(e) => handleIngredientChange(index, 'amount', e.target.value)}
                         required

@@ -147,7 +147,7 @@ const EditRecipe = () => {
                     <div className="ingredient" key={index}>
                         <label>
                             Amount:
-                            <input type="number" name="amount" value={ingredient.amount} onChange={(e) => handleIngredientChange(index, e)} required />
+                            <input type="text" name="amount" value={ingredient.amount} onChange={(e) => handleIngredientChange(index, e)} required />
                         </label>
                         <label>
                             Unit:
