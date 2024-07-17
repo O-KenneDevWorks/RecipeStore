@@ -64,7 +64,7 @@ const App = () => {
                     <Route path="/meal-planner" element={<MealPlanner />} />
                     <Route path="/edit-recipe/:id" element={<EditRecipeForm />} />
                 </Routes>
-                /*<Footer />*/
+                {/*<Footer />*/}
             </div>
         </Router>
     );
