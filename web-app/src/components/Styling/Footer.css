@@ -1,13 +1,13 @@
 .footer {
     height: 50px; /* Adjust height as needed */
-    background-color: #f8f9fa; /* Light grey background */
+    background-color: var(--background-color); /* Light grey background */
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%; /* Ensure it spans the entire width of the viewport */
     position: fixed; /* Fixed positioning to keep it relative to the viewport */
     left: 0; /* Align to the left edge of the viewport */
-    bottom: -200px; /* Start just below the viewport */
+    bottom: -60px; /* Start just below the viewport */
     transition: bottom 0.3s ease-in-out; /* Smooth transition for moving into view */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Shadow for aesthetics */
     z-index: 1000; /* High z-index to ensure it's above other content */
