@@ -1,6 +1,6 @@
 .header {
     height: 50px; /* Adjust height as needed */
-    background-color: #f8f9fa; /* Light grey background */
+    background-color: var(--background-color); /* Light grey background */
     display: flex;
     align-items: center;
     justify-content: center;
