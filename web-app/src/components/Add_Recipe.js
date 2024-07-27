@@ -127,11 +127,15 @@ const AddRecipeForm = () => {
         }
     };
 
+    const [ingredientId, setIngredientId] = useState(0);
     const handleAddIngredient = () => {
+        const newId = ingredientId + 1; // Increment the ID for each new ingredient
+        const newIngredient = { id: newId, amount: '', unit: '', name: '' };
         setRecipeData(prevState => ({
             ...prevState,
-            ingredients: [...prevState.ingredients, { amount: '', unit: '', name: '' }]
+            ingredients: [...prevState.ingredients, newIngredient]
         }));
+        setIngredientId(newId); // Update the ID in the state
     };
 
     const handleIngredientChange = (index, field, value) => {
@@ -237,7 +241,7 @@ const AddRecipeForm = () => {
                     {(provided, snapshot) => (
                         <div ref={provided.innerRef} {...provided.droppableProps}>
                             {recipeData.ingredients.map((ingredient, index) => (
-                                <Draggable key={`ingredient-${ingredient.id}`} draggableId={`ingredient-${ingredient.id}`} index={index}>
+                                <Draggable key={ingredient.id} draggableId={`ingredient-${ingredient.id}`} index={index}>
                                     {(provided) => (
                                         <div
                                             ref={provided.innerRef}
