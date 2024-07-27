@@ -232,52 +232,81 @@ const AddRecipeForm = () => {
                 placeholder="Enter tags separated by commas"
             />
 
-            <label>Ingredients *</label>
-            {recipeData.ingredients.map((ingredient, index) => (
-                <div key={index} className="ingredient-input">
-                    <input
-                        type="text"
-                        name="amount"
-                        placeholder="Amount (e.g., 1/2, 2.5, 3)"
-                        value={ingredient.amount}
-                        onChange={(e) => handleIngredientChange(index, 'amount', e.target.value)}
-                        required
-                    />
-                    <Select
-                        name="unit"
-                        options={unitOptions}
-                        value={unitOptions.find(option => option.value === ingredient.unit)}
-                        onChange={(option) => handleIngredientChange(index, 'unit', option.value)}
-                        placeholder="Select Unit"
-                        required
-                    />
-                    <input
-                        type="text"
-                        name="name"
-                        placeholder="Ingredient"
-                        value={ingredient.name}
-                        onChange={(e) => handleIngredientChange(index, 'name', e.target.value)}
-                        required
-                    />
-                    <button type="button" onClick={() => handleRemoveIngredient(index)}>Remove</button>
-                </div>
-            ))}
-            <button type="button" onClick={handleAddIngredient}>Add Ingredient</button>
+            <DragDropContext onDragEnd={onDragEnd}>
+                <Droppable droppableId="droppable-ingredients" type="ingredients">
+                    {(provided) => (
+                        <div ref={provided.innerRef} {...provided.droppableProps}>
+                            {recipeData.ingredients.map((ingredient, index) => (
+                                <Draggable key={index} draggableId={`ingredient-${index}`} index={index}>
+                                    {(provided) => (
+                                        <div
+                                            ref={provided.innerRef}
+                                            {...provided.draggableProps}
+                                            {...provided.dragHandleProps}
+                                            className="ingredient-input"
+                                        >
+                                            <input
+                                                type="text"
+                                                name="amount"
+                                                placeholder="Amount (e.g., 1/2, 2.5, 3)"
+                                                value={ingredient.amount}
+                                                onChange={(e) => handleIngredientChange(index, 'amount', e.target.value)}
+                                                required
+                                            />
+                                            <Select
+                                                name="unit"
+                                                options={unitOptions}
+                                                value={unitOptions.find(option => option.value === ingredient.unit)}
+                                                onChange={(option) => handleIngredientChange(index, 'unit', option.value)}
+                                                placeholder="Select Unit"
+                                                required
+                                            />
+                                            <input
+                                                type="text"
+                                                name="name"
+                                                placeholder="Ingredient"
+                                                value={ingredient.name}
+                                                onChange={(e) => handleIngredientChange(index, 'name', e.target.value)}
+                                                required
+                                            />
+                                            <button type="button" onClick={() => handleRemoveIngredient(index)}>Remove</button>
+                                        </div>
+                                    )}
+                                </Draggable>
+                            ))}
+                            {provided.placeholder}
+                        </div>
+                    )}
+                </Droppable>
 
-            <label>Directions *</label>
-            {recipeData.directions.map((direction, index) => (
-                <div key={index} className="direction-input">
-                    <label>Step {index + 1}</label>
-                    <textarea
-                        name="direction"
-                        value={direction}
-                        onChange={(e) => handleDirectionChange(index, e)}
-                        required
-                    />
-                    <button type="button" onClick={() => handleRemoveDirection(index)}>Remove</button>
-                </div>
-            ))}
-            <button type="button" onClick={handleAddDirection}>Add Step</button>
+                <Droppable droppableId="droppable-directions" type="directions">
+                    {(provided) => (
+                        <div ref={provided.innerRef} {...provided.droppableProps}>
+                            {recipeData.directions.map((direction, index) => (
+                                <Draggable key={index} draggableId={`direction-${index}`} index={index}>
+                                    {(provided) => (
+                                        <div
+                                            ref={provided.innerRef}
+                                            {...provided.draggableProps}
+                                            {...provided.dragHandleProps}
+                                            className="direction-input"
+                                        >
+                                            <textarea
+                                                name="direction"
+                                                value={direction}
+                                                onChange={(e) => handleDirectionChange(index, e)}
+                                                required
+                                            />
+                                            <button type="button" onClick={() => handleRemoveDirection(index)}>Remove</button>
+                                        </div>
+                                    )}
+                                </Draggable>
+                            ))}
+                            {provided.placeholder}
+                        </div>
+                    )}
+                </Droppable>
+            </DragDropContext>
 
             <label>Image</label>
             <input type="file" name="image" accept="image/*" onChange={handleImageChange} />
