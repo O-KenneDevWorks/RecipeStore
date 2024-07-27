@@ -278,6 +278,7 @@ const AddRecipeForm = () => {
                         </div>
                     )}
                 </Droppable>
+                <button type="button" onClick={handleAddIngredient}>Add Ingredient</button>
 
                 <Droppable droppableId="droppable-directions" type="directions">
                     {(provided) => (
@@ -291,6 +292,7 @@ const AddRecipeForm = () => {
                                             {...provided.dragHandleProps}
                                             className="direction-input"
                                         >
+                                            <label>Step {index + 1}</label> {/* Dynamic step label */}
                                             <textarea
                                                 name="direction"
                                                 value={direction}
@@ -306,6 +308,7 @@ const AddRecipeForm = () => {
                         </div>
                     )}
                 </Droppable>
+                <button type="button" onClick={handleAddDirection}>Add Step</button>
             </DragDropContext>
 
             <label>Image</label>
