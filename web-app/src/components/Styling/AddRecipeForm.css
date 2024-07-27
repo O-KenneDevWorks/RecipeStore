@@ -4,19 +4,58 @@
     gap: 1rem;
     max-width: 600px;
     margin: auto;
+    padding: 20px;
+    background-color: #ffffff; /* Ensure background is consistent */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow for form elevation */
 }
 
-.ingredient-input, .direction-input {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+button {
+    padding: 8px 16px;
+    background-color: #007bff; /* Bootstrap blue */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
 }
 
 .image-preview {
     max-width: 100%;
     height: auto;
+    display: block; /* Ensure it doesn't exceed container width */
+    margin-top: 1rem; /* Space above the image */
 }
 
-button {
-    margin-top: 1rem;
+/* Styling for the draggable component */
+.ingredient-input, .direction-input {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 8px;
+    background-color: #fff; /* Light background for visibility */
+    border: 1px solid #ddd; /* Subtle border for elements */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    transition: background-color 0.2s ease;
+}
+
+/* Highlight the item being dragged */
+.ingredient-input.is-dragging, .direction-input.is-dragging {
+    background-color: #e9ecef; /* Slightly different background when dragging */
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2); /* More pronounced shadow when dragging */
+}
+
+/* Styling for the droppable area */
+.droppable-area {
+    padding: 10px;
+    background-color: #f8f9fa; /* Light grey to differentiate the area */
+    border: 2px dashed #dee2e6; /* Dashed border for the droppable area */
+    margin: 1rem 0;
+}
+
+.droppable-area.is-over {
+    background-color: #dee2e6; /* Change background when an item is being dragged over */
 }
