@@ -233,13 +233,18 @@ const AddRecipeForm = () => {
             />
 
             <DragDropContext onDragEnd={onDragEnd}>
-                <Droppable droppableId="droppable-ingredients">
+                <Droppable droppableId="droppable-ingredients" type="ingredients">
                     {(provided) => (
                         <div ref={provided.innerRef} {...provided.droppableProps}>
                             {recipeData.ingredients.map((ingredient, index) => (
                                 <Draggable key={index} draggableId={`ingredient-${index}`} index={index}>
                                     {(provided) => (
-                                        <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                                        <div
+                                            ref={provided.innerRef}
+                                            {...provided.draggableProps}
+                                            {...provided.dragHandleProps}
+                                            className="ingredient-input"
+                                        >
                                             <input
                                                 type="text"
                                                 name="amount"
