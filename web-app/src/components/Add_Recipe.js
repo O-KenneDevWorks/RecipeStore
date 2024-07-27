@@ -128,10 +128,10 @@ const AddRecipeForm = () => {
     };
 
     const handleAddIngredient = () => {
-        setRecipeData({
-            ...recipeData,
-            ingredients: [...recipeData.ingredients, { amount: '', unit: '', name: '' }]
-        });
+        setRecipeData(prevState => ({
+            ...prevState,
+            ingredients: [...prevState.ingredients, { amount: '', unit: '', name: '' }]
+        }));
     };
 
     const handleIngredientChange = (index, field, value) => {
@@ -234,10 +234,10 @@ const AddRecipeForm = () => {
 
             <DragDropContext onDragEnd={onDragEnd}>
                 <Droppable droppableId="droppable-ingredients" type="ingredients">
-                    {(provided) => (
+                    {(provided, snapshot) => (
                         <div ref={provided.innerRef} {...provided.droppableProps}>
                             {recipeData.ingredients.map((ingredient, index) => (
-                                <Draggable key={index} draggableId={`ingredient-${index}`} index={index}>
+                                <Draggable key={`ingredient-${ingredient.id}`} draggableId={`ingredient-${ingredient.id}`} index={index}>
                                     {(provided) => (
                                         <div
                                             ref={provided.innerRef}
