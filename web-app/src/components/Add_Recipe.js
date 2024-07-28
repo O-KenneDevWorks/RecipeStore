@@ -242,7 +242,7 @@ const AddRecipeForm = () => {
             <DragDropContext onDragEnd={onDragEnd}>
                 <Droppable droppableId="droppable-ingredients" type="ingredients">
                     {(provided, snapshot) => (
-                        <div ref={provided.innerRef} {...provided.droppableProps}>
+                        <div ref={provided.innerRef} {...provided.droppableProps} className="ingredients-container">
                             {recipeData.ingredients.map((ingredient, index) => (
                                 <Draggable key={ingredient.id} draggableId={`ingredient-${ingredient.id}`} index={index}>
                                     {(provided) => (
@@ -289,7 +289,7 @@ const AddRecipeForm = () => {
 
                 <Droppable droppableId="droppable-directions" type="directions">
                     {(provided) => (
-                        <div ref={provided.innerRef} {...provided.droppableProps}>
+                        <div ref={provided.innerRef} {...provided.droppableProps} className="directions-container">
                             {recipeData.directions.map((direction, index) => (
                                 <Draggable key={index} draggableId={`direction-${index}`} index={index}>
                                     {(provided) => (
