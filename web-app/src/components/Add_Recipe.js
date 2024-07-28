@@ -146,6 +146,16 @@ const AddRecipeForm = () => {
         });
     };
 
+    const moveDirection = (index, direction) => {
+        const newDirections = [...recipeData.directions];
+        if (direction === 'up' && index > 0) {
+            [newDirections[index], newDirections[index - 1]] = [newDirections[index - 1], newDirections[index]];
+        } else if (direction === 'down' && index < newDirections.length - 1) {
+            [newDirections[index], newDirections[index + 1]] = [newDirections[index + 1], newDirections[index]];
+        }
+        setRecipeData({ ...recipeData, directions: newDirections });
+    };
+
     const handleDirectionChange = (index, e) => {
         const newDirections = recipeData.directions.map((direction, i) => {
             if (i === index) {
@@ -250,6 +260,7 @@ const AddRecipeForm = () => {
                     />
                     <button type="button" onClick={() => moveIngredient(index, 'up')}>↑</button>
                     <button type="button" onClick={() => moveIngredient(index, 'down')}>↓</button>
+                    <button type="button" onClick={() => handleRemoveIngredient(index)}>Remove</button>
                 </div>
             ))}
             <button type="button" onClick={handleAddIngredient}>Add Ingredient</button>
@@ -261,13 +272,17 @@ const AddRecipeForm = () => {
                     <textarea
                         name="direction"
                         value={direction}
-                        onChange={(e) => handleDirectionChange(index, e)}
+                        onChange={(e) => handleDirectionChange(index, e.target.value)}
                         required
                     />
-                    <button type="button" onClick={() => handleRemoveDirection(index)}>Remove</button>
+                    <button type="button" onClick={() => moveDirection(index, 'up')}>↑</button>
+                    <button type="button" onClick={() => moveDirection(index, 'down')}>↓</button>
                 </div>
             ))}
-            <button type="button" onClick={handleAddDirection}>Add Step</button>
+            <button type="button" onClick={() => setRecipeData(prevState => ({
+                ...prevState,
+                directions: [...prevState.directions, '']
+            }))}>Add Step</button>
 
             <label>Image</label>
             <input type="file" name="image" accept="image/*" onChange={handleImageChange} />
