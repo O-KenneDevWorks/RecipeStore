@@ -129,13 +129,16 @@ const AddRecipeForm = () => {
 
     const [ingredientId, setIngredientId] = useState(0);
     const handleAddIngredient = () => {
-        const newId = ingredientId + 1; // Increment the ID for each new ingredient
-        const newIngredient = { id: newId, amount: '', unit: '', name: '' };
+        const newIngredient = {
+            id: Date.now(),  // Simple way to get a unique ID based on the current timestamp
+            amount: '',
+            unit: '',
+            name: ''
+        };
         setRecipeData(prevState => ({
             ...prevState,
             ingredients: [...prevState.ingredients, newIngredient]
         }));
-        setIngredientId(newId); // Update the ID in the state
     };
 
     const handleIngredientChange = (index, field, value) => {
