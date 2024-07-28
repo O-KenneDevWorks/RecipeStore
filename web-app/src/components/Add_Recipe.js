@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import axios from 'axios';
 import Select from 'react-select';
 import imageCompression from 'browser-image-compression';
@@ -103,7 +102,6 @@ const AddRecipeForm = () => {
         }
     };
 
-    const [ingredientId, setIngredientId] = useState(0);
     const handleAddIngredient = () => {
         const newIngredient = {
             amount: '',
