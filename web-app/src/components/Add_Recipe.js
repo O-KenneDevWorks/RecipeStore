@@ -277,6 +277,7 @@ const AddRecipeForm = () => {
                     />
                     <button type="button" onClick={() => moveDirection(index, 'up')}>↑</button>
                     <button type="button" onClick={() => moveDirection(index, 'down')}>↓</button>
+                    <button type="button" onClick={() => handleRemoveDirection(index)}>Remove</button>
                 </div>
             ))}
             <button type="button" onClick={() => setRecipeData(prevState => ({
