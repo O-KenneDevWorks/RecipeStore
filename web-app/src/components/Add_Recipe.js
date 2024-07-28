@@ -102,6 +102,16 @@ const AddRecipeForm = () => {
         }
     };
 
+    const moveIngredient = (index, direction) => {
+        const newIngredients = [...recipeData.ingredients];
+        if (direction === 'up' && index > 0) {
+            [newIngredients[index], newIngredients[index - 1]] = [newIngredients[index - 1], newIngredients[index]];
+        } else if (direction === 'down' && index < newIngredients.length - 1) {
+            [newIngredients[index], newIngredients[index + 1]] = [newIngredients[index + 1], newIngredients[index]];
+        }
+        setRecipeData({ ...recipeData, ingredients: newIngredients });
+    };
+
     const handleAddIngredient = () => {
         const newIngredient = {
             amount: '',
@@ -218,28 +228,28 @@ const AddRecipeForm = () => {
                     <input
                         type="text"
                         name="amount"
-                        placeholder="Amount (e.g., 1/2, 2.5, 3)"
                         value={ingredient.amount}
                         onChange={(e) => handleIngredientChange(index, 'amount', e.target.value)}
+                        placeholder="Amount"
                         required
                     />
                     <Select
-                        name="unit"
                         options={unitOptions}
                         value={unitOptions.find(option => option.value === ingredient.unit)}
                         onChange={(option) => handleIngredientChange(index, 'unit', option.value)}
-                        placeholder="Select Unit"
+                        placeholder="Unit"
                         required
                     />
                     <input
                         type="text"
                         name="name"
-                        placeholder="Ingredient"
                         value={ingredient.name}
                         onChange={(e) => handleIngredientChange(index, 'name', e.target.value)}
+                        placeholder="Ingredient"
                         required
                     />
-                    <button type="button" onClick={() => handleRemoveIngredient(index)}>Remove</button>
+                    <button type="button" onClick={() => moveIngredient(index, 'up')}>↑</button>
+                    <button type="button" onClick={() => moveIngredient(index, 'down')}>↓</button>
                 </div>
             ))}
             <button type="button" onClick={handleAddIngredient}>Add Ingredient</button>
