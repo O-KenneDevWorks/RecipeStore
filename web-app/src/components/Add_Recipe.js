@@ -156,10 +156,10 @@ const AddRecipeForm = () => {
         setRecipeData({ ...recipeData, directions: newDirections });
     };
 
-    const handleDirectionChange = (index, e) => {
+    const handleDirectionChange = (index, value) => {
         const newDirections = recipeData.directions.map((direction, i) => {
             if (i === index) {
-                return e.target.value;
+                return value;
             }
             return direction;
         });
