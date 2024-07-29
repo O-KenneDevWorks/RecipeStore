@@ -280,10 +280,7 @@ const AddRecipeForm = () => {
                     <button type="button" onClick={() => handleRemoveDirection(index)}>Remove</button>
                 </div>
             ))}
-            <button type="button" onClick={() => setRecipeData(prevState => ({
-                ...prevState,
-                directions: [...prevState.directions, '']
-            }))}>Add Step</button>
+            <button type="button" onClick={handleAddDirection}>Add Step</button>
 
             <label>Image</label>
             <input type="file" name="image" accept="image/*" onChange={handleImageChange} />
