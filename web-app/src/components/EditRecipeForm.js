@@ -78,6 +78,41 @@ const EditRecipe = () => {
             .catch(error => console.error('Error updating recipe:', error));
     };
 
+    const moveItem = (arr, fromIndex, toIndex) => {
+        const item = arr[fromIndex];
+        const newArr = arr.filter((_, index) => index !== fromIndex);
+        newArr.splice(toIndex, 0, item);
+        return newArr;
+    };
+    
+    const moveIngredientUp = (index) => {
+        if (index > 0) {
+            const newIngredients = moveItem(recipe.ingredients, index, index - 1);
+            setRecipe(prev => ({ ...prev, ingredients: newIngredients }));
+        }
+    };
+    
+    const moveIngredientDown = (index) => {
+        if (index < recipe.ingredients.length - 1) {
+            const newIngredients = moveItem(recipe.ingredients, index, index + 1);
+            setRecipe(prev => ({ ...prev, ingredients: newIngredients }));
+        }
+    };
+    
+    const moveDirectionUp = (index) => {
+        if (index > 0) {
+            const newDirections = moveItem(recipe.directions, index, index - 1);
+            setRecipe(prev => ({ ...prev, directions: newDirections }));
+        }
+    };
+    
+    const moveDirectionDown = (index) => {
+        if (index < recipe.directions.length - 1) {
+            const newDirections = moveItem(recipe.directions, index, index + 1);
+            setRecipe(prev => ({ ...prev, directions: newDirections }));
+        }
+    };
+
     return (
         <div className="edit-recipe-form">
             <h1>Edit Recipe</h1>
@@ -140,35 +175,32 @@ const EditRecipe = () => {
                     <option value="American">American</option>
                     <option value="Thai">Thai</option>
                 </select>
-            </label>
+                </label>
 
                 <h2>Ingredients</h2>
                 {recipe.ingredients.map((ingredient, index) => (
                     <div className="ingredient" key={index}>
-                        <label>
-                            Amount:
-                            <input type="text" name="amount" value={ingredient.amount} onChange={(e) => handleIngredientChange(index, e)} required />
-                        </label>
-                        <label>
-                            Unit:
-                            <input type="text" name="unit" value={ingredient.unit} onChange={(e) => handleIngredientChange(index, e)} required />
-                        </label>
-                        <label>
-                            Name:
-                            <input type="text" name="name" value={ingredient.name} onChange={(e) => handleIngredientChange(index, e)} required />
-                        </label>
-                        <button type="button" onClick={() => removeIngredient(index)}>Remove Ingredient</button>
+                        <label>Amount:</label>
+                        <input type="text" name="amount" value={ingredient.amount} onChange={(e) => handleIngredientChange(index, e)} required />
+                        <label>Unit:</label>
+                        <input type="text" name="unit" value={ingredient.unit} onChange={(e) => handleIngredientChange(index, e)} required />
+                        <label>Name:</label>
+                        <input type="text" name="name" value={ingredient.name} onChange={(e) => handleIngredientChange(index, e)} required />
+                        <button type="button" onClick={() => moveIngredientUp(index)}>Up</button>
+                        <button type="button" onClick={() => moveIngredientDown(index)}>Down</button>
+                        <button type="button" onClick={() => removeIngredient(index)}>Remove</button>
                     </div>
                 ))}
                 <button type="button" onClick={addIngredient}>Add Ingredient</button>
+
                 <h2>Directions</h2>
                 {recipe.directions.map((direction, index) => (
                     <div className="direction" key={index}>
-                        <label>
-                            Step {index + 1}:
-                            <input type="text" value={direction} onChange={(e) => handleDirectionChange(index, e)} required />
-                        </label>
-                        <button type="button" onClick={() => removeDirection(index)}>Remove Direction</button>
+                        <label>Step {index + 1}:</label>
+                        <input type="text" value={direction} onChange={(e) => handleDirectionChange(index, e)} required />
+                        <button type="button" onClick={() => moveDirectionUp(index)}>Up</button>
+                        <button type="button" onClick={() => moveDirectionDown(index)}>Down</button>
+                        <button type="button" onClick={() => removeDirection(index)}>Remove</button>
                     </div>
                 ))}
                 <button type="button" onClick={addDirection}>Add Direction</button>
