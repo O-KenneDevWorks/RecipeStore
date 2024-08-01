@@ -33,18 +33,29 @@
 }
 
 .direction {
-    margin-bottom: 10px;
     display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.direction input {
-    flex-grow: 1;
+    flex-direction: column; /* Stack vertically */
+    margin-bottom: 1rem; /* Space between each direction block */
 }
 
 .direction label {
-    flex-grow: 0;
+    /* If you want to reduce the size of label or style it differently */
+    margin-bottom: 0.5rem; /* Space between label and textarea */
+}
+
+.direction textarea {
+    width: 100%; /* Ensures the textarea takes the full width */
+    margin-bottom: 0.5rem; /* Space between textarea and buttons */
+}
+
+.direction button {
+    margin-right: 0.5rem; /* Space between buttons */
+    width: auto; /* Allows the button to shrink/grow as per content */
+}
+
+.buttons-row {
+    display: flex; /* Align buttons in a row */
+    flex-wrap: nowrap; /* Prevent wrapping to the next line */
 }
 
 .buttons {

@@ -216,12 +216,13 @@ const EditRecipe = () => {
                                 handleDirectionChange(index, e.target.value);
                                 handleAutoSize(e);
                             }}
-                            style={{ height: 'auto' }} // Start with auto height
                             required
                         />
-                        <button type="button" onClick={() => moveDirectionUp(index)}>Up</button>
-                        <button type="button" onClick={() => moveDirectionDown(index)}>Down</button>
-                        <button type="button" onClick={() => removeDirection(index)}>Remove</button>
+                        <div className="buttons-row">
+                            <button type="button" onClick={() => moveDirectionUp(index)}>Up</button>
+                            <button type="button" onClick={() => moveDirectionDown(index)}>Down</button>
+                            <button type="button" onClick={() => removeDirection(index)}>Remove</button>
+                        </div>
                     </div>
                 ))}
                 <button type="button" onClick={addDirection}>Add Direction</button>
