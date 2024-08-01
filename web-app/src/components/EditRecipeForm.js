@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
+import imageCompression from 'browser-image-compression';
 import './Styling/EditRecipeForm.css';
 
 const unitOptions = [
@@ -78,7 +79,7 @@ const EditRecipe = () => {
                 const reader = new FileReader();
                 reader.onloadend = () => {
                     setImagePreview(reader.result);
-                    setRecipeData({ ...recipeData, image: reader.result });
+                    setRecipe({ ...recipe, image: reader.result });
                 };
                 reader.readAsDataURL(compressedFile);
             } catch (error) {
