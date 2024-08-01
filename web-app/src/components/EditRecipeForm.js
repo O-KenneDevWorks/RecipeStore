@@ -33,6 +33,11 @@ const EditRecipe = () => {
         setRecipe(prev => ({ ...prev, [name]: value }));
     };
 
+    const handleAutoSize = (e) => {
+        e.target.style.height = 'inherit'; // Reset the height so the calculation is correct
+        e.target.style.height = `${e.target.scrollHeight}px`; // Set the height to scroll height
+    };
+
     const handleIngredientChange = (index, e) => {
         const { name, value } = e.target;
         const newIngredients = [...recipe.ingredients];
@@ -200,7 +205,11 @@ const EditRecipe = () => {
                         <textarea
                             name="direction"
                             value={direction}
-                            onChange={(e) => handleDirectionChange(index, e.target.value)}
+                            onChange={(e) => {
+                                handleDirectionChange(index, e.target.value);
+                                handleAutoSize(e);
+                            }}
+                            style={{ height: 'auto' }} // Start with auto height
                             required
                         />
                         <button type="button" onClick={() => moveDirectionUp(index)}>Up</button>
