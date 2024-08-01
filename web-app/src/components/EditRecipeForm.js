@@ -48,6 +48,7 @@ const EditRecipe = () => {
     });
     const { id } = useParams();
     const navigate = useNavigate(); // Hook to navigate programmatically
+    const [imagePreview, setImagePreview] = useState('');
 
     useEffect(() => {
         axios.get(`http://10.0.0.85:3000/recipes/${id}`)
@@ -63,6 +64,28 @@ const EditRecipe = () => {
             textarea.style.height = `${textarea.scrollHeight}px`; // Set the height to scroll height
         });
     }, [recipe]); // This effect should re-run every time the recipe data changes
+
+    const handleImageChange = async (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const options = {
+                maxSizeMB: 1,
+                maxWidthOrHeight: 1920,
+                useWebWorker: true
+            };
+            try {
+                const compressedFile = await imageCompression(file, options);
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    setImagePreview(reader.result);
+                    setRecipeData({ ...recipeData, image: reader.result });
+                };
+                reader.readAsDataURL(compressedFile);
+            } catch (error) {
+                console.error('Error compressing image:', error);
+            }
+        }
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
