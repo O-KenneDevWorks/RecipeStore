@@ -8,32 +8,34 @@
 
 .ingredient {
     display: flex;
-    align-items: center; /* Vertically aligns elements in the container */
+    align-items: center; /* Keeps items aligned in the center vertically */
+    justify-content: space-between; /* Spaces children evenly */
+    width: 100%; /* Makes the container fill the width of its parent */
     gap: 10px; /* Space between children */
     margin-bottom: 1rem; /* Space between ingredient entries */
 }
 
 .ingredient label {
     margin: 0;
-    white-space: nowrap; /* Ensures labels do not wrap */
+    white-space: nowrap; /* Prevents label text from wrapping */
 }
 
 .ingredient input,
 .ingredient select {
-    flex-grow: 1; /* Allows inputs and select to expand to fill available space */
-    min-width: 0; /* Allows shrinking below content size if necessary */
+    flex-grow: 1; /* Allows inputs and selects to expand to use available space */
+    min-width: 0; /* Allows these elements to shrink below their content size if needed */
 }
 
 .ingredient > div {
     display: flex;
-    flex: 1 1 0px; /* Each section takes up equal space */
+    flex-grow: 1; /* Allows each div to grow and use available space equally */
     align-items: center;
     gap: 5px;
 }
 
 .ingredient button {
-    flex-grow: 0; /* Prevents buttons from growing */
-    white-space: nowrap; /* Prevents text in buttons from wrapping */
+    flex-grow: 0; /* Prevents buttons from growing, keeping them at their natural width */
+    white-space: nowrap; /* Keeps text within buttons from wrapping */
 }
 
 .direction {
