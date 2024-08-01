@@ -197,7 +197,12 @@ const EditRecipe = () => {
                 {recipe.directions.map((direction, index) => (
                     <div className="direction" key={index}>
                         <label>Step {index + 1}:</label>
-                        <input type="text" value={direction} onChange={(e) => handleDirectionChange(index, e)} required />
+                        <textarea
+                            name="direction"
+                            value={direction}
+                            onChange={(e) => handleDirectionChange(index, e.target.value)}
+                            required
+                        />
                         <button type="button" onClick={() => moveDirectionUp(index)}>Up</button>
                         <button type="button" onClick={() => moveDirectionDown(index)}>Down</button>
                         <button type="button" onClick={() => removeDirection(index)}>Remove</button>

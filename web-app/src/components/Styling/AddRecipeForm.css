@@ -30,7 +30,6 @@ button:hover {
     margin-top: 1rem; /* Space above the image */
 }
 
-/* Styling for the draggable component */
 .ingredient-input, .direction-input {
     display: flex;
     align-items: center;
@@ -40,22 +39,4 @@ button:hover {
     border: 1px solid #ddd; /* Subtle border for elements */
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
     transition: background-color 0.2s ease;
-}
-
-/* Highlight the item being dragged */
-.ingredient-input.is-dragging, .direction-input.is-dragging {
-    background-color: #e9ecef; /* Slightly different background when dragging */
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2); /* More pronounced shadow when dragging */
-}
-
-/* Styling for the droppable area */
-.droppable-area {
-    padding: 10px;
-    background-color: #f8f9fa; /* Light grey to differentiate the area */
-    border: 2px dashed #dee2e6; /* Dashed border for the droppable area */
-    margin: 1rem 0;
-}
-
-.droppable-area.is-over {
-    background-color: #dee2e6; /* Change background when an item is being dragged over */
 }
