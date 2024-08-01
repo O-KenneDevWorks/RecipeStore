@@ -8,33 +8,32 @@
 
 .ingredient {
     display: flex;
-    flex-wrap: wrap; /* Allow wrapping at the overall block level */
-    align-items: center; /* Align items vertically */
-    margin-bottom: 1rem; /* Space between each ingredient block */
-    gap: 0.5rem; /* Space between elements within the block */
+    align-items: center; /* Vertically aligns elements in the container */
+    gap: 10px; /* Space between children */
+    margin-bottom: 1rem; /* Space between ingredient entries */
 }
 
-.ingredient > div {
-    display: flex;
-    flex-wrap: nowrap; /* Prevent wrapping within this sub-container */
-    align-items: center; /* Align items vertically within each sub-container */
-    flex-grow: 1; /* Allow the sub-container to take available space */
-    min-width: 0; /* Override minimum width to allow flex shrink */
-}
-
-.ingredient label,
-.ingredient input,
-.ingredient button {
-    margin-right: 0.5rem; /* Space between elements */
+.ingredient label {
+    margin: 0;
+    white-space: nowrap; /* Ensures labels do not wrap */
 }
 
 .ingredient input,
 .ingredient select {
-    flex-grow: 1; /* Allow inputs and selects to expand within their sub-container */
+    flex-grow: 1; /* Allows inputs and select to expand to fill available space */
+    min-width: 0; /* Allows shrinking below content size if necessary */
+}
+
+.ingredient > div {
+    display: flex;
+    flex: 1 1 0px; /* Each section takes up equal space */
+    align-items: center;
+    gap: 5px;
 }
 
 .ingredient button {
-    white-space: nowrap; /* Prevent button text from wrapping */
+    flex-grow: 0; /* Prevents buttons from growing */
+    white-space: nowrap; /* Prevents text in buttons from wrapping */
 }
 
 .direction {
