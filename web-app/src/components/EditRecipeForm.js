@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
-import imageCompression from 'browser-image-compression';
 import './Styling/EditRecipeForm.css';
 
 const unitOptions = [
@@ -49,7 +48,6 @@ const EditRecipe = () => {
     });
     const { id } = useParams();
     const navigate = useNavigate(); // Hook to navigate programmatically
-    const [imagePreview, setImagePreview] = useState('');
 
     useEffect(() => {
         axios.get(`http://10.0.0.85:3000/recipes/${id}`)
@@ -65,28 +63,6 @@ const EditRecipe = () => {
             textarea.style.height = `${textarea.scrollHeight}px`; // Set the height to scroll height
         });
     }, [recipe]); // This effect should re-run every time the recipe data changes
-
-    const handleImageChange = async (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const options = {
-                maxSizeMB: 1,
-                maxWidthOrHeight: 1920,
-                useWebWorker: true
-            };
-            try {
-                const compressedFile = await imageCompression(file, options);
-                const reader = new FileReader();
-                reader.onloadend = () => {
-                    setImagePreview(reader.result);
-                    setRecipe({ ...recipe, image: reader.result });
-                };
-                reader.readAsDataURL(compressedFile);
-            } catch (error) {
-                console.error('Error compressing image:', error);
-            }
-        }
-    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -206,11 +182,10 @@ const EditRecipe = () => {
                     Yield:
                     <input type="text" name="yield" value={recipe.yield} onChange={handleChange} />
                 </label>
-
-                <label>Image</label>
-                <input type="file" name="image" accept="image/*" onChange={handleImageChange} />
-                {recipe.image && <img src={recipe.image} alt={recipe.name} />}
-
+                <label>
+                    Image:
+                    <input type="text" name="image" value={recipe.image} onChange={handleChange} />
+                </label>
                 <label>
                     Tags:
                     <input type="text" value={recipe.tags.join(', ')} onChange={handleTagChange} />
