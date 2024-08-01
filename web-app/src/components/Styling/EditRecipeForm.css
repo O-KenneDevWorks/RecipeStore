@@ -8,28 +8,25 @@
 
 .ingredient {
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 10px; /* Adjust space between elements */
-    margin-bottom: 10px; /* Space between ingredient entries */
-    padding: 10px;
-    border: 1px solid var(--form-border-color);
-    border-radius: 5px;
+    flex-wrap: wrap; /* Allow wrapping within the container */
+    align-items: center; /* Align items vertically */
+    margin-bottom: 1rem; /* Space between each ingredient block */
+    gap: 0.5rem; /* Space between elements within the block */
 }
 
-.ingredient label, .ingredient input, .ingredient button {
-    flex-grow: 1;
-    min-width: 120px; /* Ensures that elements don't get too small */
+.ingredient label,
+.ingredient input,
+.ingredient button {
+    margin-right: 0.5rem; /* Space between elements */
+    min-width: 100px; /* Minimum width of elements */
+}
+
+.ingredient input {
+    flex-grow: 1; /* Allow input to take up available space */
 }
 
 .ingredient button {
-    padding: 8px 12px;
-    background-color: var(--button-background-color);
-    color: var(--button-text-color);
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    flex-grow: 0; /* Buttons do not grow but maintain size */
+    white-space: nowrap; /* Prevent button text from wrapping */
 }
 
 .direction {
