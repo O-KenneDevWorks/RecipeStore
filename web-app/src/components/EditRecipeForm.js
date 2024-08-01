@@ -206,9 +206,11 @@ const EditRecipe = () => {
                     Yield:
                     <input type="text" name="yield" value={recipe.yield} onChange={handleChange} />
                 </label>
+
                 <label>Image</label>
                 <input type="file" name="image" accept="image/*" onChange={handleImageChange} />
-                {imagePreview && <img src={imagePreview} alt="Recipe Preview" className="image-preview" />}
+                {recipe.image && <img src={recipe.image} alt={recipe.name} />}
+
                 <label>
                     Tags:
                     <input type="text" value={recipe.tags.join(', ')} onChange={handleTagChange} />
