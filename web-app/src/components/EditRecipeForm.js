@@ -190,19 +190,27 @@ const EditRecipe = () => {
                 </label>
 
                 <h2>Ingredients</h2>
-            {recipe.ingredients.map((ingredient, index) => (
-                <div className="ingredient" key={index}>
-                    <label>Amount:</label>
-                    <input type="text" name="amount" value={ingredient.amount} onChange={(e) => handleIngredientChange(index, e)} required />
-                    <label>Unit:</label>
-                    <input type="text" name="unit" value={ingredient.unit} onChange={(e) => handleIngredientChange(index, e)} required />
-                    <label>Name:</label>
-                    <input type="text" name="name" value={ingredient.name} onChange={(e) => handleIngredientChange(index, e)} required />
-                    <button type="button" onClick={() => moveIngredientUp(index)}>Up</button>
-                    <button type="button" onClick={() => moveIngredientDown(index)}>Down</button>
-                    <button type="button" onClick={() => removeIngredient(index)}>Remove</button>
-                </div>
-            ))}
+                {recipe.ingredients.map((ingredient, index) => (
+                    <div className="ingredient" key={index}>
+                        <div>
+                            <label>Amount:</label>
+                            <input type="text" name="amount" value={ingredient.amount} onChange={(e) => handleIngredientChange(index, e)} required />
+                        </div>
+                        <div>
+                            <label>Unit:</label>
+                            <select name="unit" value={ingredient.unit} onChange={(e) => handleIngredientChange(index, e)} required>
+                                {unitOptions.map(option => (
+                                    <option key={option.value} value={option.value}>{option.label}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <div>
+                            <label>Name:</label>
+                            <input type="text" name="name" value={ingredient.name} onChange={(e) => handleIngredientChange(index, e)} required />
+                        </div>
+                        <button type="button" onClick={() => removeIngredient(index)}>Remove</button>
+                    </div>
+                ))}
                 <button type="button" onClick={addIngredient}>Add Ingredient</button>
 
                 <h2>Directions</h2>
