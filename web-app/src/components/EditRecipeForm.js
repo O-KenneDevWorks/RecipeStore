@@ -28,6 +28,13 @@ const EditRecipe = () => {
             .catch(error => console.error('Error fetching recipe:', error));
     }, [id]);
 
+    useEffect(() => {
+        document.querySelectorAll('textarea[name="direction"]').forEach(textarea => {
+            textarea.style.height = "auto"; // Reset the height
+            textarea.style.height = `${textarea.scrollHeight}px`; // Set the height to scroll height
+        });
+    }, [recipe]); // This effect should re-run every time the recipe data changes
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setRecipe(prev => ({ ...prev, [name]: value }));
