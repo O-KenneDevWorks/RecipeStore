@@ -3,6 +3,35 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import './Styling/EditRecipeForm.css';
 
+const unitOptions = [
+    { value: 'Teaspoon', label: 'Teaspoon (tsp)' },
+    { value: 'Tablespoon', label: 'Tablespoon (tbsp)' },
+    { value: 'Fluid Ounce', label: 'Fluid Ounce (fl oz)' },
+    { value: 'Cup', label: 'Cup' },
+    { value: 'Pint', label: 'Pint (pt)' },
+    { value: 'Quart', label: 'Quart (qt)' },
+    { value: 'Gallon', label: 'Gallon (gal)' },
+    { value: 'Milliliter', label: 'Milliliter (ml)' },
+    { value: 'Liter', label: 'Liter (l)' },
+    { value: 'Deciliter', label: 'Deciliter (dl)' },
+    { value: 'Ounce', label: 'Ounce (oz)' },
+    { value: 'Pound', label: 'Pound (lb)' },
+    { value: 'Gram', label: 'Gram (g)' },
+    { value: 'Kilogram', label: 'Kilogram (kg)' },
+    { value: 'Inch', label: 'Inch (in)' },
+    { value: 'Centimeter', label: 'Centimeter (cm)' },
+    { value: 'Millimeter', label: 'Millimeter (mm)' },
+    { value: 'Each', label: 'Each' },
+    { value: 'Dozen', label: 'Dozen' },
+    { value: 'Pinch', label: 'Pinch' },
+    { value: 'Dash', label: 'Dash' },
+    { value: 'Smidgen', label: 'Smidgen' },
+    { value: 'Handful', label: 'Handful' },
+    { value: 'Bunch', label: 'Bunch' },
+    { value: 'Degrees Fahrenheit', label: 'Degrees Fahrenheit (°F)' },
+    { value: 'Degrees Celsius', label: 'Degrees Celsius (°C)' }
+];
+
 const EditRecipe = () => {
     const [recipe, setRecipe] = useState({
         name: '',
@@ -208,6 +237,8 @@ const EditRecipe = () => {
                             <label>Name:</label>
                             <input type="text" name="name" value={ingredient.name} onChange={(e) => handleIngredientChange(index, e)} required />
                         </div>
+                        <button type="button" onClick={() => moveIngredientUp(index)}>Up</button>
+                        <button type="button" onClick={() => moveIngredientDown(index)}>Down</button>
                         <button type="button" onClick={() => removeIngredient(index)}>Remove</button>
                     </div>
                 ))}
