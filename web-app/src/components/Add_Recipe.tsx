@@ -1,6 +1,6 @@
-import React, { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import axios from 'axios';
-import Select, { SingleValue } from 'react-select';
+import Select from 'react-select';
 import imageCompression from 'browser-image-compression';
 import './Styling/AddRecipeForm.css';
 
@@ -131,7 +131,7 @@ const AddRecipeForm = () => {
         }
     };
 
-    const moveIngredient = (index, direction) => {
+    const moveIngredient = (index: number, direction: 'up' | 'down'): void => {
         const newIngredients = [...recipeData.ingredients];
         if (direction === 'up' && index > 0) {
             [newIngredients[index], newIngredients[index - 1]] = [newIngredients[index - 1], newIngredients[index]];
@@ -153,7 +153,7 @@ const AddRecipeForm = () => {
         }));
     };
 
-    const handleIngredientChange = (index, field, value) => {
+    const handleIngredientChange = (index: number, field: keyof Ingredient, value: string): void => {
         const newIngredients = recipeData.ingredients.map((ingredient, i) => {
             if (i === index) {
                 return { ...ingredient, [field]: value };
@@ -163,7 +163,7 @@ const AddRecipeForm = () => {
         setRecipeData({ ...recipeData, ingredients: newIngredients });
     };
 
-    const handleRemoveIngredient = (index) => {
+    const handleRemoveIngredient = (index: number): void => {
         const newIngredients = recipeData.ingredients.filter((_, i) => i !== index);
         setRecipeData({ ...recipeData, ingredients: newIngredients });
     };
@@ -175,7 +175,7 @@ const AddRecipeForm = () => {
         });
     };
 
-    const moveDirection = (index, direction) => {
+    const moveDirection = (index: number, direction: 'up' | 'down'): void => {
         const newDirections = [...recipeData.directions];
         if (direction === 'up' && index > 0) {
             [newDirections[index], newDirections[index - 1]] = [newDirections[index - 1], newDirections[index]];
@@ -185,7 +185,7 @@ const AddRecipeForm = () => {
         setRecipeData({ ...recipeData, directions: newDirections });
     };
 
-    const handleDirectionChange = (index, value) => {
+    const handleDirectionChange = (index: number, value: string): void => {
         const newDirections = recipeData.directions.map((direction, i) => {
             if (i === index) {
                 return value;
@@ -195,13 +195,14 @@ const AddRecipeForm = () => {
         setRecipeData({ ...recipeData, directions: newDirections });
     };
 
-    const handleRemoveDirection = (index) => {
+    const handleRemoveDirection = (index: number): void => {
         const newDirections = recipeData.directions.filter((_, i) => i !== index);
         setRecipeData({ ...recipeData, directions: newDirections });
     };
 
-    const handleTagChange = (e) => {
-        setRecipeData({ ...recipeData, tags: e.target.value.split(',').map(tag => tag.trim()) });
+    const handleTagChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        const tags = e.target.value.split(',').map(tag => tag.trim());
+        setRecipeData({ ...recipeData, tags });
     };
 
     return (
@@ -275,7 +276,13 @@ const AddRecipeForm = () => {
                     <Select
                         options={unitOptions}
                         value={unitOptions.find(option => option.value === ingredient.unit)}
-                        onChange={(option) => handleIngredientChange(index, 'unit', option.value)}
+                        onChange={(option) => {
+                            if (option !== null) {
+                                handleIngredientChange(index, 'unit', option.value);
+                            } else {
+                                handleIngredientChange(index, 'unit', '');
+                            }
+                        }}
                         placeholder="Unit"
                         required
                     />
