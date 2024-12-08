@@ -1,19 +1,25 @@
-import React, { useState } from 'react';
+import { useState, ChangeEvent, FormEvent } from 'react';
 import axios from 'axios';
 
+interface PantryItem {
+    name: string;
+    amount: string;
+    unit: string;
+}
+
 const AddPantryItem = () => {
-    const [pantryItem, setPantryItem] = useState({
+    const [pantryItem, setPantryItem] = useState<PantryItem>({
         name: '',
         amount: '',
         unit: ''
     });
 
-    const handleChange = (e) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setPantryItem({ ...pantryItem, [name]: value });
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
             const response = await axios.post('http://10.0.0.85:3000/pantry', pantryItem);
