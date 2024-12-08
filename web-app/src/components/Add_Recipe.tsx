@@ -1,10 +1,36 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
 import axios from 'axios';
-import Select from 'react-select';
+import Select, { SingleValue } from 'react-select';
 import imageCompression from 'browser-image-compression';
 import './Styling/AddRecipeForm.css';
 
-const unitOptions = [
+interface UnitOption {
+    value: string;
+    label: string;
+}
+
+interface Ingredient {
+    amount: string;
+    unit: string;
+    name: string;
+}
+
+interface RecipeData {
+    name: string;
+    ingredients: Ingredient[];
+    directions: string[];
+    prepTime: string;
+    cookTime: string;
+    totalTime: string;
+    servings: string;
+    yield: string;
+    image: string;
+    tags: string[];
+    course: string;
+    cuisine: string;
+}
+
+const unitOptions: UnitOption[] = [
     { value: 'Teaspoon', label: 'Teaspoon (tsp)' },
     { value: 'Tablespoon', label: 'Tablespoon (tbsp)' },
     { value: 'Fluid Ounce', label: 'Fluid Ounce (fl oz)' },
@@ -34,7 +60,7 @@ const unitOptions = [
 ];
 
 const AddRecipeForm = () => {
-    const [recipeData, setRecipeData] = useState({
+    const [recipeData, setRecipeData] = useState<RecipeData>({
         name: '',
         ingredients: [{ amount: '', unit: '', name: '' }],
         directions: [''],
@@ -48,15 +74,15 @@ const AddRecipeForm = () => {
         course: '',
         cuisine: ''
     });
-    const [imagePreview, setImagePreview] = useState('');
+    const [imagePreview, setImagePreview] = useState<string>('');
 
-    const handleChange = (e) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setRecipeData({ ...recipeData, [name]: value });
     };
 
-    const handleImageChange = async (e) => {
-        const file = e.target.files[0];
+    const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files ? e.target.files[0] : null;
         if (file) {
             const options = {
                 maxSizeMB: 1,
@@ -67,8 +93,11 @@ const AddRecipeForm = () => {
                 const compressedFile = await imageCompression(file, options);
                 const reader = new FileReader();
                 reader.onloadend = () => {
-                    setImagePreview(reader.result);
-                    setRecipeData({ ...recipeData, image: reader.result });
+                    const result = reader.result;
+                    if (typeof result === 'string') {
+                        setImagePreview(result);
+                        setRecipeData({ ...recipeData, image: result });
+                    }
                 };
                 reader.readAsDataURL(compressedFile);
             } catch (error) {
@@ -77,7 +106,7 @@ const AddRecipeForm = () => {
         }
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
             const response = await axios.post('http://10.0.0.85:3000/recipes', recipeData);
