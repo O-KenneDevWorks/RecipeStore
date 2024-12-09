@@ -1,7 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import './Styling/EditRecipeForm.css';
+
+interface Ingredient {
+    amount: string;
+    unit: string;
+    name: string;
+}
+
+interface Recipe {
+    name: string;
+    ingredients: Ingredient[];
+    directions: string[];
+    prepTime: string;
+    cookTime: string;
+    totalTime: string;
+    servings: string;
+    yield: string;
+    image: string;
+    tags: string[];
+    course: string;
+    cuisine?: string; // Make cuisine optional if it's not always provided
+}
 
 const unitOptions = [
     { value: 'Teaspoon', label: 'Teaspoon (tsp)' },
@@ -33,7 +54,7 @@ const unitOptions = [
 ];
 
 const EditRecipe = () => {
-    const [recipe, setRecipe] = useState({
+    const [recipe, setRecipe] = useState<Recipe>({
         name: '',
         ingredients: [{ amount: '', unit: '', name: '' }],
         directions: [''],
@@ -43,8 +64,8 @@ const EditRecipe = () => {
         servings: '',
         yield: '',
         image: '',
-        tags: [],
-        course: ''
+        tags: [],  // This should now be inferred as string[]
+        course: '',
     });
     const { id } = useParams();
     const navigate = useNavigate(); // Hook to navigate programmatically
@@ -58,36 +79,36 @@ const EditRecipe = () => {
     }, [id]);
 
     useEffect(() => {
-        document.querySelectorAll('textarea[name="direction"]').forEach(textarea => {
-            textarea.style.height = "auto"; // Reset the height
-            textarea.style.height = `${textarea.scrollHeight}px`; // Set the height to scroll height
+        document.querySelectorAll<HTMLTextAreaElement>('textarea[name="direction"]').forEach(textarea => {
+            textarea.style.height = "auto";
+            textarea.style.height = `${textarea.scrollHeight}px`;
         });
-    }, [recipe]); // This effect should re-run every time the recipe data changes
+    }, [recipe]);
 
-    const handleChange = (e) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setRecipe(prev => ({ ...prev, [name]: value }));
     };
 
-    const handleAutoSize = (e) => {
-        e.target.style.height = 'inherit'; // Reset the height so the calculation is correct
-        e.target.style.height = `${e.target.scrollHeight}px`; // Set the height to scroll height
+    const handleAutoSize = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        e.target.style.height = 'inherit';
+        e.target.style.height = `${e.target.scrollHeight}px`;
     };
 
-    const handleIngredientChange = (index, e) => {
+    const handleIngredientChange = (index: number, e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         const newIngredients = [...recipe.ingredients];
-        newIngredients[index][name] = value;
+        newIngredients[index] = {...newIngredients[index], [name]: value};
         setRecipe(prev => ({ ...prev, ingredients: newIngredients }));
     };
 
-    const handleDirectionChange = (index, e) => {
+    const handleDirectionChange = (index: number, value: string) => {
         const newDirections = [...recipe.directions];
-        newDirections[index] = e.target.value;
+        newDirections[index] = value;
         setRecipe(prev => ({ ...prev, directions: newDirections }));
     };
 
-    const handleTagChange = (e) => {
+    const handleTagChange = (e: ChangeEvent<HTMLInputElement>) => {
         const tags = e.target.value.split(',').map(tag => tag.trim());
         setRecipe(prev => ({ ...prev, tags }));
     };
@@ -96,7 +117,7 @@ const EditRecipe = () => {
         setRecipe(prev => ({ ...prev, ingredients: [...prev.ingredients, { amount: '', unit: '', name: '' }] }));
     };
 
-    const removeIngredient = (index) => {
+    const removeIngredient = (index: number) => {
         const newIngredients = [...recipe.ingredients];
         newIngredients.splice(index, 1);
         setRecipe(prev => ({ ...prev, ingredients: newIngredients }));
@@ -106,48 +127,48 @@ const EditRecipe = () => {
         setRecipe(prev => ({ ...prev, directions: [...prev.directions, ''] }));
     };
 
-    const removeDirection = (index) => {
+    const removeDirection = (index: number) => {
         const newDirections = [...recipe.directions];
         newDirections.splice(index, 1);
         setRecipe(prev => ({ ...prev, directions: newDirections }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         axios.put(`http://10.0.0.85:3000/recipes/${id}`, recipe)
             .then(() => navigate(`/recipes/${id}`)) // Redirect to the recipe detail page
             .catch(error => console.error('Error updating recipe:', error));
     };
 
-    const moveItem = (arr, fromIndex, toIndex) => {
+    const moveItem = <T,>(arr: T[], fromIndex: number, toIndex: number): T[] => {
         const item = arr[fromIndex];
         const newArr = arr.filter((_, index) => index !== fromIndex);
         newArr.splice(toIndex, 0, item);
         return newArr;
     };
     
-    const moveIngredientUp = (index) => {
+    const moveIngredientUp = (index: number) => {
         if (index > 0) {
             const newIngredients = moveItem(recipe.ingredients, index, index - 1);
             setRecipe(prev => ({ ...prev, ingredients: newIngredients }));
         }
     };
     
-    const moveIngredientDown = (index) => {
+    const moveIngredientDown = (index: number) => {
         if (index < recipe.ingredients.length - 1) {
             const newIngredients = moveItem(recipe.ingredients, index, index + 1);
             setRecipe(prev => ({ ...prev, ingredients: newIngredients }));
         }
     };
     
-    const moveDirectionUp = (index) => {
+    const moveDirectionUp = (index: number) => {
         if (index > 0) {
             const newDirections = moveItem(recipe.directions, index, index - 1);
             setRecipe(prev => ({ ...prev, directions: newDirections }));
         }
     };
     
-    const moveDirectionDown = (index) => {
+    const moveDirectionDown = (index: number) => {
         if (index < recipe.directions.length - 1) {
             const newDirections = moveItem(recipe.directions, index, index + 1);
             setRecipe(prev => ({ ...prev, directions: newDirections }));
