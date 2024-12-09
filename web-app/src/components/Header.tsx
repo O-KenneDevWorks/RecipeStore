@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './Styling/Header.css'
 import './Styling/Global.css';
 import './Styling/theme.css';
