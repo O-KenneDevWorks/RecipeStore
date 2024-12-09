@@ -1,6 +1,5 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import axios from 'axios';
-import Select from 'react-select';
 import imageCompression from 'browser-image-compression';
 import '../Styling/AddRecipeForm.css';
 
@@ -206,124 +205,142 @@ const AddRecipeForm = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="add-recipe-form">
-            <label>Name *</label>
-            <input type="text" name="name" value={recipeData.name} onChange={handleChange} required />
+        <div className="add-recipe-form">
+            <h1>Add Recipe</h1>
+            <form onSubmit={handleSubmit} className="add-recipe-form">
+                <label>
+                    Name *
+                    <input type="text" name="name" value={recipeData.name} onChange={handleChange} required />
+                </label>
+                <label>
+                    Prep Time
+                    <input type="text" name="prepTime" value={recipeData.prepTime} onChange={handleChange} />
+                </label>
+                <label>
+                    Cook Time
+                    <input type="text" name="cookTime" value={recipeData.cookTime} onChange={handleChange} />
+                </label>
+                <label>
+                    Total Time
+                    <input type="text" name="totalTime" value={recipeData.totalTime} onChange={handleChange} />
+                </label>
+                <label>
+                    Servings
+                    <input type="number" name="servings" value={recipeData.servings} onChange={handleChange} />
+                </label>
+                <label>
+                    Yield
+                    <input type="text" name="yield" value={recipeData.yield} onChange={handleChange} />
+                </label>
+                <label>
+                    Course:
+                    <select name="course" value={recipeData.course} onChange={handleChange} required>
+                        <option value="">Select Course</option>
+                        <option value="Main Course">Main Course</option>
+                        <option value="Side">Side</option>
+                        <option value="Salad">Salad</option>
+                        <option value="Soup">Soup</option>
+                        <option value="Appetizer">Appetizer</option>
+                        <option value="Dessert">Dessert</option>
+                        <option value="Breakfast">Breakfast</option>
+                    </select>
+                </label>
+                <label>
+                    Cuisine:
+                    <select name="cuisine" value={recipeData.cuisine} onChange={handleChange} required>
+                        <option value="">Select Cuisine</option>
+                        <option value="Italian">Italian</option>
+                        <option value="Mexican">Mexican</option>
+                        <option value="Chinese">Chinese</option>
+                        <option value="Indian">Indian</option>
+                        <option value="French">French</option>
+                        <option value="Japanese">Japanese</option>
+                        <option value="American">American</option>
+                        <option value="Thai">Thai</option>
+                    </select>
+                </label>
+                <label>Tags</label>
+                <input
+                    type="text"
+                    name="tags"
+                    value={recipeData.tags.join(', ')}
+                    onChange={handleTagChange}
+                    placeholder="Enter tags separated by commas"
+                />
 
-            <label>Prep Time</label>
-            <input type="text" name="prepTime" value={recipeData.prepTime} onChange={handleChange} />
+                <h2>Ingredients *</h2>
+                {recipeData.ingredients.map((ingredient, index) => (
+                    <div key={index} className="ingredient">
+                        <div>
+                            <label>Amount:</label>
+                            <input
+                                type="text"
+                                name="amount"
+                                value={ingredient.amount}
+                                onChange={(e) => handleIngredientChange(index, 'amount', e.target.value)}
+                                placeholder="Amount"
+                                required
+                            />
+                        </div>
+                        <div>
+                            <label>Unit:</label>
+                            <select
+                                name="unit"
+                                value={ingredient.unit} // Match the selected value with the ingredient's unit
+                                onChange={(e) => handleIngredientChange(index, 'unit', e.target.value)} // Update the state on change
+                                required
+                            >
+                                {unitOptions.map(option => (
+                                    <option key={option.value} value={option.value}>
+                                        {option.label}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                        <div>
+                            <label>Name:</label>
+                            <input
+                                type="text"
+                                name="name"
+                                value={ingredient.name}
+                                onChange={(e) => handleIngredientChange(index, 'name', e.target.value)}
+                                placeholder="Ingredient"
+                                required
+                            />
+                        </div>
+                        <button type="button" onClick={() => moveIngredient(index, 'up')}>↑</button>
+                        <button type="button" onClick={() => moveIngredient(index, 'down')}>↓</button>
+                        <button type="button" onClick={() => handleRemoveIngredient(index)}>Remove</button>
+                    </div>
+                ))}
+                <button type="button" onClick={handleAddIngredient}>Add Ingredient</button>
 
-            <label>Cook Time</label>
-            <input type="text" name="cookTime" value={recipeData.cookTime} onChange={handleChange} />
+                <h2>Directions *</h2>
+                {recipeData.directions.map((direction, index) => (
+                    <div key={index} className="direction">
+                        <label>Step {index + 1}</label>
+                        <textarea
+                            name="direction"
+                            value={direction}
+                            onChange={(e) => handleDirectionChange(index, e.target.value)}
+                            required
+                        />
+                        <div className='buttons-row'>
+                        <button type="button" onClick={() => moveDirection(index, 'up')}>↑</button>
+                        <button type="button" onClick={() => moveDirection(index, 'down')}>↓</button>
+                        <button type="button" onClick={() => handleRemoveDirection(index)}>Remove</button>
+                        </div>
+                    </div>
+                ))}
+                <button type="button" onClick={handleAddDirection}>Add Step</button>
 
-            <label>Total Time</label>
-            <input type="text" name="totalTime" value={recipeData.totalTime} onChange={handleChange} />
+                <label>Image</label>
+                <input type="file" name="image" accept="image/*" onChange={handleImageChange} />
+                {imagePreview && <img src={imagePreview} alt="Recipe Preview" className="image-preview" />}
 
-            <label>Servings</label>
-            <input type="number" name="servings" value={recipeData.servings} onChange={handleChange} />
-
-            <label>Yield</label>
-            <input type="text" name="yield" value={recipeData.yield} onChange={handleChange} />
-
-            <label>
-                Course:
-                <select name="course" value={recipeData.course} onChange={handleChange} required>
-                    <option value="">Select Course</option>
-                    <option value="Main Course">Main Course</option>
-                    <option value="Side">Side</option>
-                    <option value="Salad">Salad</option>
-                    <option value="Soup">Soup</option>
-                    <option value="Appetizer">Appetizer</option>
-                    <option value="Dessert">Dessert</option>
-                    <option value="Breakfast">Breakfast</option>
-                </select>
-            </label>
-            <label>
-                Cuisine:
-                <select name="cuisine" value={recipeData.cuisine} onChange={handleChange} required>
-                    <option value="">Select Cuisine</option>
-                    <option value="Italian">Italian</option>
-                    <option value="Mexican">Mexican</option>
-                    <option value="Chinese">Chinese</option>
-                    <option value="Indian">Indian</option>
-                    <option value="French">French</option>
-                    <option value="Japanese">Japanese</option>
-                    <option value="American">American</option>
-                    <option value="Thai">Thai</option>
-                </select>
-            </label>
-
-            <label>Tags</label>
-            <input
-                type="text"
-                name="tags"
-                value={recipeData.tags.join(', ')}
-                onChange={handleTagChange}
-                placeholder="Enter tags separated by commas"
-            />
-
-            <label>Ingredients *</label>
-            {recipeData.ingredients.map((ingredient, index) => (
-                <div key={index} className="ingredient-input">
-                    <input
-                        type="text"
-                        name="amount"
-                        value={ingredient.amount}
-                        onChange={(e) => handleIngredientChange(index, 'amount', e.target.value)}
-                        placeholder="Amount"
-                        required
-                    />
-                    <Select
-                        options={unitOptions}
-                        value={unitOptions.find(option => option.value === ingredient.unit)}
-                        onChange={(option) => {
-                            if (option !== null) {
-                                handleIngredientChange(index, 'unit', option.value);
-                            } else {
-                                handleIngredientChange(index, 'unit', '');
-                            }
-                        }}
-                        placeholder="Unit"
-                        required
-                    />
-                    <input
-                        type="text"
-                        name="name"
-                        value={ingredient.name}
-                        onChange={(e) => handleIngredientChange(index, 'name', e.target.value)}
-                        placeholder="Ingredient"
-                        required
-                    />
-                    <button type="button" onClick={() => moveIngredient(index, 'up')}>↑</button>
-                    <button type="button" onClick={() => moveIngredient(index, 'down')}>↓</button>
-                    <button type="button" onClick={() => handleRemoveIngredient(index)}>Remove</button>
-                </div>
-            ))}
-            <button type="button" onClick={handleAddIngredient}>Add Ingredient</button>
-
-            <label>Directions *</label>
-            {recipeData.directions.map((direction, index) => (
-                <div key={index} className="direction-input">
-                    <label>Step {index + 1}</label>
-                    <textarea
-                        name="direction"
-                        value={direction}
-                        onChange={(e) => handleDirectionChange(index, e.target.value)}
-                        required
-                    />
-                    <button type="button" onClick={() => moveDirection(index, 'up')}>↑</button>
-                    <button type="button" onClick={() => moveDirection(index, 'down')}>↓</button>
-                    <button type="button" onClick={() => handleRemoveDirection(index)}>Remove</button>
-                </div>
-            ))}
-            <button type="button" onClick={handleAddDirection}>Add Step</button>
-
-            <label>Image</label>
-            <input type="file" name="image" accept="image/*" onChange={handleImageChange} />
-            {imagePreview && <img src={imagePreview} alt="Recipe Preview" className="image-preview" />}
-
-            <button type="submit">Add Recipe</button>
-        </form>
+                <button type="submit">Add Recipe</button>
+            </form>
+        </div>
     );
 };
 
