@@ -3,7 +3,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import App from './App';
 import Home from './components/Home';
 import AddRecipeForm from './components/Add_Recipe';
 import ViewRecipes from './components/View_Recipes';
@@ -27,17 +26,22 @@ const router = createBrowserRouter([
       { path: "add-pantry-item", element: <AddPantryItem /> },
       { path: "pantry", element: <PantryView /> },
       { path: "random-recipe", element: <RandomRecipe /> },
-      { path: "meal-planner", element: <MealPlanner /> },
+      { path: "meal-planner", element: <MealPlanner userId="dummyUserId" /> },
       { path: "edit-recipe/:id", element: <EditRecipeForm /> },
     ],
   },
 ]);
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const rootElement = document.getElementById('root');
+
+if (!rootElement) {
+  throw new Error("Root element not found. Check your HTML file.");
+}
+
+const root = ReactDOM.createRoot(rootElement);
+
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router}>
-      <App />
-    </RouterProvider>
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
