@@ -10,8 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@apollo/client": "^3.10.6",
     "axios": "^1.7.2",
     "browser-image-compression": "^2.0.2",
+    "graphql": "^16.9.0",
     "mongodb": "^6.6.2",
     "react": "^18.3.1",
     "react-beautiful-dnd": "^13.1.1",
@@ -21,14 +23,13 @@
     "react-select": "^5.8.0",
     "react-slick": "^0.30.2",
     "slick-carousel": "^1.8.1",
-    "web-vitals": "^2.1.4",
-    "@apollo/client": "^3.10.6",
-    "graphql": "^16.9.0"
+    "web-vitals": "^2.1.4"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
+    "@types/react-slick": "^0.23.13",
     "@vitejs/plugin-react": "^4.3.1",
     "eslint": "^8.57.0",
     "eslint-plugin-react-hooks": "^4.6.2",
