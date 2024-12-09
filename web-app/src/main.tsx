@@ -3,23 +3,26 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import Home from './components/Home';
-import AddRecipeForm from './components/Add_Recipe';
-import ViewRecipes from './components/View_Recipes';
-import RecipeDetail from './components/RecipeDetail';
-import AddPantryItem from './components/AddPantryItem';
-import PantryView from './components/PantryView';
-import RandomRecipe from './components/RandomRecipe';
-import MealPlanner from './components/MealPlanner';
-import EditRecipeForm from './components/EditRecipeForm';
+import App from './App';
 
-import './components/Styling/Global.css';
+import Home from './pages/Home';
+import AddRecipeForm from './pages/Add_Recipe';
+import ViewRecipes from './pages/View_Recipes';
+import RecipeDetail from './pages/RecipeDetail';
+import AddPantryItem from './pages/AddPantryItem';
+import PantryView from './pages/PantryView';
+import RandomRecipe from './pages/RandomRecipe';
+import MealPlanner from './pages/MealPlanner';
+import EditRecipeForm from './pages/EditRecipeForm';
+
+import './Styling/Global.css';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
+    element: <App />,
     children: [
+      { index: true, element: <Home /> },
       { path: "add-recipe", element: <AddRecipeForm /> },
       { path: "view-recipes", element: <ViewRecipes /> },
       { path: "recipes/:id", element: <RecipeDetail /> },
@@ -30,7 +33,11 @@ const router = createBrowserRouter([
       { path: "edit-recipe/:id", element: <EditRecipeForm /> },
     ],
   },
-]);
+], {
+  future: {
+    v7_startTransition: true,
+  },
+});
 
 const rootElement = document.getElementById('root');
 

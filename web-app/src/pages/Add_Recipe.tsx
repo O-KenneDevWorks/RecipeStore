@@ -2,7 +2,7 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import axios from 'axios';
 import Select from 'react-select';
 import imageCompression from 'browser-image-compression';
-import './Styling/AddRecipeForm.css';
+import '../Styling/AddRecipeForm.css';
 
 interface UnitOption {
     value: string;

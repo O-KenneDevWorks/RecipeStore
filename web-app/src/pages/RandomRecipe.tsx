@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import './Styling/RandomRecipe.css';
+import '../Styling/RandomRecipe.css';
 
 interface Ingredient {
     amount: string;

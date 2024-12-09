@@ -1,5 +1,4 @@
-import RecipeCarousel from './RecipeCarousel';  // Make sure the path is correct
-
+import RecipeCarousel from '../components/RecipeCarousel';  // Make sure the path is correct
 
 const Home = () => {
     return (

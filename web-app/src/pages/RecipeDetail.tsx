@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
-import './Styling/RecipeDetail.css';
+import '../Styling/RecipeDetail.css';
 
 interface Ingredient {
     amount: string;

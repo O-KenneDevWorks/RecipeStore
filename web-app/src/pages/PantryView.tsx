@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import './Styling/PantryView.css'
+import '../Styling/PantryView.css'
 
 interface PantryItem {
     _id: string;

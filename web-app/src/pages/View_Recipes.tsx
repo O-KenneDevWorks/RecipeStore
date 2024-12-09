@@ -1,7 +1,7 @@
 import { useEffect, useState, ChangeEvent } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import './Styling/ViewRecipes.css';
+import '../Styling/ViewRecipes.css';
 
 interface Recipe {
     _id: string;

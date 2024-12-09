@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import './Styling/Header.css'
-import './Styling/Global.css';
-import './Styling/theme.css';
+import '../Styling/Header.css'
+import '../Styling/Global.css';
+import '../Styling/theme.css';
 
 const Header = () => {
     const [theme, setTheme] = useState('light');

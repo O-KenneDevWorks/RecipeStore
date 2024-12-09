@@ -1,7 +1,7 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
-import './Styling/EditRecipeForm.css';
+import '../Styling/EditRecipeForm.css';
 
 interface Ingredient {
     amount: string;

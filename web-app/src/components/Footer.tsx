@@ -1,4 +1,4 @@
-import './Styling/Footer.css'
+import '../Styling/Footer.css'
 
 
 const Footer = () => {
