@@ -1,9 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, ChangeEvent } from 'react';
 import axios from 'axios';
 
-const MealPlanner = ({ userId }) => {
-    const [weekPlan, setWeekPlan] = useState(Array(7).fill([]));
-    const [recipes, setRecipes] = useState([]);
+interface Recipe {
+    _id: string;
+    name: string;
+}
+
+interface Props {
+    userId: string;
+}
+
+const MealPlanner = ({ userId }: Props) => {
+    const [weekPlan, setWeekPlan] = useState<string[][]>(Array(7).fill([]));
+    const [recipes, setRecipes] = useState<Recipe[]>([]);
     const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
     useEffect(() => {
@@ -15,14 +24,14 @@ const MealPlanner = ({ userId }) => {
         fetchRecipes();
     }, [userId]);
 
-    const handleAddRecipe = (dayIndex, recipeId) => {
+    const handleAddRecipe = (dayIndex: number, recipeId: string) => {
         const updatedDay = [...weekPlan[dayIndex], recipeId];
         const updatedWeekPlan = [...weekPlan];
         updatedWeekPlan[dayIndex] = updatedDay;
         setWeekPlan(updatedWeekPlan);
     };
 
-    const handleRemoveRecipe = (dayIndex, recipeIndex) => {
+    const handleRemoveRecipe = (dayIndex: number, recipeIndex: number) => {
         const updatedDay = [...weekPlan[dayIndex]];
         updatedDay.splice(recipeIndex, 1);
         const updatedWeekPlan = [...weekPlan];
@@ -30,7 +39,7 @@ const MealPlanner = ({ userId }) => {
         setWeekPlan(updatedWeekPlan);
     };
 
-    const handleRandomRecipe = (dayIndex) => {
+    const handleRandomRecipe = (dayIndex: number) => {
         const randomRecipe = recipes[Math.floor(Math.random() * recipes.length)];
         handleAddRecipe(dayIndex, randomRecipe._id);
     };
