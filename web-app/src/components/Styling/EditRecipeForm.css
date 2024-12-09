@@ -1,0 +1,76 @@
+.edit-recipe-form {
+    max-width: 800px; /* Adjust width as necessary */
+    margin: auto;
+    padding: 20px;
+    background: var(--form-background-color);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch; /* Ensures children stretch to fit the form width */
+}
+
+.ingredient {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: calc(100% - 40px); /* Subtract the total horizontal padding of the form */
+    gap: 10px;
+    margin-bottom: 1rem;
+}
+
+.ingredient input[type="text"],
+.ingredient select {
+    flex-grow: 1;
+    margin: 0 5px; /* Ensures some spacing but should be adjusted if it causes overflow */
+}
+
+.ingredient label {
+    margin-right: 5px; /* Consistent right margin for labels */
+    white-space: nowrap;
+}
+
+.ingredient button {
+    white-space: nowrap;
+}
+
+.direction {
+    display: flex;
+    flex-direction: column; /* Stack vertically */
+    margin-bottom: 1rem; /* Space between each direction block */
+}
+
+.direction label {
+    /* If you want to reduce the size of label or style it differently */
+    margin-bottom: 0.5rem; /* Space between label and textarea */
+}
+
+.direction textarea {
+    width: 100%; /* Ensures the textarea takes the full width */
+    margin-bottom: 0.5rem; /* Space between textarea and buttons */
+}
+
+.direction button {
+    margin-right: 0.5rem; /* Space between buttons */
+    width: auto; /* Allows the button to shrink/grow as per content */
+}
+
+.buttons-row {
+    display: flex; /* Align buttons in a row */
+    flex-wrap: nowrap; /* Prevent wrapping to the next line */
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.textarea {
+    width: 100%; /* Ensures the textarea takes up the full container width */
+    padding: 8px; /* Adds some padding inside the textareas */
+    box-sizing: border-box; /* Includes padding in the width calculation */
+    border: 1px solid #ccc; /* A light border for better visibility */
+    border-radius: 4px; /* Rounded corners */
+    resize: none; /* Disables resizing, remove if users should change size */
+}

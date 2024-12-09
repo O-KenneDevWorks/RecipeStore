@@ -1,0 +1,12 @@
+.header {
+    height: 50px; /* Adjust height as needed */
+    background-color: var(--background-color); /* Light grey background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for a lifted effect */
+    position: relative; /* Adjust based on layout needs */
+    z-index: 1000; /* Ensure it stays on top if needed */
+}
+
+/* Additional styles specific to content within the header space can go here */

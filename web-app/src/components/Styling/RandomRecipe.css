@@ -1,0 +1,35 @@
+.random-recipe {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background: var(--background-color);
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.random-recipe h1 {
+    margin-bottom: 20px;
+}
+
+.random-recipe p {
+    margin-bottom: 10px;
+}
+
+.random-recipe img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.random-recipe ul, .random-recipe ol {
+    text-align: left;
+    max-width: 600px;
+    width: 100%;
+}
+
+.random-recipe ul li {
+    margin-bottom: 5px;
+}
