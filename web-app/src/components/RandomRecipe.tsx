@@ -1,16 +1,37 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Styling/RandomRecipe.css';
 
+interface Ingredient {
+    amount: string;
+    unit: string;
+    name: string;
+}
+
+interface Recipe {
+    name: string;
+    image?: string;
+    prepTime: string;
+    cookTime: string;
+    totalTime: string;
+    servings: string;
+    yield: string;
+    course: string;
+    cuisine: string;
+    ingredients: Ingredient[];
+    directions: string[];
+    tags: string[];
+}
+
 const RandomRecipe = () => {
-    const [recipe, setRecipe] = useState(null);
-    const [error, setError] = useState(null);
+    const [recipe, setRecipe] = useState<Recipe | null>(null);
+    const [error, setError] = useState<string | null>(null);
 
     const fetchRandomRecipe = async () => {
         try {
-            const response = await axios.get('http://10.0.0.85:3000/random-recipe');
+            const response = await axios.get<Recipe>('http://10.0.0.85:3000/random-recipe');
             setRecipe(response.data);
-        } catch (error) {
+        } catch (error: any) {
             setError(error.response?.data?.error || 'Error fetching random recipe');
         }
     };
