@@ -1,13 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, ChangeEvent } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './Styling/ViewRecipes.css';
 
+interface Recipe {
+    _id: string;
+    name: string;
+    tags: string[];
+    course: string;
+    cuisine: string;
+}
+
 const ViewRecipes = () => {
-    const [recipes, setRecipes] = useState([]);
-    const [selectedTag, setSelectedTag] = useState('');
-    const [selectedCourse, setSelectedCourse] = useState('');
-    const [selectedCuisine, setSelectedCuisine] = useState('');
+    const [recipes, setRecipes] = useState<Recipe[]>([]);
+    const [selectedTag, setSelectedTag] = useState<string>('');
+    const [selectedCourse, setSelectedCourse] = useState<string>('');
+    const [selectedCuisine, setSelectedCuisine] = useState<string>('');
 
     useEffect(() => {
         const fetchRecipes = async () => {
@@ -22,15 +30,15 @@ const ViewRecipes = () => {
         fetchRecipes();
     }, []);
 
-    const handleTagChange = (e) => {
+    const handleTagChange = (e: ChangeEvent<HTMLSelectElement>) => {
         setSelectedTag(e.target.value);
     };
 
-    const handleCourseChange = (e) => {
+    const handleCourseChange = (e: ChangeEvent<HTMLSelectElement>) => {
         setSelectedCourse(e.target.value);
     };
 
-    const handleCuisineChange = (e) => {
+    const handleCuisineChange = (e: ChangeEvent<HTMLSelectElement>) => {
         setSelectedCuisine(e.target.value);
     };
 

@@ -1,11 +1,33 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
 import './Styling/RecipeDetail.css';
 
+interface Ingredient {
+    amount: string;
+    unit: string;
+    name: string;
+}
+
+interface Recipe {
+    _id: string;
+    name: string;
+    image?: string;
+    prepTime: string;
+    cookTime: string;
+    totalTime: string;
+    servings: string;
+    yield: string;
+    course: string;
+    cuisine: string;
+    tags?: string[];
+    ingredients: Ingredient[];
+    directions: string[];
+}
+
 const RecipeDetail = () => {
-    const { id } = useParams();
-    const [recipe, setRecipe] = useState(null);
+    const { id } = useParams<{ id: string }>();
+    const [recipe, setRecipe] = useState<Recipe | null>(null);
 
     console.log('Recipe ID: ', id);
 
