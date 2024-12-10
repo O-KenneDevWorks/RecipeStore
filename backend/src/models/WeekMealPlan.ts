@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 const mealSchema = new mongoose.Schema({
     dayOfWeek: String,
@@ -14,4 +14,5 @@ const weekMealPlanSchema = new mongoose.Schema({
 });
 
 const WeekMealPlan = mongoose.model('WeekMealPlan', weekMealPlanSchema);
-module.exports = WeekMealPlan;
+
+export default WeekMealPlan;

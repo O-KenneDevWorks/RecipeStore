@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 const PantryItemSchema = new mongoose.Schema({
     name: {
@@ -15,4 +15,6 @@ const PantryItemSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('PantryItem', PantryItemSchema)
+const PantryItem = mongoose.model('PantryItem', PantryItemSchema)
+
+export default PantryItem;
