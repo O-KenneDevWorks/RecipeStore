@@ -22,12 +22,13 @@ import WeekMealPlan from './models/WeekMealPlan.js';
 const app = express();
 
 app.use(cors());
-const corsOptions = {
-    origin: 'http://10.0.0.101:3000', // Allow specific origin
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Allowed methods
-    credentials: true, // Allow cookies
-};
-app.use(cors(corsOptions));
+
+// const corsOptions = {
+//     origin: ['http://localhost:3000', 'http://10.0.0.101:3000'], // Allow specific origin
+//     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Allowed methods
+//     credentials: true, // Allow cookies
+// };
+// app.use(cors(corsOptions));
 
 // const port = 3000;
 const PORT = process.env.PORT || 3001;
