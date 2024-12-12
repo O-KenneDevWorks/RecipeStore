@@ -34,7 +34,7 @@ const RecipeDetail = () => {
     useEffect(() => {
         const fetchRecipe = async () => {
             try {
-                const response = await axios.get(`http://10.0.0.85:3000/recipes/${id}`);
+                const response = await axios.get(`http://localhost:3001/recipes/${id}`);
                 setRecipe(response.data);
             } catch (error) {
                 console.error('Error fetching recipe:', error);

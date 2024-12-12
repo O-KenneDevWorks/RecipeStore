@@ -29,7 +29,7 @@ const RandomRecipe = () => {
 
     const fetchRandomRecipe = async () => {
         try {
-            const response = await axios.get<Recipe>('http://10.0.0.85:3000/random-recipe');
+            const response = await axios.get<Recipe>('http://localhost:3001/random-recipe');
             setRecipe(response.data);
         } catch (error: any) {
             setError(error.response?.data?.error || 'Error fetching random recipe');
