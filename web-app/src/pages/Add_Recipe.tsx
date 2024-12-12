@@ -108,7 +108,7 @@ const AddRecipeForm = () => {
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://10.0.0.85:3000/recipes', recipeData);
+            const response = await axios.post('http://localhost:3001/recipes', recipeData);
             console.log('Recipe added:', response.data);
             setRecipeData({
                 name: '',

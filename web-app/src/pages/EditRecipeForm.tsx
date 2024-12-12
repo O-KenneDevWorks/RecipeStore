@@ -71,7 +71,7 @@ const EditRecipe = () => {
     const navigate = useNavigate(); // Hook to navigate programmatically
 
     useEffect(() => {
-        axios.get(`http://10.0.0.85:3000/recipes/${id}`)
+        axios.get(`http://localhost:3001/recipes/${id}`)
             .then(response => {
                 setRecipe(response.data);
             })
@@ -135,7 +135,7 @@ const EditRecipe = () => {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        axios.put(`http://10.0.0.85:3000/recipes/${id}`, recipe)
+        axios.put(`http://localhost:3001/recipes/${id}`, recipe)
             .then(() => navigate(`/recipes/${id}`)) // Redirect to the recipe detail page
             .catch(error => console.error('Error updating recipe:', error));
     };

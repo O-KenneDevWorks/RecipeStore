@@ -2,9 +2,12 @@ import express from 'express';
 import mongoose from 'mongoose';
 // import fs from 'fs';
 // import path from 'path';
-// import cors from 'cors';
+import cors from 'cors';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
 
 // Load environment variables
 dotenv.config();
@@ -17,16 +20,34 @@ import Recipe from './models/Recipe.js';
 import WeekMealPlan from './models/WeekMealPlan.js';
 
 const app = express();
+
+app.use(cors());
+
+// const corsOptions = {
+//     origin: ['http://localhost:3000', 'http://10.0.0.101:3000'], // Allow specific origin
+//     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Allowed methods
+//     credentials: true, // Allow cookies
+// };
+// app.use(cors(corsOptions));
+
 // const port = 3000;
 const PORT = process.env.PORT || 3001;
 
 const TEST_USER_ID = '1234567890abcdef12345678'; // Example ObjectId
 
-app.use(bodyParser.json({ limit: '10mb' }));
-app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
 // app.use(cors());
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
+
+
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const viteBuildPath = path.join(__dirname, '../web-app/dist');
+
+app.use(express.static(viteBuildPath));
 
 // DB Config
 // const db = require('./config/keys').mongoURI;
@@ -34,8 +55,8 @@ app.use(bodyParser.json());
 mongoose.connect('mongodb://10.0.0.85:27017/recipeStore', {
 
 })
-.then(() => console.log('Connected to MongoDB'))
-.catch(err => console.error('Failed to connect to MongoDB', err));
+    .then(() => console.log('Connected to MongoDB'))
+    .catch(err => console.error('Failed to connect to MongoDB', err));
 
 // Routes
 // app.use('/api/users', users);
@@ -46,9 +67,6 @@ mongoose.connect('mongodb://10.0.0.85:27017/recipeStore', {
 //     cert: fs.readFileSync(path.join(__dirname, 'server.cert'))
 // };
 
-app.get('/', (_req, res) => {
-    res.send('Server running at http://10.0.0.85:3000');
-});
 
 // Route to add a pantry item
 app.post('/pantry', async (req, res) => {
@@ -141,7 +159,7 @@ app.get('/random-recipe', async (_req, res) => {
         const pantryItems = await PantryItem.find();
         const pantryIngredients = pantryItems.map(item => item.name.toLowerCase());
         const recipes = await Recipe.find();
-        const matchingRecipes = recipes.filter(recipe => 
+        const matchingRecipes = recipes.filter(recipe =>
             recipe.ingredients.some(ingredient => pantryIngredients.includes(ingredient.name.toLowerCase()))
         );
         if (matchingRecipes.length > 0) {
@@ -189,11 +207,24 @@ app.get('/mealPlan/:userId/:year/:weekOfYear', async (req, res) => {
     }
 });
 
+// if (process.env.NODE_ENV === 'production') {
+//     app.use(express.static(path.join(__dirname, '../client/dist')));
+
+//     app.get('*', (_req: Request, res: Response) => {
+//       res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+//     });
+//   }
+
+app.use(express.static(path.join(__dirname, '../../web-app/dist')));
+
+app.get('*', (_req, res) => {
+    res.sendFile(path.join(__dirname, '../../web-app/dist/index.html'));
+});
+
 // https.createServer(httpsOptions, app).listen(3000, () => {
 //     console.log('HTTPS Server running on port 3000');
 // });
- 
+
 app.listen(PORT, () => {
     console.log(`API server running on port ${PORT}!`);
-  });
-  
+});

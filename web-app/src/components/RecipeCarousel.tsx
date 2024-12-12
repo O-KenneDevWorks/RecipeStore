@@ -18,7 +18,7 @@ const RecipeCarousel = () => {
 
     const fetchRecipes = useCallback(async () => {
         try {
-            const response = await axios.get('http://10.0.0.85:3000/recipes/previews');
+            const response = await axios.get('http://localhost:3001/recipes/previews');
             setRecipes(response.data);
             setLoading(false);
         } catch (error) {
