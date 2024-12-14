@@ -1,0 +1,17 @@
+import express from 'express';
+
+import {
+    getMealPlan,
+    createMealPlan,
+} from '../../controllers/mealPlanController.js'
+
+
+const router = express.Router();
+
+ // POST /mealPlan - save a meal plan
+router.post('/', createMealPlan);
+
+ // GET /mealPlan - Get a meal plan for a specific week
+router.get('/:userId/:year/:weekOfYear', getMealPlan);
+
+export { router as mealPlanRouter };
