@@ -16,7 +16,7 @@ const PantryView = () => {
     useEffect(() => {
         const fetchPantryItems = async () => {
             try {
-                const response = await axios.get('http://localhost:3001/pantry');
+                const response = await axios.get('http://localhost:3001/api/pantry');
                 setPantryItems(response.data); // Make sure the data received matches the PantryItem array
             } catch (error) {
                 console.error('Error fetching pantry items: ', error);

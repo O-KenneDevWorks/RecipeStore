@@ -20,7 +20,7 @@ const ViewRecipes = () => {
     useEffect(() => {
         const fetchRecipes = async () => {
             try {
-                const response = await axios.get('http://localhost:3001/recipes');
+                const response = await axios.get('http://localhost:3001/api/recipes');
                 setRecipes(response.data);
             } catch (error) {
                 console.error('Error fetching recipes:', error);

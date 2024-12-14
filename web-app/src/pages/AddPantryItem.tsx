@@ -22,7 +22,7 @@ const AddPantryItem = () => {
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:3001/pantry', pantryItem);
+            const response = await axios.post('http://localhost:3001/api/pantry', pantryItem);
             console.log('Pantry item added: ', response.data);
             // Clear form after successful submission
             setPantryItem({

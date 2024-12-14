@@ -71,7 +71,7 @@ const EditRecipe = () => {
     const navigate = useNavigate(); // Hook to navigate programmatically
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/recipes/${id}`)
+        axios.get(`http://localhost:3001/api/recipes/${id}`)
             .then(response => {
                 setRecipe(response.data);
             })
