@@ -4,12 +4,17 @@
   "description": "",
   "main": "server/dist/server.js",
   "scripts": {
-    "start": "node backend/dist/server.js",
-    "develop": "concurrently \"cd backend && npm run watch\" \"wait-on tcp:3001 && cd web-app && npm run dev\"",
-    "install": "cd backend && npm i && cd ../web-app && npm i",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm run server",
+    "start:dev": "concurrently \"npm run server:dev\" \"wait-on tcp:3001 && npm run client:dev\"",
+    "server": "cd backend && npm start",
+    "server:dev": "cd backend && npm run dev",
+    "install": "cd backend && npm i && cd ../web-app && npm i && npm run build",
+    "client:build": "cd web-app && npm run build",
+    "client:dev": "cd web-app && npm run dev",
+    "build": "cd web-app && npm run build",
     "seed": "cd backend && npm run seed",
-    "build": "concurrently \"cd backend && npm run build\" \"cd web-app && npm run build\"",
-    "render-build":"npm install && npm run build"
+    "render-build": "npm install && npm run build"
   },
   "keywords": [],
   "author": "",
