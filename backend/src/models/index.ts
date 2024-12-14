@@ -1,7 +1,7 @@
-import PantryItem from './PantryItem.js'
+// Import individual models
+import PantryItem from './PantryItem.js';
 import Recipe from './Recipe.js';
 import WeekMealPlan from './WeekMealPlan.js';
 
-export { PantryItem };
-export { Recipe };
-export { WeekMealPlan };
+// Export all models from a single object
+export { PantryItem, Recipe, WeekMealPlan };
