@@ -19,7 +19,6 @@ const AddPantryItem = () => {
         try {
             const addedItem = await addPantryItem(pantryItem);
             console.log('Pantry item added: ', addedItem);
-            // Clear form after successful submission
             setPantryItem({
                 name: '',
                 amount: '',

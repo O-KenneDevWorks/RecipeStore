@@ -12,7 +12,6 @@ const MealPlanner = ({ userId }: Props) => {
     const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
     useEffect(() => {
-        // Fetch recipes and meal plan at component mount
         const loadData = async () => {
             try {
                 const recipeData = await fetchRecipes();

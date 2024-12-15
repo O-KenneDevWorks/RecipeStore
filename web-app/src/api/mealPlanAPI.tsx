@@ -1,4 +1,3 @@
-// api/mealPlanAPI.tsx
 import { MealPlan, Recipe } from '../interfaces/MealPlan';
 
 // Fetch all recipes for a user

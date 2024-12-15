@@ -4,28 +4,6 @@ import '../Styling/RecipeDetail.css';
 import { getRecipeById } from '../api/recipeAPI';
 import { Recipe } from '../interfaces/Recipe';
 
-// interface Ingredient {
-//   amount: string;
-//   unit: string;
-//   name: string;
-// }
-
-// interface Recipe {
-//   _id: string;
-//   name: string;
-//   image?: string;
-//   prepTime: string;
-//   cookTime: string;
-//   totalTime: string;
-//   servings: string;
-//   yield: string;
-//   course: string;
-//   cuisine: string;
-//   tags?: string[];
-//   ingredients: Ingredient[];
-//   directions: string[];
-// }
-
 const RecipeDetail = () => {
   const { id } = useParams<{ id: string }>();
   const [recipe, setRecipe] = useState<Recipe | null>(null);

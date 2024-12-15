@@ -4,28 +4,6 @@ import '../Styling/EditRecipeForm.css';
 
 import { getRecipeById, updateRecipe } from '../api/recipeAPI';
 import { Recipe } from '../interfaces/Recipe';
-// import { Ingredient } from "../interfaces/Ingredient";
-
-// interface Ingredient {
-//     amount: string;
-//     unit: string;
-//     name: string;
-// }
-
-// interface Recipe {
-//     name: string;
-//     ingredients: Ingredient[];
-//     directions: string[];
-//     prepTime: string;
-//     cookTime: string;
-//     totalTime: string;
-//     servings: string;
-//     yield: string;
-//     image: string;
-//     tags: string[];
-//     course: string;
-//     cuisine?: string; // Make cuisine optional if it's not always provided
-// }
 
 const unitOptions = [
     { value: 'Teaspoon', label: 'Teaspoon (tsp)' },
@@ -72,7 +50,7 @@ const EditRecipe = () => {
         course: '',
     });
     const { id } = useParams();
-    const navigate = useNavigate(); // Hook to navigate programmatically
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchRecipe = async () => {
