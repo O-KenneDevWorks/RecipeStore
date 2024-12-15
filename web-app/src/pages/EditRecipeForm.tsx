@@ -1,28 +1,31 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
-import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import '../Styling/EditRecipeForm.css';
 
-interface Ingredient {
-    amount: string;
-    unit: string;
-    name: string;
-}
+import { getRecipeById, updateRecipe } from '../api/recipeAPI';
+import { Recipe } from '../interfaces/Recipe';
+// import { Ingredient } from "../interfaces/Ingredient";
 
-interface Recipe {
-    name: string;
-    ingredients: Ingredient[];
-    directions: string[];
-    prepTime: string;
-    cookTime: string;
-    totalTime: string;
-    servings: string;
-    yield: string;
-    image: string;
-    tags: string[];
-    course: string;
-    cuisine?: string; // Make cuisine optional if it's not always provided
-}
+// interface Ingredient {
+//     amount: string;
+//     unit: string;
+//     name: string;
+// }
+
+// interface Recipe {
+//     name: string;
+//     ingredients: Ingredient[];
+//     directions: string[];
+//     prepTime: string;
+//     cookTime: string;
+//     totalTime: string;
+//     servings: string;
+//     yield: string;
+//     image: string;
+//     tags: string[];
+//     course: string;
+//     cuisine?: string; // Make cuisine optional if it's not always provided
+// }
 
 const unitOptions = [
     { value: 'Teaspoon', label: 'Teaspoon (tsp)' },
@@ -55,6 +58,7 @@ const unitOptions = [
 
 const EditRecipe = () => {
     const [recipe, setRecipe] = useState<Recipe>({
+        _id: '',
         name: '',
         ingredients: [{ amount: '', unit: '', name: '' }],
         directions: [''],
@@ -64,19 +68,21 @@ const EditRecipe = () => {
         servings: '',
         yield: '',
         image: '',
-        tags: [],  // This should now be inferred as string[]
+        tags: [],
         course: '',
     });
     const { id } = useParams();
     const navigate = useNavigate(); // Hook to navigate programmatically
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/api/recipes/${id}`)
-            .then(response => {
-                setRecipe(response.data);
-            })
-            .catch(error => console.error('Error fetching recipe:', error));
-    }, [id]);
+        const fetchRecipe = async () => {
+          if (!id) return;
+          const data = await getRecipeById(id);
+          if (data) setRecipe(data);
+        };
+    
+        fetchRecipe();
+      }, [id]);
 
     useEffect(() => {
         document.querySelectorAll<HTMLTextAreaElement>('textarea[name="direction"]').forEach(textarea => {
@@ -133,12 +139,17 @@ const EditRecipe = () => {
         setRecipe(prev => ({ ...prev, directions: newDirections }));
     };
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        axios.put(`http://localhost:3001/recipes/${id}`, recipe)
-            .then(() => navigate(`/recipes/${id}`)) // Redirect to the recipe detail page
-            .catch(error => console.error('Error updating recipe:', error));
-    };
+        if (!id) return;
+    
+        try {
+          await updateRecipe(id, recipe);
+          navigate(`/recipes/${id}`);
+        } catch (err) {
+          console.error('Error updating recipe:', err);
+        }
+      };
 
     const moveItem = <T,>(arr: T[], fromIndex: number, toIndex: number): T[] => {
         const item = arr[fromIndex];
@@ -209,7 +220,7 @@ const EditRecipe = () => {
                 </label>
                 <label>
                     Tags:
-                    <input type="text" value={recipe.tags.join(', ')} onChange={handleTagChange} />
+                    <input type="text" value={(recipe.tags ?? []).join(', ')} onChange={handleTagChange} />
                 </label>
                 <label>
                     Course:

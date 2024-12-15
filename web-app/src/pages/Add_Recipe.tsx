@@ -1,32 +1,13 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
-import axios from 'axios';
 import imageCompression from 'browser-image-compression';
 import '../Styling/AddRecipeForm.css';
+import { addRecipe } from "../api/recipeAPI";
+import { Recipe } from "../interfaces/Recipe"
+import { Ingredient } from "../interfaces/Ingredient";
 
 interface UnitOption {
     value: string;
     label: string;
-}
-
-interface Ingredient {
-    amount: string;
-    unit: string;
-    name: string;
-}
-
-interface RecipeData {
-    name: string;
-    ingredients: Ingredient[];
-    directions: string[];
-    prepTime: string;
-    cookTime: string;
-    totalTime: string;
-    servings: string;
-    yield: string;
-    image: string;
-    tags: string[];
-    course: string;
-    cuisine: string;
 }
 
 const unitOptions: UnitOption[] = [
@@ -59,9 +40,9 @@ const unitOptions: UnitOption[] = [
 ];
 
 const AddRecipeForm = () => {
-    const [recipeData, setRecipeData] = useState<RecipeData>({
+    const [recipeData, setRecipeData] = useState<Recipe>({
         name: '',
-        ingredients: [{ amount: '', unit: '', name: '' }],
+        ingredients: [{ amount: '', unit: unitOptions[0].value, name: '' }],
         directions: [''],
         prepTime: '',
         cookTime: '',
@@ -71,7 +52,6 @@ const AddRecipeForm = () => {
         image: '',
         tags: [],
         course: '',
-        cuisine: ''
     });
     const [imagePreview, setImagePreview] = useState<string>('');
 
@@ -108,26 +88,31 @@ const AddRecipeForm = () => {
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:3001/api/recipes', recipeData);
-            console.log('Recipe added:', response.data);
-            setRecipeData({
-                name: '',
-                ingredients: [{ amount: '', unit: '', name: '' }],
-                directions: [''],
-                prepTime: '',
-                cookTime: '',
-                totalTime: '',
-                servings: '',
-                yield: '',
-                image: '',
-                tags: [],
-                course: '',
-                cuisine: ''
-            });
-            setImagePreview('');
+            const addedRecipe = await addRecipe(recipeData);
+            console.log("Recipe added:", addedRecipe);
+            resetForm();
         } catch (error) {
-            console.error('Error adding recipe:', error);
+            console.error("Error adding recipe:", error);
         }
+    };
+
+    const resetForm = () => {
+        setRecipeData({
+            _id: '',
+            name: "",
+            ingredients: [{ amount: "", unit: unitOptions[0].value, name: "" }],
+            directions: [""],
+            prepTime: "",
+            cookTime: "",
+            totalTime: "",
+            servings: "",
+            yield: "",
+            image: "",
+            tags: [],
+            course: "",
+            cuisine: "",
+        });
+        setImagePreview("");
     };
 
     const moveIngredient = (index: number, direction: 'up' | 'down'): void => {
@@ -143,7 +128,7 @@ const AddRecipeForm = () => {
     const handleAddIngredient = () => {
         const newIngredient = {
             amount: '',
-            unit: '',
+            unit: unitOptions[0].value,
             name: ''
         };
         setRecipeData(prevState => ({
@@ -263,7 +248,7 @@ const AddRecipeForm = () => {
                 <input
                     type="text"
                     name="tags"
-                    value={recipeData.tags.join(', ')}
+                    value={(recipeData.tags || []).join(", ")}
                     onChange={handleTagChange}
                     placeholder="Enter tags separated by commas"
                 />
@@ -286,8 +271,8 @@ const AddRecipeForm = () => {
                             <label>Unit:</label>
                             <select
                                 name="unit"
-                                value={ingredient.unit} // Match the selected value with the ingredient's unit
-                                onChange={(e) => handleIngredientChange(index, 'unit', e.target.value)} // Update the state on change
+                                value={ingredient.unit}
+                                onChange={(e) => handleIngredientChange(index, 'unit', e.target.value)}
                                 required
                             >
                                 {unitOptions.map(option => (
@@ -326,9 +311,9 @@ const AddRecipeForm = () => {
                             required
                         />
                         <div className='buttons-row'>
-                        <button type="button" onClick={() => moveDirection(index, 'up')}>↑</button>
-                        <button type="button" onClick={() => moveDirection(index, 'down')}>↓</button>
-                        <button type="button" onClick={() => handleRemoveDirection(index)}>Remove</button>
+                            <button type="button" onClick={() => moveDirection(index, 'up')}>↑</button>
+                            <button type="button" onClick={() => moveDirection(index, 'down')}>↓</button>
+                            <button type="button" onClick={() => handleRemoveDirection(index)}>Remove</button>
                         </div>
                     </div>
                 ))}

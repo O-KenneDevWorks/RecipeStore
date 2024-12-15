@@ -1,17 +1,12 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
-import axios from 'axios';
-
-interface PantryItem {
-    name: string;
-    amount: string;
-    unit: string;
-}
+import { addPantryItem } from '../api/pantryAPI';
+import { PantryItem } from '../interfaces/Pantry';
 
 const AddPantryItem = () => {
     const [pantryItem, setPantryItem] = useState<PantryItem>({
         name: '',
         amount: '',
-        unit: ''
+        unit: '',
     });
 
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -22,13 +17,13 @@ const AddPantryItem = () => {
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:3001/api/pantry', pantryItem);
-            console.log('Pantry item added: ', response.data);
+            const addedItem = await addPantryItem(pantryItem);
+            console.log('Pantry item added: ', addedItem);
             // Clear form after successful submission
             setPantryItem({
                 name: '',
                 amount: '',
-                unit: ''
+                unit: '',
             });
         } catch (error) {
             console.error('Error adding pantry item: ', error);
@@ -38,14 +33,34 @@ const AddPantryItem = () => {
     return (
         <form onSubmit={handleSubmit}>
             <label>Name *</label>
-            <input type="text" name="name" value={pantryItem.name} onChange={handleChange} required />
+            <input
+                type="text"
+                name="name"
+                value={pantryItem.name}
+                onChange={handleChange}
+                required
+            />
 
             <label>Amount *</label>
-            <input type='number' step="0.1" name='amount' value={pantryItem.amount} onChange={handleChange} required />
+            <input
+                type="number"
+                step="0.1"
+                name="amount"
+                value={pantryItem.amount}
+                onChange={handleChange}
+                required
+            />
 
             <label>Unit *</label>
-            <select name='unit' value={pantryItem.unit} onChange={handleChange} required>
-                <option value="" disabled>Select Unit</option>
+            <select
+                name="unit"
+                value={pantryItem.unit}
+                onChange={handleChange}
+                required
+            >
+                <option value="" disabled>
+                    Select Unit
+                </option>
                 <option value="cup">Cup</option>
                 <option value="tablespoon">Tablespoon</option>
                 <option value="teaspoon">Teaspoon</option>

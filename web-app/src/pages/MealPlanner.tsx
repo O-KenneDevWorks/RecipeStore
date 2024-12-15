@@ -1,10 +1,6 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
-
-interface Recipe {
-    _id: string;
-    name: string;
-}
+import { fetchRecipes, fetchMealPlan, saveMealPlan } from '../api/mealPlanAPI';
+import { Recipe, MealPlan } from '../interfaces/MealPlan';
 
 interface Props {
     userId: string;
@@ -16,12 +12,22 @@ const MealPlanner = ({ userId }: Props) => {
     const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
     useEffect(() => {
-        // Fetch recipes at component mount
-        const fetchRecipes = async () => {
-            const response = await axios.get(`/recipes/${userId}`);
-            setRecipes(response.data);
+        // Fetch recipes and meal plan at component mount
+        const loadData = async () => {
+            try {
+                const recipeData = await fetchRecipes();
+                setRecipes(recipeData);
+
+                const mealPlanData = await fetchMealPlan(userId);
+                if (mealPlanData) {
+                    setWeekPlan(mealPlanData.meals);
+                }
+            } catch (error) {
+                console.error('Error loading data:', error);
+            }
         };
-        fetchRecipes();
+
+        loadData();
     }, [userId]);
 
     const handleAddRecipe = (dayIndex: number, recipeId: string) => {
@@ -44,6 +50,22 @@ const MealPlanner = ({ userId }: Props) => {
         handleAddRecipe(dayIndex, randomRecipe._id);
     };
 
+    const handleSaveMealPlan = async () => {
+        const mealPlan: MealPlan = {
+            userId,
+            weekOfYear: 50,
+            year: 2024,
+            meals: weekPlan,
+        };
+
+        try {
+            await saveMealPlan(mealPlan);
+            alert('Meal plan saved successfully!');
+        } catch (error) {
+            console.error('Error saving meal plan:', error);
+        }
+    };
+
     return (
         <div className="meal-planner">
             <h1>Meal Planner</h1>
@@ -52,7 +74,7 @@ const MealPlanner = ({ userId }: Props) => {
                     <h2>{day}</h2>
                     <ul>
                         {weekPlan[index].map((recipeId, idx) => {
-                            const recipe = recipes.find(r => r._id === recipeId);
+                            const recipe = recipes.find((r) => r._id === recipeId);
                             return (
                                 <li key={idx}>
                                     {recipe ? recipe.name : 'Recipe not found'}
@@ -65,13 +87,16 @@ const MealPlanner = ({ userId }: Props) => {
                         <button onClick={() => handleRandomRecipe(index)}>Add Random Recipe</button>
                         <select onChange={(e) => handleAddRecipe(index, e.target.value)} value="">
                             <option value="">Select a Recipe</option>
-                            {recipes.map(recipe => (
-                                <option key={recipe._id} value={recipe._id}>{recipe.name}</option>
+                            {recipes.map((recipe) => (
+                                <option key={recipe._id} value={recipe._id}>
+                                    {recipe.name}
+                                </option>
                             ))}
                         </select>
                     </div>
                 </div>
             ))}
+            <button onClick={handleSaveMealPlan}>Save Meal Plan</button>
         </div>
     );
 };

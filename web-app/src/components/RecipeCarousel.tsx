@@ -1,35 +1,25 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import '../Styling/RecipeCarousel.css'; // Ensure your CSS file path is correct
-
-interface Recipe {
-    _id: string;
-    name: string;
-    image?: string;
-}
+import { getRecipePreviews } from '../api/recipeAPI';
+import { RecipePreview } from "../interfaces/Recipe";
 
 const RecipeCarousel = () => {
-    const [recipes, setRecipes] = useState<Recipe[]>([]);
+    const [recipes, setRecipes] = useState<RecipePreview[]>([]);
     const [loading, setLoading] = useState(true);
 
-    const fetchRecipes = useCallback(async () => {
-        try {
-            const response = await axios.get('http://localhost:3001/api/recipes/previews');
-            setRecipes(response.data);
-            setLoading(false);
-        } catch (error) {
-            console.error('Failed to fetch recipes:', error);
-            setLoading(false);
-        }
-    }, []);
-
     useEffect(() => {
+        const fetchRecipes = async () => {
+          const data = await getRecipePreviews();
+          setRecipes(data);
+          setLoading(false);
+        };
+    
         fetchRecipes();
-    }, [fetchRecipes]);
+      }, []);
 
     const settings = {
         dots: false,
