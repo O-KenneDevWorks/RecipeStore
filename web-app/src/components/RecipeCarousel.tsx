@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import '../Styling/RecipeCarousel.css';
 import { getRecipePreviews } from '../api/recipeAPI';
 import { RecipePreview } from "../interfaces/Recipe";
+import RecipeCard from './RecipeCard';
 
 const RecipeCarousel = () => {
     const [recipes, setRecipes] = useState<RecipePreview[]>([]);
@@ -13,13 +13,13 @@ const RecipeCarousel = () => {
 
     useEffect(() => {
         const fetchRecipes = async () => {
-          const data = await getRecipePreviews();
-          setRecipes(data);
-          setLoading(false);
+            const data = await getRecipePreviews();
+            setRecipes(data);
+            setLoading(false);
         };
-    
+
         fetchRecipes();
-      }, []);
+    }, []);
 
     const settings = {
         dots: false,
@@ -48,16 +48,13 @@ const RecipeCarousel = () => {
     return (
         <div className="carousel-container">
             <Slider {...settings}>
-                {recipes.map((recipe) => (
-                    <div key={recipe._id} className="carousel-item">
-                        <div className="carousel-item-inner">
-                            <Link to={`/recipes/${recipe._id}`}>
-                                <img src={recipe.image || 'https://via.placeholder.com/150'} alt={recipe.name} />
-                                <h3>{recipe.name}</h3>
-                            </Link>
+                {recipes
+                    .filter(recipe => recipe.image)
+                    .map((recipe) => (
+                        <div key={recipe._id} className="carousel-item">
+                            <RecipeCard {...recipe} />
                         </div>
-                    </div>
-                ))}
+                    ))}
             </Slider>
         </div>
     );
