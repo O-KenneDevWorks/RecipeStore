@@ -14,7 +14,7 @@ const ViewRecipes = () => {
   useEffect(() => {
     const fetchRecipes = async () => {
       const data = await getRecipes();
-      
+
       setRecipes(data);
     };
 
@@ -31,27 +31,6 @@ const ViewRecipes = () => {
       (selectedCourse ? recipe.course === selectedCourse : true) &&
       (selectedCuisine ? recipe.cuisine === selectedCuisine : true)
   );
-
-  // const uniqueTags = [...new Set(recipes.flatMap((recipe) => recipe.tags))];
-  // const uniqueCourses = [
-  //   'Main Course',
-  //   'Side',
-  //   'Salad',
-  //   'Soup',
-  //   'Appetizer',
-  //   'Dessert',
-  //   'Breakfast',
-  // ];
-  // const uniqueCuisine = [
-  //   'Italian',
-  //   'Mexican',
-  //   'Chinese',
-  //   'Indian',
-  //   'French',
-  //   'Japanese',
-  //   'American',
-  //   'Thai',
-  // ];
 
   return (
     <div className="view-recipes">
@@ -87,9 +66,11 @@ const ViewRecipes = () => {
 
       {/* Grid of Recipe Cards */}
       <div className="recipe-grid">
-        {filteredRecipes.map((recipe) => (
-          <RecipeCard {...(recipe as RecipePreview)} />
-        ))}
+        {filteredRecipes
+          .sort((a, b) => a.name.localeCompare(b.name)) // Sort alphabetically by 'name'
+          .map((recipe) => (
+            <RecipeCard key={recipe._id} {...(recipe as RecipePreview)} />
+          ))}
       </div>
     </div>
   );
