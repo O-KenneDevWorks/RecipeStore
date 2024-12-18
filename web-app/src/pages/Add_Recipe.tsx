@@ -159,11 +159,6 @@ const AddRecipeForm = () => {
         setRecipeData({ ...recipeData, directions: newDirections });
     };
 
-    const handleTagChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        const tags = e.target.value.split(',').map(tag => tag.trim());
-        setRecipeData({ ...recipeData, tags });
-    };
-
     return (
         <div className="add-recipe-form">
             <h1>Add Recipe</h1>
