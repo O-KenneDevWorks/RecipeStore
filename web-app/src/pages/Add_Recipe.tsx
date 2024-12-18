@@ -4,14 +4,15 @@ import '../Styling/AddRecipeForm.css';
 import { addRecipe } from "../api/recipeAPI";
 import { Recipe } from "../interfaces/Recipe"
 import { Ingredient } from "../interfaces/Ingredient";
-import { COURSE_OPTIONS, CUISINE_OPTIONS, SUGGESTED_TAGS, UnitOptions} from "../constants/options";
+import { COURSE_OPTIONS, CUISINE_OPTIONS, UnitOptions} from "../constants/options";
+import TagInput from "../components/TagInput";
 
 interface UnitOption {
     value: string;
     label: string;
 }
 
-const unitOptions = UnitOptions;
+const unitOptions: UnitOption[] = UnitOptions;
 
 const AddRecipeForm = () => {
     const [recipeData, setRecipeData] = useState<Recipe>({
@@ -213,14 +214,15 @@ const AddRecipeForm = () => {
                         ))}
                     </select>
                 </label>
-                <label>Tags</label>
+                {/* <label>Tags</label>
                 <input
                     type="text"
                     name="tags"
                     value={(recipeData.tags || []).join(", ")}
                     onChange={handleTagChange}
                     placeholder="Enter tags separated by commas"
-                />
+                /> */}
+                <TagInput recipeData={recipeData} setRecipeData={setRecipeData} />
 
                 <h2>Ingredients *</h2>
                 {recipeData.ingredients.map((ingredient, index) => (

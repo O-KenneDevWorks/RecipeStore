@@ -1,0 +1,12 @@
+.suggestions-list li:hover {
+    background-color: #f0f0f0;
+}
+
+.suggestions-list li {
+    border-bottom: 1px solid #ddd;
+}
+
+.tag-input-container {
+    width: 100%;
+    max-width: 400px;
+}
