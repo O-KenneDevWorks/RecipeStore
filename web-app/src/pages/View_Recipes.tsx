@@ -4,6 +4,7 @@ import { Recipe } from "../interfaces/Recipe"
 import RecipeCard from '../components/RecipeCard';
 import { RecipePreview } from '../interfaces/Recipe';
 import { getRecipes } from '../api/recipeAPI';
+import { COURSE_OPTIONS, CUISINE_OPTIONS } from "../constants/options";
 
 const ViewRecipes = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -50,7 +51,7 @@ const ViewRecipes = () => {
         <label>Filter by course:</label>
         <select onChange={handleCourseChange} value={selectedCourse}>
           <option value="">All</option>
-          {['Main Course', 'Side', 'Salad', 'Soup', 'Appetizer', 'Dessert', 'Breakfast'].map((course, index) => (
+          {COURSE_OPTIONS.map((course, index) => (
             <option key={index} value={course}>{course}</option>
           ))}
         </select>
@@ -58,7 +59,7 @@ const ViewRecipes = () => {
         <label>Filter by cuisine:</label>
         <select onChange={handleCuisineChange} value={selectedCuisine}>
           <option value="">All</option>
-          {['Italian', 'Mexican', 'Chinese', 'Indian', 'French', 'Japanese', 'American', 'Thai'].map((cuisine, index) => (
+          {CUISINE_OPTIONS.map((cuisine, index) => (
             <option key={index} value={cuisine}>{cuisine}</option>
           ))}
         </select>

@@ -4,40 +4,15 @@ import '../Styling/AddRecipeForm.css';
 import { addRecipe } from "../api/recipeAPI";
 import { Recipe } from "../interfaces/Recipe"
 import { Ingredient } from "../interfaces/Ingredient";
+import { COURSE_OPTIONS, CUISINE_OPTIONS, UnitOptions} from "../constants/options";
+import TagInput from "../components/TagInput";
 
 interface UnitOption {
     value: string;
     label: string;
 }
 
-const unitOptions: UnitOption[] = [
-    { value: 'Teaspoon', label: 'Teaspoon (tsp)' },
-    { value: 'Tablespoon', label: 'Tablespoon (tbsp)' },
-    { value: 'Fluid Ounce', label: 'Fluid Ounce (fl oz)' },
-    { value: 'Cup', label: 'Cup' },
-    { value: 'Pint', label: 'Pint (pt)' },
-    { value: 'Quart', label: 'Quart (qt)' },
-    { value: 'Gallon', label: 'Gallon (gal)' },
-    { value: 'Milliliter', label: 'Milliliter (ml)' },
-    { value: 'Liter', label: 'Liter (l)' },
-    { value: 'Deciliter', label: 'Deciliter (dl)' },
-    { value: 'Ounce', label: 'Ounce (oz)' },
-    { value: 'Pound', label: 'Pound (lb)' },
-    { value: 'Gram', label: 'Gram (g)' },
-    { value: 'Kilogram', label: 'Kilogram (kg)' },
-    { value: 'Inch', label: 'Inch (in)' },
-    { value: 'Centimeter', label: 'Centimeter (cm)' },
-    { value: 'Millimeter', label: 'Millimeter (mm)' },
-    { value: 'Each', label: 'Each' },
-    { value: 'Dozen', label: 'Dozen' },
-    { value: 'Pinch', label: 'Pinch' },
-    { value: 'Dash', label: 'Dash' },
-    { value: 'Smidgen', label: 'Smidgen' },
-    { value: 'Handful', label: 'Handful' },
-    { value: 'Bunch', label: 'Bunch' },
-    { value: 'Degrees Fahrenheit', label: 'Degrees Fahrenheit (°F)' },
-    { value: 'Degrees Celsius', label: 'Degrees Celsius (°C)' }
-];
+const unitOptions: UnitOption[] = UnitOptions;
 
 const AddRecipeForm = () => {
     const [recipeData, setRecipeData] = useState<Recipe>({
@@ -184,11 +159,6 @@ const AddRecipeForm = () => {
         setRecipeData({ ...recipeData, directions: newDirections });
     };
 
-    const handleTagChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        const tags = e.target.value.split(',').map(tag => tag.trim());
-        setRecipeData({ ...recipeData, tags });
-    };
-
     return (
         <div className="add-recipe-form">
             <h1>Add Recipe</h1>
@@ -221,37 +191,33 @@ const AddRecipeForm = () => {
                     Course:
                     <select name="course" value={recipeData.course} onChange={handleChange} required>
                         <option value="">Select Course</option>
-                        <option value="Main Course">Main Course</option>
-                        <option value="Side">Side</option>
-                        <option value="Salad">Salad</option>
-                        <option value="Soup">Soup</option>
-                        <option value="Appetizer">Appetizer</option>
-                        <option value="Dessert">Dessert</option>
-                        <option value="Breakfast">Breakfast</option>
+                        {COURSE_OPTIONS.map((course) => (
+                            <option key={course} value={course}>
+                                {course}
+                            </option>
+                        ))}
                     </select>
                 </label>
                 <label>
                     Cuisine:
                     <select name="cuisine" value={recipeData.cuisine} onChange={handleChange} required>
                         <option value="">Select Cuisine</option>
-                        <option value="Italian">Italian</option>
-                        <option value="Mexican">Mexican</option>
-                        <option value="Chinese">Chinese</option>
-                        <option value="Indian">Indian</option>
-                        <option value="French">French</option>
-                        <option value="Japanese">Japanese</option>
-                        <option value="American">American</option>
-                        <option value="Thai">Thai</option>
+                        {CUISINE_OPTIONS.map((cuisine) => (
+                            <option key={cuisine} value={cuisine}>
+                                {cuisine}
+                            </option>
+                        ))}
                     </select>
                 </label>
-                <label>Tags</label>
+                {/* <label>Tags</label>
                 <input
                     type="text"
                     name="tags"
                     value={(recipeData.tags || []).join(", ")}
                     onChange={handleTagChange}
                     placeholder="Enter tags separated by commas"
-                />
+                /> */}
+                <TagInput recipeData={recipeData} setRecipeData={setRecipeData} />
 
                 <h2>Ingredients *</h2>
                 {recipeData.ingredients.map((ingredient, index) => (
