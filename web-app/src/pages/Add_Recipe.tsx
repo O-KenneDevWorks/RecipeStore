@@ -4,6 +4,7 @@ import '../Styling/AddRecipeForm.css';
 import { addRecipe } from "../api/recipeAPI";
 import { Recipe } from "../interfaces/Recipe"
 import { Ingredient } from "../interfaces/Ingredient";
+import { COURSE_OPTIONS, CUISINE_OPTIONS } from "../constants/options";
 
 interface UnitOption {
     value: string;
@@ -221,27 +222,22 @@ const AddRecipeForm = () => {
                     Course:
                     <select name="course" value={recipeData.course} onChange={handleChange} required>
                         <option value="">Select Course</option>
-                        <option value="Main Course">Main Course</option>
-                        <option value="Side">Side</option>
-                        <option value="Salad">Salad</option>
-                        <option value="Soup">Soup</option>
-                        <option value="Appetizer">Appetizer</option>
-                        <option value="Dessert">Dessert</option>
-                        <option value="Breakfast">Breakfast</option>
+                        {COURSE_OPTIONS.map((course) => (
+                            <option key={course} value={course}>
+                                {course}
+                            </option>
+                        ))}
                     </select>
                 </label>
                 <label>
                     Cuisine:
                     <select name="cuisine" value={recipeData.cuisine} onChange={handleChange} required>
                         <option value="">Select Cuisine</option>
-                        <option value="Italian">Italian</option>
-                        <option value="Mexican">Mexican</option>
-                        <option value="Chinese">Chinese</option>
-                        <option value="Indian">Indian</option>
-                        <option value="French">French</option>
-                        <option value="Japanese">Japanese</option>
-                        <option value="American">American</option>
-                        <option value="Thai">Thai</option>
+                        {CUISINE_OPTIONS.map((cuisine) => (
+                            <option key={cuisine} value={cuisine}>
+                                {cuisine}
+                            </option>
+                        ))}
                     </select>
                 </label>
                 <label>Tags</label>
