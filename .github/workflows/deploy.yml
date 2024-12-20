@@ -1,0 +1,29 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Install Dependencies
+      run: |
+        cd home/lucifer/RecipeStore
+        npm install
+
+    - name: Build Application
+      run: |
+        cd home/lucifer/RecipeStore
+        npm run build
+
+    - name: Restart Application
+      run: |
+        pm2 stop RecipeStore || true
+        pm2 start backend/dist/index.js --name RecipeStore
