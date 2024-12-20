@@ -25,5 +25,6 @@ jobs:
 
     - name: Restart Application
       run: |
+        cd /home/lucifer/RecipeStore
         pm2 stop RecipeStore || true
         pm2 start backend/dist/index.js --name RecipeStore
