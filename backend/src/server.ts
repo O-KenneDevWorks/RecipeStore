@@ -44,7 +44,7 @@ const __dirname = path.dirname(__filename);
 // ==========================
 
 // Load environment variables from .env file into process.env
-dotenv.config();
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 // ==========================
 // Middleware Configuration
