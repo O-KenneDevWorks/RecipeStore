@@ -15,12 +15,12 @@ jobs:
 
     - name: Install Dependencies
       run: |
-        cd home/lucifer/RecipeStore
+        cd /home/lucifer/RecipeStore
         npm install
 
     - name: Build Application
       run: |
-        cd home/lucifer/RecipeStore
+        cd /home/lucifer/RecipeStore
         npm run build
 
     - name: Restart Application
