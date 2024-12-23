@@ -62,16 +62,19 @@ const DayPlan: React.FC<DayPlanProps> = ({
                     </div>
                 ))}
                 {selectedRecipes.sides.length < 2 && (
-                    <select onChange={(e) => onAddRecipe(dayIndex, 'side', e.target.value, selectedRecipes.sides.length)}>
-                        <option value="">Select Side</option>
-                        {recipes.map((recipe) => (
-                            <option key={recipe._id} value={recipe._id}>
-                                {recipe.name}
-                            </option>
-                        ))}
-                    </select>
+                    <div>
+                        <select onChange={(e) => onAddRecipe(dayIndex, 'side', e.target.value, selectedRecipes.sides.length)}>
+                            <option value="">Select Side</option>
+                            {recipes.map((recipe) => (
+                                <option key={recipe._id} value={recipe._id}>
+                                    {recipe.name}
+                                </option>
+                            ))}
+                        </select>
+                        
+                        <button onClick={() => onRandomRecipe(dayIndex, 'side', selectedRecipes.sides.length)}>Randomize Side</button>
+                    </div>
                 )}
-                <button onClick={() => onRandomRecipe(dayIndex, 'side', selectedRecipes.sides.length)}>Randomize Side</button>
             </div>
 
             {/* Randomize Day */}
