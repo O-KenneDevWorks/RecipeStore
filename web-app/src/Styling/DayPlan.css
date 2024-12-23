@@ -41,6 +41,7 @@
     align-items: center;
 }
 
+/* Dropdown styles */
 .meal-section select {
     width: 100%;
     padding: 8px;
@@ -48,8 +49,27 @@
     border-radius: 4px;
     margin-top: 8px;
     font-size: 1em;
-    background-color: var(--section-background-color);
-    color: var(--text-color);
+    background-color: var(--form-background-color); /* Explicitly set background */
+    color: var(--text-color); /* Explicitly set text color */
+    appearance: none; /* Ensures consistent styling across browsers */
+    /* -webkit-appearance: none; For Safari */
+    /* -moz-appearance: none; For Firefox */
+    transition: border-color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+/* Hover and Focus States */
+.meal-section select:hover,
+.meal-section select:focus {
+    border-color: var(--link-color); /* Highlight border on hover and focus */
+    background-color: var(--section-background-color); /* Optional: Adjust hover background */
+    outline: none; /* Remove default outline */
+}
+
+/* Ensure options inside dropdown are readable */
+/* Dropdown options styling */
+.meal-section select option {
+    background-color: var(--form-background-color); /* Set background for options */
+    color: var(--text-color); /* Set text color for options */
 }
 
 .meal-section button {
