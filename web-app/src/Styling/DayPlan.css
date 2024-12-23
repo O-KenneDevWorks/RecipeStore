@@ -52,8 +52,6 @@
     background-color: var(--form-background-color); /* Explicitly set background */
     color: var(--text-color); /* Explicitly set text color */
     appearance: none; /* Ensures consistent styling across browsers */
-    /* -webkit-appearance: none; For Safari */
-    /* -moz-appearance: none; For Firefox */
     transition: border-color 0.2s ease-in-out, background-color 0.2s ease-in-out;
 }
 

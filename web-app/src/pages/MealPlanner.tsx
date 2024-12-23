@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { fetchRecipes, fetchMealPlan, saveMealPlan } from '../api/mealPlanAPI';
-import { Recipe, MealPlan } from '../interfaces/MealPlan';
+import { fetchRecipes, fetchMealPlan } from '../api/mealPlanAPI';
+import { Recipe } from '../interfaces/MealPlan';
 import DayPlan from '../components/DayPlan';
 import '../Styling/MealPlanner.css'
 

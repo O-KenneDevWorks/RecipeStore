@@ -1,4 +1,3 @@
-// src/components/RandomRecipe.tsx
 import { useState, useEffect } from 'react';
 import '../Styling/RandomRecipe.css';
 import { getRandomRecipe } from '../api/recipeAPI';

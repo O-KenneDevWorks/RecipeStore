@@ -209,14 +209,7 @@ const AddRecipeForm = () => {
                         ))}
                     </select>
                 </label>
-                {/* <label>Tags</label>
-                <input
-                    type="text"
-                    name="tags"
-                    value={(recipeData.tags || []).join(", ")}
-                    onChange={handleTagChange}
-                    placeholder="Enter tags separated by commas"
-                /> */}
+                
                 <TagInput recipeData={recipeData} setRecipeData={setRecipeData} />
 
                 <h2>Ingredients *</h2>
