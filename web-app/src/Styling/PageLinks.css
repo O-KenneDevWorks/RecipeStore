@@ -2,12 +2,23 @@
     display: inline-block;
     padding: 10px 15px;
     margin: 5px;
-    background-color: #007bff;
-    color: white;
+    background-color: var(--button-background-color); /* Use button background color */
+    color: var(--button-text-color); /* Use button text color */
     text-decoration: none;
     border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
 }
 
 .page-links a:hover {
-    background-color: #0056b3;
+    background-color: var(--hover-button-background-color); /* Use hover button background color */
+    color: var(--text-color); /* Optional: Adjust text color on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .page-links a {
+        padding: 8px 12px; /* Adjust padding for smaller screens */
+        margin: 3px; /* Reduce margin for tighter spacing */
+        font-size: 0.9rem; /* Smaller font size for compact display */
+    }
 }

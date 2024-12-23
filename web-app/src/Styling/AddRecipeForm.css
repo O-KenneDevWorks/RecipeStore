@@ -1,19 +1,22 @@
 .add-recipe-form {
-    max-width: 800px; /* Adjust width as necessary */
+    max-width: 800px;
     margin: auto;
     padding: 20px;
     background: var(--form-background-color);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    color: var(--text-color);
+    border: 1px solid var(--form-border-color);
+    box-shadow: 0 2px 8px var(--carousel-shadow);
+    border-radius: 8px; /* Rounded edges */
     display: flex;
     flex-direction: column;
-    align-items: stretch; /* Ensures children stretch to fit the form width */
+    align-items: stretch;
 }
 
 .ingredient {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: calc(100% - 40px); /* Subtract the total horizontal padding of the form */
+    width: 100%;
     gap: 10px;
     margin-bottom: 1rem;
 }
@@ -21,42 +24,73 @@
 .ingredient input[type="text"],
 .ingredient select {
     flex-grow: 1;
-    margin: 0 5px; /* Ensures some spacing but should be adjusted if it causes overflow */
+    padding: 8px;
+    background: var(--input-background-color);
+    color: var(--input-text-color);
+    border: 1px solid var(--input-border-color);
+    border-radius: 4px;
 }
 
 .ingredient label {
-    margin-right: 5px; /* Consistent right margin for labels */
+    margin-right: 5px;
     white-space: nowrap;
+    color: var(--label-text-color);
 }
 
 .ingredient button {
     white-space: nowrap;
+    background: var(--button-background-color);
+    color: var(--button-text-color);
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.ingredient button:hover {
+    opacity: 0.9;
 }
 
 .direction {
     display: flex;
-    flex-direction: column; /* Stack vertically */
-    margin-bottom: 1rem; /* Space between each direction block */
+    flex-direction: column;
+    margin-bottom: 1rem;
 }
 
 .direction label {
-    /* If you want to reduce the size of label or style it differently */
-    margin-bottom: 0.5rem; /* Space between label and textarea */
+    margin-bottom: 0.5rem;
+    color: var(--label-text-color);
 }
 
 .direction textarea {
-    width: 100%; /* Ensures the textarea takes the full width */
-    margin-bottom: 0.5rem; /* Space between textarea and buttons */
+    width: 100%;
+    padding: 8px;
+    background: var(--textarea-background-color);
+    color: var(--textarea-text-color);
+    border: 1px solid var(--textarea-border-color);
+    border-radius: 4px;
+    resize: none;
+    box-sizing: border-box;
+    margin-bottom: 0.5rem;
 }
 
 .direction button {
-    margin-right: 0.5rem; /* Space between buttons */
-    width: auto; /* Allows the button to shrink/grow as per content */
+    margin-right: 0.5rem;
+    background: var(--button-background-color);
+    color: var(--button-text-color);
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.direction button:hover {
+    opacity: 0.9;
 }
 
 .buttons-row {
-    display: flex; /* Align buttons in a row */
-    flex-wrap: nowrap; /* Prevent wrapping to the next line */
+    display: flex;
+    gap: 10px;
 }
 
 .buttons {
@@ -67,10 +101,12 @@
 }
 
 .textarea {
-    width: 100%; /* Ensures the textarea takes up the full container width */
-    padding: 8px; /* Adds some padding inside the textareas */
-    box-sizing: border-box; /* Includes padding in the width calculation */
-    border: 1px solid #ccc; /* A light border for better visibility */
-    border-radius: 4px; /* Rounded corners */
-    resize: none; /* Disables resizing, remove if users should change size */
+    width: 100%;
+    padding: 8px;
+    background: var(--textarea-background-color);
+    color: var(--textarea-text-color);
+    border: 1px solid var(--textarea-border-color);
+    border-radius: 4px;
+    resize: none;
+    box-sizing: border-box;
 }

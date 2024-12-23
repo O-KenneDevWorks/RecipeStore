@@ -1,12 +1,75 @@
-.suggestions-list li:hover {
-    background-color: #f0f0f0;
+.tag-input-container {
+    width: 100%;
+    background-color: var(--form-background-color);
+    border-radius: 5px;
+    position: relative; 
+}
+
+.tag-input-container input {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    color: var(--input-text-color);
+    box-sizing: border-box;
+    margin-bottom: 8px;
+    transition: border-color 0.2s ease-in-out;
+}
+
+.tag-input-container input:focus {
+    border-color: var(--link-color);
+    outline: none;
+}
+
+.suggestions-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    background-color: var(--section-background-color);
+    border: 1px solid var(--section-border-color);
+    border-radius: 4px;
+    box-shadow: 0 2px 5px var(--card-shadow-color);
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 10;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
 }
 
 .suggestions-list li {
-    border-bottom: 1px solid #ddd;
+    padding: 8px;
+    color: var(--text-color);
+    border-bottom: 1px solid var(--section-border-color);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
 }
 
-.tag-input-container {
-    width: 100%;
-    max-width: 400px;
+.suggestions-list li:hover {
+    background-color: var(--hover-button-background-color);
+    color: var(--button-text-color);
+}
+
+.tag-item {
+    display: inline-block;
+    background-color: var(--button-background-color);
+    color: var(--button-text-color);
+    padding: 5px 10px;
+    border-radius: 15px;
+    margin: 5px;
+    font-size: 0.9em;
+    cursor: default;
+}
+
+.tag-item button {
+    background: none;
+    border: none;
+    color: var(--button-text-color);
+    margin-left: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+.tag-item button:hover {
+    color: var(--delete-button-hover-color);
 }

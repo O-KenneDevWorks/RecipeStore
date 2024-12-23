@@ -1,11 +1,11 @@
 .day-plan {
     width: 300px;
-    border: 2px solid #ccc;
+    border: 2px solid var(--card-border-color);
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px var(--card-shadow-color);
     margin: 16px;
     padding: 16px;
-    background-color: #f9f9f9;
+    background-color: var(--card-background-color);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -15,22 +15,22 @@
     text-align: center;
     font-size: 1.5em;
     margin: 0;
-    color: #333;
-    border-bottom: 2px solid #ccc;
+    color: var(--card-heading-color);
+    border-bottom: 2px solid var(--card-heading-border-color);
     padding-bottom: 8px;
 }
 
 .meal-section {
     margin: 16px 0;
     padding: 8px;
-    background-color: #fff;
-    border: 1px solid #ddd;
+    background-color: var(--section-background-color);
+    border: 1px solid var(--section-border-color);
     border-radius: 8px;
 }
 
 .meal-section h3 {
     font-size: 1.2em;
-    color: #555;
+    color: var(--section-heading-color);
     margin-bottom: 8px;
 }
 
@@ -44,17 +44,19 @@
 .meal-section select {
     width: 100%;
     padding: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--section-border-color);
     border-radius: 4px;
     margin-top: 8px;
     font-size: 1em;
+    background-color: var(--section-background-color);
+    color: var(--text-color);
 }
 
 .meal-section button {
     margin-top: 8px;
     padding: 8px 12px;
-    background-color: #007bff;
-    color: white;
+    background-color: var(--button-background-color);
+    color: var(--button-text-color);
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -62,14 +64,14 @@
 }
 
 .meal-section button:hover {
-    background-color: #0056b3;
+    background-color: var(--hover-button-background-color);
 }
 
 .day-plan button {
     margin: 8px 0;
     padding: 10px 15px;
-    background-color: #28a745;
-    color: white;
+    background-color: var(--confirm-button-background-color);
+    color: var(--button-text-color);
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -78,13 +80,13 @@
 }
 
 .day-plan button:hover {
-    background-color: #218838;
+    background-color: var(--confirm-button-hover-color);
 }
 
 .day-plan button:last-of-type {
-    background-color: #dc3545;
+    background-color: var(--delete-button-background-color);
 }
 
 .day-plan button:last-of-type:hover {
-    background-color: #c82333;
+    background-color: var(--delete-button-hover-color);
 }
