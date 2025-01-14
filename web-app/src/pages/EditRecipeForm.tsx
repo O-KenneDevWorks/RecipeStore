@@ -48,6 +48,7 @@ const EditRecipe = () => {
         image: '',
         tags: [],
         course: '',
+        notes: '',
     });
     const { id } = useParams();
     const navigate = useNavigate();
@@ -275,6 +276,15 @@ const EditRecipe = () => {
                     </div>
                 ))}
                 <button type="button" onClick={addDirection}>Add Direction</button>
+
+                <h2>Notes:</h2>
+                <div className="notes">
+                    <textarea
+                        name="notes"
+                        value={recipe.notes}
+                        onChange={handleChange}
+                    />
+                </div>
                 
                 <div className="buttons">
                     <button type="submit">Update Recipe</button>

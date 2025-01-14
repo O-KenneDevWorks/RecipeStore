@@ -65,6 +65,12 @@ const RecipeDetail = () => {
           <li key={index}>{direction}</li>
         ))}
       </ol>
+      <h2>Notes</h2>
+      {recipe.notes && (
+        <>
+          <p>{recipe.notes}</p>
+        </>
+      )}
     </div>
   );
 };
