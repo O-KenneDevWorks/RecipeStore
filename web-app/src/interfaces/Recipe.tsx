@@ -14,6 +14,7 @@ export interface Recipe {
     tags?: string[];
     ingredients: Ingredient[];
     directions: string[];
+    notes: string;
   }
 
 export interface RecipePreview {

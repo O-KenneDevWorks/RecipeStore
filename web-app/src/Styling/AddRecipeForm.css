@@ -69,9 +69,10 @@
     color: var(--textarea-text-color);
     border: 1px solid var(--textarea-border-color);
     border-radius: 4px;
-    resize: none;
     box-sizing: border-box;
     margin-bottom: 0.5rem;
+    width: 100%; /* Ensures the textarea takes the full width */
+    resize: vertical; /* Only allow the textarea to be resized vertically */
 }
 
 .direction button {
@@ -86,6 +87,28 @@
 
 .direction button:hover {
     opacity: 0.9;
+}
+
+.notes {
+    display: flex;
+    flex-direction: column; /* Stack vertically */
+    margin-bottom: 1rem; /* Space between each direction block */
+}
+
+.notes label {
+    /* If you want to reduce the size of label or style it differently */
+    margin-bottom: 0.5rem; /* Space between label and textarea */
+}
+
+.notes textarea {
+    width: 100%; /* Ensures the textarea takes the full width */
+    resize: vertical; /* Only allow the textarea to be resized vertically */
+    margin-bottom: 0.5rem; /* Space between textarea and buttons */
+}
+
+.notes button {
+    margin-right: 0.5rem; /* Space between buttons */
+    width: auto; /* Allows the button to shrink/grow as per content */
 }
 
 .buttons-row {

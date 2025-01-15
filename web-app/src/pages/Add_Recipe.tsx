@@ -27,6 +27,7 @@ const AddRecipeForm = () => {
         image: '',
         tags: [],
         course: '',
+        notes: '',
     });
     const [imagePreview, setImagePreview] = useState<string>('');
 
@@ -86,6 +87,7 @@ const AddRecipeForm = () => {
             tags: [],
             course: "",
             cuisine: "",
+            notes: "",
         });
         setImagePreview("");
     };
@@ -277,6 +279,15 @@ const AddRecipeForm = () => {
                     </div>
                 ))}
                 <button type="button" onClick={handleAddDirection}>Add Step</button>
+.
+                <h2>Notes:</h2>
+                <div className="notes">
+                    <textarea
+                        name="notes"
+                        value={recipeData.notes}
+                        onChange={handleChange}
+                    />
+                </div>
 
                 <label>Image</label>
                 <input type="file" name="image" accept="image/*" onChange={handleImageChange} />

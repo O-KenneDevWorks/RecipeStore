@@ -37,6 +37,9 @@ const RecipeSchema = new mongoose.Schema({
             required: true,
         },
     ],
+    notes: {
+        type: String,
+    },
     // Preparation time for the recipe (optional)
     prepTime: {
         type: String,
