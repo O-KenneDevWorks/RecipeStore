@@ -49,12 +49,12 @@ const MealPlanner = ({ userId }: Props) => {
                 }
                 return day;
             });
-    
+
             console.log("Updated weekPlan:", updatedWeekPlan); // Verify state update
             return updatedWeekPlan;
         });
     };
-    
+
 
     const handleRemoveRecipe = (dayIndex: number, type: 'main' | 'side', sideIndex?: number) => {
         const updatedDay = { ...weekPlan[dayIndex] };
@@ -71,7 +71,7 @@ const MealPlanner = ({ userId }: Props) => {
     const handleRandomRecipe = (dayIndex: number, type: 'main' | 'side', sideIndex?: number) => {
         const randomRecipe = recipes[Math.floor(Math.random() * recipes.length)];
         console.log(`Randomizing ${type} for day ${dayIndex}:`, randomRecipe);
-    
+
         if (type === 'main') {
             console.log(`Setting main for day ${dayIndex}`);
             handleAddRecipe(dayIndex, 'main', randomRecipe._id);
@@ -80,7 +80,7 @@ const MealPlanner = ({ userId }: Props) => {
             handleAddRecipe(dayIndex, 'side', randomRecipe._id, sideIndex);
         }
     };
-    
+
 
     const handleClearDay = (dayIndex: number) => {
         const updatedDay = { main: null, sides: [] };
@@ -89,24 +89,53 @@ const MealPlanner = ({ userId }: Props) => {
         setWeekPlan(updatedWeekPlan);
     };
 
+    const handleRandomizeWeek = () => {
+        setWeekPlan((prevWeekPlan) =>
+            prevWeekPlan.map(() => {
+                const randomMain = recipes[Math.floor(Math.random() * recipes.length)];
+                const randomSide1 = recipes[Math.floor(Math.random() * recipes.length)];
+                const randomSide2 = recipes[Math.floor(Math.random() * recipes.length)];
+
+                return {
+                    main: randomMain._id,
+                    sides: [randomSide1._id, randomSide2._id],
+                };
+            })
+        );
+    };
+
+    const handleClearWeek = () => {
+        setWeekPlan(Array(7).fill({ main: null, sides: [] }));
+    };
+
     return (
-        <div>
-            <h1>Meal Planner</h1>
-            <div className="meal-planner">
-            {daysOfWeek.map((day, index) => (
-                <DayPlan
-                    key={index}
-                    day={day}
-                    dayIndex={index}
-                    recipes={recipes}
-                    selectedRecipes={weekPlan[index]}
-                    onAddRecipe={handleAddRecipe}
-                    onRemoveRecipe={handleRemoveRecipe}
-                    onRandomRecipe={handleRandomRecipe}
-                    onClearDay={handleClearDay}
-                />
-            ))}
-        </div>
+        <div className="meal-planner">
+            <div className="header-container">
+                <h1>Meal Planner</h1>
+                <div className="week-buttons-container">
+                    <button className="week-buttons" onClick={handleRandomizeWeek}>
+                        Randomize Week
+                    </button>
+                    <button className="week-buttons" onClick={handleClearWeek}>
+                        Clear Week
+                    </button>
+                </div>
+            </div>
+            <div className="week-plan">
+                {daysOfWeek.map((day, index) => (
+                    <DayPlan
+                        key={index}
+                        day={day}
+                        dayIndex={index}
+                        recipes={recipes}
+                        selectedRecipes={weekPlan[index]}
+                        onAddRecipe={handleAddRecipe}
+                        onRemoveRecipe={handleRemoveRecipe}
+                        onRandomRecipe={handleRandomRecipe}
+                        onClearDay={handleClearDay}
+                    />
+                ))}
+            </div>
         </div>
     );
 };
