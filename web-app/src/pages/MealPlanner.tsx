@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { fetchRecipes, fetchMealPlan } from '../api/mealPlanAPI';
-import { Recipe } from '../interfaces/MealPlan';
+import { ShortRecipe } from '../interfaces/MealPlan';
+import { Recipe } from '../interfaces/Recipe'
 import DayPlan from '../components/DayPlan';
+import ShoppingList from '../components/ShoppingList';
 import '../Styling/MealPlanner.css'
 
 interface Props {
@@ -12,8 +14,10 @@ const MealPlanner = ({ userId }: Props) => {
     const [weekPlan, setWeekPlan] = useState(
         Array(7).fill({ main: null, sides: [] })
     );
-    const [recipes, setRecipes] = useState<Recipe[]>([]);
+    const [recipes, setRecipes] = useState<ShortRecipe[]>([]);
     const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    const [isShoppingListOpen, setIsShoppingListOpen] = useState(false);
+    const [shoppingList, setShoppingList] = useState<Record<string, number>>({});
 
     useEffect(() => {
         const loadData = async () => {
@@ -108,6 +112,36 @@ const MealPlanner = ({ userId }: Props) => {
         setWeekPlan(Array(7).fill({ main: null, sides: [] }));
     };
 
+    const handleShowShoppingList = () => {
+        const ingredientsMap: Record<string, number> = {};
+        weekPlan.forEach((day) => {
+            if (day.main) {
+                const mainRecipe = recipes.find((r): r is Recipe => r._id === day.main);
+                mainRecipe?.ingredients?.forEach(({ name, amount }) => {
+                    if (name && amount !== undefined) {
+                        ingredientsMap[name] = (ingredientsMap[name] || 0) + amount;
+                    }
+                });
+            }
+    
+            day.sides.forEach((sideId: string) => {
+                const sideRecipe = recipes.find((r): r is Recipe => r._id === sideId);
+                sideRecipe?.ingredients?.forEach(({ name, amount }) => {
+                    if (name && amount !== undefined) {
+                        ingredientsMap[name] = (ingredientsMap[name] || 0) + amount;
+                    }
+                });
+            });
+        });
+        setShoppingList(ingredientsMap);
+        setIsShoppingListOpen(true);
+    };
+    
+
+    const handleCloseShoppingList = () => {
+        setIsShoppingListOpen(false);
+    };
+
     return (
         <div className="meal-planner">
             <div className="header-container">
@@ -118,6 +152,9 @@ const MealPlanner = ({ userId }: Props) => {
                     </button>
                     <button className="week-buttons" onClick={handleClearWeek}>
                         Clear Week
+                    </button>
+                    <button className="week-buttons" onClick={handleShowShoppingList}>
+                        Shopping List
                     </button>
                 </div>
             </div>
@@ -136,6 +173,11 @@ const MealPlanner = ({ userId }: Props) => {
                     />
                 ))}
             </div>
+            <ShoppingList
+                isOpen={isShoppingListOpen}
+                onClose={handleCloseShoppingList}
+                shoppingList={shoppingList}
+            />
         </div>
     );
 };
