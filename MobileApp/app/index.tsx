@@ -1,9 +1,3 @@
-import { View, Text } from 'react-native';
+import Home from './Home';
 
-export default function HomePage() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Welcome to RecipeStore!</Text>
-    </View>
-  );
-}
+export default Home;

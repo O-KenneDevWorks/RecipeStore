@@ -13,9 +13,9 @@ export default function AppNavigator() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="AddRecipeForm" component={AddRecipeForm} />
-        <Stack.Screen name="ViewRecipes" component={ViewRecipes} />
-        <Stack.Screen name="RecipeDetail" component={RecipeDetail} />
+        <Stack.Screen name="Add Recipe" component={AddRecipeForm} />
+        <Stack.Screen name="View Recipes" component={ViewRecipes} />
+        <Stack.Screen name="Recipe Detail" component={RecipeDetail} />
       </Stack.Navigator>
     </NavigationContainer>
   );
