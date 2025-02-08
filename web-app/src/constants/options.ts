@@ -62,6 +62,10 @@ export const UnitOptions: UnitOption[] = [
     { value: 'Smidgen', label: 'Smidgen' },
     { value: 'Handful', label: 'Handful' },
     { value: 'Bunch', label: 'Bunch' },
+    { value: 'ToTaste', label: 'To Taste' },
+    { value: 'Small', label: 'Small' },
+    { value: 'Medium', label: 'Medium' },
+    { value: 'Large', label: 'Large' },
     { value: 'Degrees Fahrenheit', label: 'Degrees Fahrenheit (°F)' },
     { value: 'Degrees Celsius', label: 'Degrees Celsius (°C)' }
 ];
