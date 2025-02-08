@@ -4,35 +4,7 @@ import '../Styling/EditRecipeForm.css';
 
 import { getRecipeById, updateRecipe } from '../api/recipeAPI';
 import { Recipe } from '../interfaces/Recipe';
-
-const unitOptions = [
-    { value: 'Teaspoon', label: 'Teaspoon (tsp)' },
-    { value: 'Tablespoon', label: 'Tablespoon (tbsp)' },
-    { value: 'Fluid Ounce', label: 'Fluid Ounce (fl oz)' },
-    { value: 'Cup', label: 'Cup' },
-    { value: 'Pint', label: 'Pint (pt)' },
-    { value: 'Quart', label: 'Quart (qt)' },
-    { value: 'Gallon', label: 'Gallon (gal)' },
-    { value: 'Milliliter', label: 'Milliliter (ml)' },
-    { value: 'Liter', label: 'Liter (l)' },
-    { value: 'Deciliter', label: 'Deciliter (dl)' },
-    { value: 'Ounce', label: 'Ounce (oz)' },
-    { value: 'Pound', label: 'Pound (lb)' },
-    { value: 'Gram', label: 'Gram (g)' },
-    { value: 'Kilogram', label: 'Kilogram (kg)' },
-    { value: 'Inch', label: 'Inch (in)' },
-    { value: 'Centimeter', label: 'Centimeter (cm)' },
-    { value: 'Millimeter', label: 'Millimeter (mm)' },
-    { value: 'Each', label: 'Each' },
-    { value: 'Dozen', label: 'Dozen' },
-    { value: 'Pinch', label: 'Pinch' },
-    { value: 'Dash', label: 'Dash' },
-    { value: 'Smidgen', label: 'Smidgen' },
-    { value: 'Handful', label: 'Handful' },
-    { value: 'Bunch', label: 'Bunch' },
-    { value: 'Degrees Fahrenheit', label: 'Degrees Fahrenheit (°F)' },
-    { value: 'Degrees Celsius', label: 'Degrees Celsius (°C)' }
-];
+import { UnitOptions } from '../constants/options';
 
 const EditRecipe = () => {
     const [recipe, setRecipe] = useState<Recipe>({
@@ -239,7 +211,7 @@ const EditRecipe = () => {
                         <div>
                             <label>Unit:</label>
                             <select name="unit" value={ingredient.unit} onChange={(e) => handleIngredientChange(index, e)} required>
-                                {unitOptions.map(option => (
+                                {UnitOptions.map(option => (
                                     <option key={option.value} value={option.value}>{option.label}</option>
                                 ))}
                             </select>
