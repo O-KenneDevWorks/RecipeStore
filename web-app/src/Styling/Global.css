@@ -1,16 +1,33 @@
-/* Add your global styles here */
+/* General Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     background-color: var(--background-color);
     color: var(--text-color);
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth theme transitions */
     margin: 0;
     padding: 0;
 }
- 
+
+/* Links */
 a {
     color: var(--link-color);
+    text-decoration: none;
+    transition: color 0.2s ease;
 }
- 
+
+a:hover {
+    text-decoration: underline;
+    color: var(--link-hover-color, var(--link-color)); /* Fallback if hover color is not defined */
+}
+
+/* Buttons */
 button {
     background-color: var(--button-background-color);
     color: var(--button-text-color);
@@ -18,20 +35,91 @@ button {
     padding: 10px 15px;
     cursor: pointer;
     border-radius: 4px;
+    font-size: 1em;
+    transition: background-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
 }
- 
+
+button:hover {
+    opacity: 0.8;
+}
+
+button:disabled {
+    background-color: var(--form-border-color);
+    color: var(--text-color);
+    cursor: not-allowed;
+}
+
+/* Theme Toggle Button */
 button.theme-toggle {
     position: absolute;
     top: 10px;
     right: 10px;
     background-color: var(--button-background-color);
     color: var(--button-text-color);
-}
- 
-button:hover {
-    opacity: 0.8;
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 0.9em;
 }
 
+/* Main Content */
 .main-content {
-    padding-bottom: 70px; /* Adjust this value based on your footer's height */
+    padding-bottom: 70px; /* Adjust based on footer height */
+}
+
+/* Form Elements */
+input, select, textarea {
+    font-family: inherit;
+    font-size: 1em;
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid var(--form-border-color);
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--link-color);
+}
+
+/* Headers */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-color);
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+/* Utility Classes */
+.text-center {
+    text-align: center;
+}
+
+.flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.gap-10 {
+    gap: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    button.theme-toggle {
+        top: 8px;
+        right: 8px;
+        padding: 6px 10px;
+        font-size: 0.8em;
+    }
+
+    .main-content {
+        padding-bottom: 90px; /* Adjust for potentially larger footer height on mobile */
+    }
 }

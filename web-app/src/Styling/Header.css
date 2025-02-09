@@ -1,12 +1,62 @@
+/* Header Container */
 .header {
-    height: 50px; /* Adjust height as needed */
-    background-color: var(--background-color); /* Light grey background */
+    height: 60px; /* Slightly taller for better visibility */
+    background-color: var(--background-color); /* Dynamically adapts to theme */
+    color: var(--text-color); /* Matches the text color of the current theme */
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between; /* Space out logo and theme selector */
+    padding: 0 20px; /* Add padding for better alignment */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for a lifted effect */
-    position: relative; /* Adjust based on layout needs */
-    z-index: 1000; /* Ensure it stays on top if needed */
+    position: sticky; /* Stick to the top of the viewport when scrolling */
+    top: 0;
+    z-index: 1000; /* Ensure it stays above other content */
 }
 
-/* Additional styles specific to content within the header space can go here */
+/* Logo Section */
+.header .logo {
+    font-size: 1.5rem; /* Larger font for visibility */
+    font-weight: bold;
+    color: var(--text-color); /* Accent color for branding */
+    text-decoration: none;
+}
+
+.header .logo:hover {
+    color: var(--link-hover-color, var(--link-color)); /* Slight color change on hover */
+}
+
+/* Theme Selector Container */
+.header .theme-selector {
+    display: flex;
+    align-items: center; /* Ensure label and selector are on the same line */
+    gap: 10px; /* Add spacing between label and selector */
+}
+
+/* Theme Selector Dropdown */
+.header .theme-selector select {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid var(--form-border-color);
+    outline: none;
+    background-color: var(--form-background-color);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: border-color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+.header .theme-selector select:hover {
+    border-color: var(--link-color); /* Highlight border on hover */
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column; /* Stack content vertically */
+        height: auto; /* Allow height to adjust to content */
+        padding: 10px; /* Add padding for better spacing */
+    }
+
+    .header .theme-selector {
+        margin-top: 10px; /* Add spacing from other elements */
+    }
+}

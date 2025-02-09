@@ -1,7 +1,7 @@
-import { MealPlan, Recipe } from '../interfaces/MealPlan';
+import { MealPlan, ShortRecipe } from '../interfaces/MealPlan';
 
 // Fetch all recipes for a user
-export const fetchRecipes = async (): Promise<Recipe[]> => {
+export const fetchRecipes = async (): Promise<ShortRecipe[]> => {
     try {
         const response = await fetch('/api/recipes', {
             method: 'GET',

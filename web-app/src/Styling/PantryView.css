@@ -2,13 +2,19 @@
     max-width: 600px;
     margin: 20px auto;
     padding: 20px;
-    background: var(--background-color);
+    background: var(--card-background-color); /* Card background color */
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px var(--card-shadow-color); /* Card shadow color */
+    border: 1px solid var(--card-border-color); /* Card border color */
 }
 
 .pantry-view h1 {
     margin-bottom: 20px;
+    color: var(--card-heading-color); /* Heading color */
+    border-bottom: 2px solid var(--card-heading-border-color); /* Heading underline */
+    padding-bottom: 10px;
+    font-size: 1.8em;
+    text-align: center;
 }
 
 .pantry-list {
@@ -19,16 +25,34 @@
 .pantry-list li {
     margin-bottom: 10px;
     padding: 10px;
-    border: 1px solid var(--form-border-color);
+    border: 1px solid var(--section-border-color); /* Section border color */
     border-radius: 4px;
-    background-color: var(--form-background-color);
+    background-color: var(--section-background-color); /* Section background color */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pantry-list li:hover {
+    background-color: var(--hover-button-background-color); /* Hover background color */
+    box-shadow: 0 2px 6px var(--card-shadow-color); /* Add subtle shadow on hover */
+    color: var(--button-text-color); /* Text color on hover */
 }
 
 .pantry-list li a {
     text-decoration: none;
-    color: var(--link-color);
+    color: var(--link-color); /* Link color */
 }
 
 .pantry-list li a:hover {
     text-decoration: underline;
+    color: var(--navbar-link-hover-color); /* Hover link color */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .pantry-view {
+        padding: 15px;
+    }
+    .pantry-list li {
+        padding: 8px;
+    }
 }

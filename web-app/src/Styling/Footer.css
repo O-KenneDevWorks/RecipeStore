@@ -1,21 +1,45 @@
 .footer {
     height: 50px; /* Adjust height as needed */
-    background-color: var(--background-color); /* Light grey background */
+    background-color: var(--background-color); /* Themed background color */
+    color: var(--text-color); /* Themed text color */
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%; /* Ensure it spans the entire width of the viewport */
-    position: fixed; /* Fixed positioning to keep it relative to the viewport */
-    left: 0; /* Align to the left edge of the viewport */
-    bottom: -60px; /* Start just below the viewport */
-    transition: bottom 0.3s ease-in-out; /* Smooth transition for moving into view */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Shadow for aesthetics */
-    z-index: 1000; /* High z-index to ensure it's above other content */
+    width: 100%; /* Full-width footer */
+    position: fixed; /* Keep it at the bottom of the viewport */
+    left: 0; /* Align to the left edge */
+    bottom: 0; /* Fixed to the bottom of the viewport */
+    transition: bottom 0.3s ease-in-out; /* Smooth transition for movement */
+    box-shadow: 0 -2px 5px var(--card-shadow-color); /* Shadow for elevation */
+    z-index: 1000; /* High z-index to ensure it remains on top */
+    border-top: 1px solid var(--form-border-color); /* Top border for definition */
 }
 
-/* Additional styles for text or links within the footer */
-.footer p, .footer a {
-    color: #333;
+/* Styling for text and links within the footer */
+.footer p,
+.footer a {
+    color: var(--text-color); /* Use themed text color */
     text-decoration: none;
-    padding: 10px;
+    padding: 0 10px;
+    font-size: 0.9em; /* Slightly smaller text */
+    margin: 0;
+}
+
+.footer a:hover {
+    text-decoration: underline; /* Highlight links on hover */
+    color: var(--link-color); /* Themed hover link color */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .footer {
+        height: 60px; /* Slightly taller footer for smaller screens */
+        flex-wrap: wrap; /* Allow content to wrap if necessary */
+        padding: 10px;
+    }
+
+    .footer p,
+    .footer a {
+        font-size: 0.8em; /* Adjust text size for smaller screens */
+    }
 }

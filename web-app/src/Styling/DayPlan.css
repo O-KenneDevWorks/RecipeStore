@@ -1,0 +1,110 @@
+.day-plan {
+    width: 300px;
+    border: 2px solid var(--card-border-color);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px var(--card-shadow-color);
+    margin: 16px;
+    padding: 16px;
+    background-color: var(--card-background-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.day-plan h2 {
+    text-align: center;
+    font-size: 1.5em;
+    margin: 0;
+    color: var(--card-heading-color);
+    border-bottom: 2px solid var(--card-heading-border-color);
+    padding-bottom: 8px;
+}
+
+.meal-section {
+    margin: 16px 0;
+    padding: 8px;
+    background-color: var(--section-background-color);
+    border: 1px solid var(--section-border-color);
+    border-radius: 8px;
+}
+
+.meal-section h3 {
+    font-size: 1.2em;
+    color: var(--section-heading-color);
+    margin-bottom: 8px;
+}
+
+.meal-section div {
+    margin: 8px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Dropdown styles */
+.meal-section select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--section-border-color);
+    border-radius: 4px;
+    margin-top: 8px;
+    font-size: 1em;
+    background-color: var(--form-background-color); /* Explicitly set background */
+    color: var(--text-color); /* Explicitly set text color */
+    appearance: none; /* Ensures consistent styling across browsers */
+    transition: border-color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+/* Hover and Focus States */
+.meal-section select:hover,
+.meal-section select:focus {
+    border-color: var(--link-color); /* Highlight border on hover and focus */
+    background-color: var(--section-background-color); /* Optional: Adjust hover background */
+    outline: none; /* Remove default outline */
+}
+
+/* Ensure options inside dropdown are readable */
+/* Dropdown options styling */
+.meal-section select option {
+    background-color: var(--form-background-color); /* Set background for options */
+    color: var(--text-color); /* Set text color for options */
+}
+
+.meal-section button {
+    margin-top: 8px;
+    padding: 8px 12px;
+    background-color: var(--button-background-color);
+    color: var(--button-text-color);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+.meal-section button:hover {
+    background-color: var(--hover-button-background-color);
+}
+
+.day-plan button {
+    margin: 8px 0;
+    padding: 10px 15px;
+    background-color: var(--confirm-button-background-color);
+    color: var(--button-text-color);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    width: 100%;
+}
+
+.day-plan button:hover {
+    background-color: var(--confirm-button-hover-color);
+}
+
+.day-plan button:last-of-type {
+    background-color: var(--delete-button-background-color);
+}
+
+.day-plan button:last-of-type:hover {
+    background-color: var(--delete-button-hover-color);
+}

@@ -2,17 +2,27 @@
     max-width: 650px;
     margin: 20px auto;
     padding: 20px;
-    background: var(--background-color);
+    background: var(--card-background-color);
+    border: 1px solid var(--card-border-color);
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px var(--card-shadow-color);
+    color: var(--text-color);
+    box-sizing: border-box;
 }
 
 .recipe-detail h1 {
     margin-bottom: 20px;
+    color: var(--card-heading-color);
+    border-bottom: 2px solid var(--card-heading-border-color);
+    padding-bottom: 10px;
+    font-size: 2em;
+    text-align: center;
 }
 
 .recipe-detail p {
     margin-bottom: 10px;
+    line-height: 1.5;
+    color: var(--text-color);
 }
 
 .recipe-detail img {
@@ -22,14 +32,42 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px var(--card-shadow-color);
 }
 
 .recipe-detail ul, .recipe-detail ol {
     text-align: left;
     max-width: 600px;
     width: 100%;
+    padding: 10px 30px;
+    background: var(--section-background-color);
+    border: 1px solid var(--section-border-color);
+    border-radius: 4px;
+    
 }
 
-.recipe-detail ul li {
+.recipe-detail ul li, .recipe-detail ol li {
     margin-bottom: 5px;
+    color: var(--text-color);
+    line-height: 1.5;
+}
+
+.recipe-detail ul li::marker, .recipe-detail ol li::marker {
+    color: var(--link-color);
+}
+
+.recipe-detail button {
+    margin-top: 20px;
+    padding: 10px 15px;
+    background-color: var(--button-background-color);
+    color: var(--button-text-color);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.recipe-detail button:hover {
+    background-color: var(--hover-button-background-color);
 }

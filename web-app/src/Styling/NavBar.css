@@ -1,6 +1,8 @@
 .nav-bar {
-    background-color: #333;
+    background-color: var(--navbar-background-color); /* Navbar-specific background */
+    color: var(--navbar-text-color); /* Navbar-specific text color */
     padding: 10px;
+    box-shadow: 0 2px 4px var(--navbar-shadow); /* Navbar-specific shadow */
 }
 
 .nav-bar ul {
@@ -8,20 +10,26 @@
     margin: 0;
     padding: 0;
     overflow: hidden;
+    display: flex; /* Align items in a row */
+    justify-content: space-around; /* Distribute items evenly */
+    align-items: center; /* Center items vertically */
 }
 
 .nav-bar ul li {
-    float: left;
+    float: none; /* Removed float for flex compatibility */
 }
 
 .nav-bar ul li a {
     display: block;
-    color: white;
+    color: var(--navbar-link-color); /* Navbar-specific link color */
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
+    border-radius: 4px; /* Add subtle rounded corners */
+    transition: background-color 0.3s, color 0.3s; /* Smooth hover transition */
 }
 
 .nav-bar ul li a:hover {
-    background-color: #111;
+    background-color: var(--navbar-link-hover-color); /* Navbar-specific hover color */
+    color: var(--button-text-color); /* Ensure text remains readable */
 }

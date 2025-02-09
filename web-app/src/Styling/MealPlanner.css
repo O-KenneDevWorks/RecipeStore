@@ -1,32 +1,156 @@
 .meal-planner {
-    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center the entire meal planner content */
+    padding: 16px;
+    background-color: var(--background-color); /* Use themed background */
+    box-sizing: border-box;
 }
 
-.weekly-plan {
+.header-container {
     display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+    flex-wrap: wrap; /* Allow wrapping when the container is resized */
+    align-items: center;
+    justify-content: space-between; /* Distribute space between the h1 and buttons */
+    width: 100%;
+    margin-bottom: 16px;
+    gap: 16px; /* Space between elements when wrapping */
+}
+
+.header-container h1 {
+    margin: 0;
+    font-size: 2em;
+    color: var(--text-color);
+    flex: 1; /* Allow the h1 to take up available space */
+    text-align: left;
+    padding-left: 15%;
+}
+
+.week-buttons-container {
+    display: flex;
+    gap: 16px; /* Add spacing between buttons */
+    padding-right: 15%;
+    flex-wrap: wrap; /* Ensure buttons wrap onto the next line if needed */
+    justify-content: flex-end; /* Align buttons to the right on larger screens */
+}
+
+.week-buttons {
+    padding: 8px 16px;
+    background-color: var(--button-background-color);
+    color: var(--button-text-color);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s;
+}
+
+.week-buttons:hover {
+    background-color: var(--hover-button-background-color); /* Change color on hover */
+}
+
+.week-plan {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping to the next row */
+    justify-content: center; /* Center horizontally */
+    gap: 16px; /* Space between cards */
+    padding: 16px;
+    background-color: var(--background-color); /* Use themed background */
+    box-sizing: border-box;
 }
 
 .day-plan {
-    border: 1px solid #ccc;
-    padding: 10px;
-    width: 200px;
+    width: 300px; /* Set a fixed width for each day card */
+    border: 2px solid var(--form-border-color); /* Use themed border color */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px var(--carousel-shadow); /* Use themed shadow */
+    margin: 8px; /* Margin between cards */
+    padding: 16px;
+    background-color: var(--form-background-color); /* Themed card background */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
 .day-plan h2 {
-    margin-top: 0;
+    font-size: 1.5em;
+    margin-bottom: 16px;
+    color: var(--text-color); /* Themed text color */
+    border-bottom: 2px solid var(--form-border-color); /* Themed border */
+    padding-bottom: 8px;
+    width: 100%;
 }
 
-.shopping-list {
-    margin-top: 20px;
+.meal-section {
+    width: 100%;
+    margin: 16px 0;
+    padding: 8px;
+    background-color: var(--input-background-color); /* Themed input background */
+    border: 1px solid var(--input-border-color); /* Themed border color */
+    border-radius: 8px;
+    box-sizing: border-box;
 }
 
-.shopping-list ul {
-    list-style-type: none;
-    padding: 0;
+.meal-section h3 {
+    font-size: 1.2em;
+    color: var(--text-color); /* Themed text color */
+    margin-bottom: 8px;
 }
 
-.shopping-list li {
-    margin-bottom: 5px;
+.meal-section div {
+    margin: 8px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.meal-section select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--input-border-color); /* Themed border */
+    background-color: var(--input-background-color); /* Themed input background */
+    color: var(--input-text-color); /* Themed input text */
+    border-radius: 4px;
+    margin-top: 8px;
+    font-size: 1em;
+}
+
+.meal-section button {
+    margin-top: 8px;
+    padding: 8px 12px;
+    background-color: var(--button-background-color); /* Themed button background */
+    color: var(--button-text-color); /* Themed button text */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+.meal-section button:hover {
+    background-color: var(--link-color); /* Accent color on hover */
+}
+
+.day-plan button {
+    margin: 8px 0;
+    padding: 10px 15px;
+    background-color: var(--button-background-color); /* Themed button background */
+    color: var(--button-text-color); /* Themed button text */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    width: 100%;
+}
+
+.day-plan button:hover {
+    background-color: var(--link-color); /* Accent color on hover */
+}
+
+.day-plan button:last-of-type {
+    background-color: var(--button-background-color); /* Themed button background */
+}
+
+.day-plan button:last-of-type:hover {
+    background-color: var(--link-color); /* Accent color on hover */
 }
