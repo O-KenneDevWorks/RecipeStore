@@ -1,6 +1,7 @@
 export const COURSE_OPTIONS = [
     "Appetizer",
     "Breakfast",
+    "Cocktail",
     "Dessert",
     "Main Course",
     "Marinades",
