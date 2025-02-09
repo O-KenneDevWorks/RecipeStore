@@ -67,7 +67,7 @@ app.use(routes);
 // ==========================
 
 // Connect to MongoDB database using mongoose
-mongoose.connect('mongodb://10.0.0.85:27017/recipeStore', {})
+mongoose.connect(process.env.MONGODB_URI || "", {})
     .then(() => console.log('Connected to MongoDB')) // Log success message on connection
     .catch(err => console.error('Failed to connect to MongoDB', err)); // Log error if connection fails
 

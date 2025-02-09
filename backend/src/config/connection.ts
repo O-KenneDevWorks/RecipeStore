@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
 
-mongoose.connect('mongodb://127.0.0.1:27017/recipeStore');
+mongoose.connect('mongodb://10.0.0.85:27017/recipeStore');
 
 export default mongoose.connection;
