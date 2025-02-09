@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { fetchRecipes, fetchMealPlan } from '../api/mealPlanAPI';
-import { ShortRecipe } from '../interfaces/MealPlan';
+// import { ShortRecipe } from '../interfaces/MealPlan';
 import { Recipe } from '../interfaces/Recipe'
 import DayPlan from '../components/DayPlan';
 import ShoppingList from '../components/ShoppingList';
@@ -14,7 +14,7 @@ const MealPlanner = ({ userId }: Props) => {
     const [weekPlan, setWeekPlan] = useState(
         Array(7).fill({ main: null, sides: [] })
     );
-    const [recipes, setRecipes] = useState<ShortRecipe[]>([]);
+    const [recipes, setRecipes] = useState<Recipe[]>([]);
     const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     const [isShoppingListOpen, setIsShoppingListOpen] = useState(false);
     const [shoppingList, setShoppingList] = useState<Record<string, number>>({});
@@ -78,10 +78,14 @@ const MealPlanner = ({ userId }: Props) => {
 
         if (type === 'main') {
             console.log(`Setting main for day ${dayIndex}`);
-            handleAddRecipe(dayIndex, 'main', randomRecipe._id);
+            if (randomRecipe._id) {
+                handleAddRecipe(dayIndex, 'main', randomRecipe._id);
+            }
         } else if (type === 'side') {
             console.log(`Setting side ${sideIndex} for day ${dayIndex}`);
-            handleAddRecipe(dayIndex, 'side', randomRecipe._id, sideIndex);
+            if (randomRecipe._id) {
+                handleAddRecipe(dayIndex, 'side', randomRecipe._id, sideIndex);
+            }
         }
     };
 
@@ -119,7 +123,7 @@ const MealPlanner = ({ userId }: Props) => {
                 const mainRecipe = recipes.find((r): r is Recipe => r._id === day.main);
                 mainRecipe?.ingredients?.forEach(({ name, amount }) => {
                     if (name && amount !== undefined) {
-                        ingredientsMap[name] = (ingredientsMap[name] || 0) + amount;
+                        ingredientsMap[name] = (ingredientsMap[name] || 0) + Number(amount);
                     }
                 });
             }
@@ -128,7 +132,7 @@ const MealPlanner = ({ userId }: Props) => {
                 const sideRecipe = recipes.find((r): r is Recipe => r._id === sideId);
                 sideRecipe?.ingredients?.forEach(({ name, amount }) => {
                     if (name && amount !== undefined) {
-                        ingredientsMap[name] = (ingredientsMap[name] || 0) + amount;
+                        ingredientsMap[name] = (ingredientsMap[name] || 0) + Number(amount);
                     }
                 });
             });
