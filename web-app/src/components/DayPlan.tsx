@@ -1,6 +1,6 @@
 import React from 'react';
 import '../Styling/DayPlan.css'; // Import the CSS file
-import { Recipe } from '../interfaces/MealPlan';
+import { Recipe } from '../interfaces/Recipe';
 
 interface DayPlanProps {
     day: string;
