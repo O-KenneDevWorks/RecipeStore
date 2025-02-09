@@ -80,9 +80,11 @@ export const updateRecipes = async (req: Request, res: Response) => {
     try {
         const recipe = await Recipe.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
         if (!recipe) {
+            console.log(`Recipe ${req.params.id} not found`);
             res.status(404).send('Recipe not found');
             return;
         }
+        console.log("Updated recipe:", recipe);
         res.status(200).send(recipe);
     } catch (error) {
         const errorMessage = error instanceof Error ? error.message : 'Unknown error';
