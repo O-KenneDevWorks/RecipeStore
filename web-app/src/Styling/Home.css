@@ -1,8 +1,74 @@
+/* Home Container */
 .home {
     padding: 20px;
     text-align: center;
+    background-color: var(--background-color); /* Matches the current theme */
+    color: var(--text-color); /* Adapts to the text color of the theme */
+    min-height: 100vh; /* Ensure the home page takes up full viewport height */
 }
 
+/* Carousel Container */
 .carousel-container {
     margin-top: 20px;
+    background-color: var(--carousel-background); /* Use carousel-specific background color */
+    padding: 20px; /* Add padding for better spacing */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 10px var(--carousel-shadow); /* Use themed shadow for a polished effect */
+}
+
+/* Home Title */
+.home h1 {
+    font-size: 2.5em; /* Larger font size for visibility */
+    font-weight: bold;
+    margin-bottom: 20px; /* Space between title and content */
+    color: var(--link-color); /* Use accent color for the title */
+}
+
+/* Buttons */
+.home button {
+    margin: 10px;
+    padding: 10px 20px;
+    background-color: var(--button-background-color);
+    color: var(--button-text-color);
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.home button:hover {
+    background-color: var(--link-color);
+    color: var(--background-color);
+}
+
+/* Links */
+.home a {
+    color: var(--link-color);
+    text-decoration: none;
+    font-size: 1.2em;
+    transition: color 0.3s ease;
+}
+
+.home a:hover {
+    color: var(--link-hover-color, var(--button-background-color)); /* Subtle hover effect */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .home {
+        padding: 10px;
+    }
+
+    .carousel-container {
+        padding: 10px;
+    }
+
+    .home h1 {
+        font-size: 2em; /* Adjust title size for smaller screens */
+    }
+
+    .home button {
+        padding: 8px 16px; /* Adjust button padding for smaller screens */
+    }
 }

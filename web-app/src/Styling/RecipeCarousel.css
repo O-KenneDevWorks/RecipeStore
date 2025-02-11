@@ -4,7 +4,7 @@
     position: relative;
     width: 80%;
     margin: 0 auto;
-    padding: 20px 0;  /* Adds padding around the carousel for better spacing */
+    padding: 20px 0; /* Adds padding around the carousel for better spacing */
     background-color: var(--carousel-background);
     box-shadow: 0 4px 8px var(--carousel-shadow);
     border-top-left-radius: 10px;
@@ -19,9 +19,9 @@
     align-items: center;
     position: relative;
     border-radius: 5px;
-    box-shadow: 0 2px 10px var(--carousel-shadow);
+    box-shadow: 0 2px 10px var(--card-shadow-color);
     overflow: hidden;
-    background-color: #fff; /* White background for the card */
+    background-color: var(--card-background-color); /* Use card background color */
     max-width: 250px; /* Set max width for the card */
     margin: 10px; /* Add spacing between cards */
     transition: transform 0.3s ease-in-out;
@@ -47,8 +47,8 @@
 
 /* Recipe Name Banner */
 .recipe-name-banner {
-    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
-    color: #fff; /* White text */
+    background-color: var(--banner-background); /* Semi-transparent black background */
+    color: var(--banner-color); /* Use button text color for text */
     text-align: center;
     padding: 10px 0;
     font-size: 1rem;
@@ -61,6 +61,59 @@
     transition: background-color 0.3s ease-in-out;
 }
 
+.recipe-name-banner h3 {
+    color: var(--banner-color); /* Ensure the text color matches the theme */
+    margin: 0; /* Remove default margin for better alignment */
+    font-size: 1rem; /* Optional: Match font size if needed */
+    font-weight: bold; /* Optional: Reapply bold weight */
+}
+
 .carousel-item-inner:hover .recipe-name-banner {
     background-color: rgba(0, 0, 0, 0.9); /* Darker background on hover */
+}
+
+/* Navigation Buttons */
+.carousel-navigation {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    transform: translateY(-50%);
+    z-index: 1000;
+}
+
+.carousel-button {
+    background-color: var(--button-background-color);
+    color: var(--button-text-color);
+    border: none;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.carousel-button:hover {
+    background-color: var(--hover-button-background-color);
+}
+
+/* Dots for navigation */
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.carousel-dot {
+    width: 10px;
+    height: 10px;
+    background-color: var(--form-border-color);
+    border-radius: 50%;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.carousel-dot.active {
+    background-color: var(--link-color);
 }

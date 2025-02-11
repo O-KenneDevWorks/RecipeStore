@@ -2,22 +2,305 @@
     --background-color: #ffffff;
     --text-color: #000000;
     --link-color: #007bff;
-    --button-background-color: #007bff;
+    --button-background-color: #333333;
     --button-text-color: #ffffff;
     --form-background-color: #f9f9f9;
     --form-border-color: #ddd;
-    --carousel-background: #cccccc;
-    --carousel-shadow: rgba(0, 0, 0, 0.2);
+    --card-background-color: #f9f9f9;
+    --card-border-color: #ccc;
+    --card-shadow-color: rgba(0, 0, 0, 0.1);
+    --section-background-color: #fff;
+    --section-border-color: #ddd;
+    --section-heading-color: #555;
+    --hover-button-background-color: #0056b3;
+    --delete-button-background-color: #dc3545;
+    --delete-button-hover-color: #c82333;
+    --confirm-button-background-color: #28a745;
+    --confirm-button-hover-color: #218838;
+    --card-heading-color: #333;
+    --card-heading-border-color: #ccc;
+    --carousel-background: #aaaaaa;
+    --carousel-shadow: rgba(255, 255, 255, 0.1);
+    --banner-background: rgba(0, 0, 0, 0.7);
+    --banner-color: #fff;
+    --input-border-color: #000;
+    --navbar-background-color: #333333;
+    --navbar-text-color: #ffffff;
+    --navbar-link-color: #ffffff;
+    --navbar-link-hover-color: #007bff;
+    --navbar-shadow: rgba(0, 0, 0, 0.5);
 }
 
-[data-theme='dark'] {
-    --background-color: #1e1e1e;
+.theme-dark {
+    --background-color: #121212;
     --text-color: #ffffff;
     --link-color: #1e90ff;
-    --button-background-color: #1e90ff;
-    --button-text-color: #000000;
+    --button-background-color: #1e1e1e;
+    --button-text-color: #ffffff;
     --form-background-color: #2c2c2c;
     --form-border-color: #444;
-    --carousel-background: #333333;
+    --card-background-color: #333333;
+    --card-border-color: #444;
+    --card-shadow-color: rgba(0, 0, 0, 0.5);
+    --section-background-color: #1e1e1e;
+    --section-border-color: #555;
+    --section-heading-color: #ddd;
+    --hover-button-background-color: #0d6efd;
+    --delete-button-background-color: #f44336;
+    --delete-button-hover-color: #d32f2f;
+    --confirm-button-background-color: #4caf50;
+    --confirm-button-hover-color: #388e3c;
+    --card-heading-color: #ffffff;
+    --card-heading-border-color: #777;
+    --carousel-background: #222222;
     --carousel-shadow: rgba(255, 255, 255, 0.1);
+    --banner-background: rgba(0, 0, 0, 0.8);
+    --banner-color: #ffffff;
+    --input-border-color: #777;
+    --navbar-background-color: #1e1e1e;
+    --navbar-text-color: #ffffff;
+    --navbar-link-color: #1e90ff;
+    --navbar-link-hover-color: #00bfff;
+    --navbar-shadow: rgba(0, 0, 0, 0.8);
 }
+
+/* Clean and Minimalistic */
+.theme-minimal {
+    --background-color: #f8f9fa;
+    --text-color: #212529;
+    --link-color: #007bff;
+    --button-background-color: #ffffff;
+    --button-text-color: #212529;
+    --form-background-color: #ffffff;
+    --form-border-color: #ddd;
+    --card-background-color: #ffffff;
+    --card-border-color: #ddd;
+    --card-shadow-color: rgba(0, 0, 0, 0.05);
+    --section-background-color: #ffffff;
+    --section-border-color: #ccc;
+    --section-heading-color: #333;
+    --hover-button-background-color: #0056b3;
+    --delete-button-background-color: #dc3545;
+    --delete-button-hover-color: #bd2130;
+    --confirm-button-background-color: #28a745;
+    --confirm-button-hover-color: #218838;
+    --card-heading-color: #000;
+    --card-heading-border-color: #ddd;
+    --carousel-background: #eeeeee;
+    --carousel-shadow: rgba(0, 0, 0, 0.05);
+    --banner-background: rgba(240, 240, 240, 0.9);
+    --banner-color: #000;
+    --input-border-color: #bbb;
+    --navbar-background-color: #ffffff;
+    --navbar-text-color: #000000;
+    --navbar-link-color: #007bff;
+    --navbar-link-hover-color: #0056b3;
+    --navbar-shadow: rgba(0, 0, 0, 0.1);
+}
+
+/* Warm and Inviting */
+.theme-warm {
+    --background-color: #fff8e1;
+    --text-color: #3e2723;
+    --link-color: #ff5722;
+    --button-background-color: #ff5722;
+    --button-text-color: #ffffff;
+    --form-background-color: #ffccbc;
+    --form-border-color: #ffab91;
+    --card-background-color: #fff3e0;
+    --card-border-color: #ffab91;
+    --card-shadow-color: rgba(255, 87, 34, 0.2);
+    --section-background-color: #ffe0b2;
+    --section-border-color: #ffab91;
+    --section-heading-color: #bf360c;
+    --hover-button-background-color: #e64a19;
+    --delete-button-background-color: #d84315;
+    --delete-button-hover-color: #bf360c;
+    --confirm-button-background-color: #f4511e;
+    --confirm-button-hover-color: #d32f2f;
+    --card-heading-color: #ff5722;
+    --card-heading-border-color: #ff8a65;
+    --carousel-background: #ffe0b2;
+    --carousel-shadow: rgba(255, 87, 34, 0.3);
+    --banner-background: rgba(255, 87, 34, 0.7);
+    --banner-color: #ffffff;
+    --input-border-color: #ffab91;
+    --navbar-background-color: #bf360c;
+    --navbar-text-color: #ffffff;
+    --navbar-link-color: #ffe0b2;
+    --navbar-link-hover-color: #ffccbc;
+    --navbar-shadow: rgba(255, 87, 34, 0.5);
+}
+
+/* Fresh and Organic */
+.theme-organic {
+    --background-color: #f1f8e9;
+    --text-color: #2e7d32;
+    --link-color: #4caf50;
+    --button-background-color: #8bc34a;
+    --button-text-color: #ffffff;
+    --form-background-color: #c8e6c9;
+    --form-border-color: #a5d6a7;
+    --card-background-color: #dcedc8;
+    --card-border-color: #aed581;
+    --card-shadow-color: rgba(76, 175, 80, 0.2);
+    --section-background-color: #dcedc8;
+    --section-border-color: #a5d6a7;
+    --section-heading-color: #388e3c;
+    --hover-button-background-color: #66bb6a;
+    --delete-button-background-color: #e53935;
+    --delete-button-hover-color: #c62828;
+    --confirm-button-background-color: #43a047;
+    --confirm-button-hover-color: #2e7d32;
+    --card-heading-color: #4caf50;
+    --card-heading-border-color: #81c784;
+    --carousel-background: #dcedc8;
+    --carousel-shadow: rgba(76, 175, 80, 0.3);
+    --banner-background: rgba(67, 160, 71, 0.7);
+    --banner-color: #ffffff;
+    --input-border-color: #a5d6a7;
+    --navbar-background-color: #388e3c;
+    --navbar-text-color: #ffffff;
+    --navbar-link-color: #c8e6c9;
+    --navbar-link-hover-color: #aed581;
+    --navbar-shadow: rgba(76, 175, 80, 0.5);
+}
+
+/* Modern and Sleek */
+.theme-modern {
+    --background-color: #f5f5f5;
+    --text-color: #202124;
+    --link-color: #1a73e8;
+    --button-background-color: #4285f4;
+    --button-text-color: #ffffff;
+    --form-background-color: #ffffff;
+    --form-border-color: #ddd;
+    --card-background-color: #ffffff;
+    --card-border-color: #ccc;
+    --card-shadow-color: rgba(0, 0, 0, 0.1);
+    --section-background-color: #ffffff;
+    --section-border-color: #ddd;
+    --section-heading-color: #5f6368;
+    --hover-button-background-color: #3367d6;
+    --delete-button-background-color: #ea4335;
+    --delete-button-hover-color: #d93025;
+    --confirm-button-background-color: #34a853;
+    --confirm-button-hover-color: #1e8e3e;
+    --card-heading-color: #1a73e8;
+    --card-heading-border-color: #d2e3fc;
+    --carousel-background: #f5f5f5;
+    --carousel-shadow: rgba(0, 0, 0, 0.1);
+    --banner-background: rgba(26, 115, 232, 0.7);
+    --banner-color: #ffffff;
+    --input-border-color: #ddd;
+    --navbar-background-color: #1a73e8;
+    --navbar-text-color: #ffffff;
+    --navbar-link-color: #d2e3fc;
+    --navbar-link-hover-color: #3367d6;
+    --navbar-shadow: rgba(26, 115, 232, 0.5);
+}
+
+/* Rustic and Earthy */
+.theme-rustic {
+    --background-color: #f3e5f5;
+    --text-color: #3e2723;
+    --link-color: #8d6e63;
+    --button-background-color: #795548;
+    --button-text-color: #ffffff;
+    --form-background-color: #efebe9;
+    --form-border-color: #d7ccc8;
+    --card-background-color: #fafafa;
+    --card-border-color: #bcaaa4;
+    --card-shadow-color: rgba(121, 85, 72, 0.2);
+    --section-background-color: #f3e5f5;
+    --section-border-color: #d7ccc8;
+    --section-heading-color: #5d4037;
+    --hover-button-background-color: #6d4c41;
+    --delete-button-background-color: #bf360c;
+    --delete-button-hover-color: #8d2b08;
+    --confirm-button-background-color: #4e342e;
+    --confirm-button-hover-color: #3e2723;
+    --card-heading-color: #795548;
+    --card-heading-border-color: #a1887f;
+    --carousel-background: #fbe9e7;
+    --carousel-shadow: rgba(121, 85, 72, 0.3);
+    --banner-background: rgba(121, 85, 72, 0.7);
+    --banner-color: #ffffff;
+    --input-border-color: #d7ccc8;
+    --navbar-background-color: #5d4037;
+    --navbar-text-color: #ffffff;
+    --navbar-link-color: #efebe9;
+    --navbar-link-hover-color: #bcaaa4;
+    --navbar-shadow: rgba(121, 85, 72, 0.5);
+}
+
+/* Vibrant and Fun */
+.theme-vibrant {
+    --background-color: #fffde7;
+    --text-color: #37474f;
+    --link-color: #ff5722;
+    --button-background-color: #ff5722;
+    --button-text-color: #ffffff;
+    --form-background-color: #ffe082;
+    --form-border-color: #ffcc80;
+    --card-background-color: #ffecb3;
+    --card-border-color: #ffd54f;
+    --card-shadow-color: rgba(255, 87, 34, 0.2);
+    --section-background-color: #fff9c4;
+    --section-border-color: #ffe082;
+    --section-heading-color: #ff7043;
+    --hover-button-background-color: #ff7043;
+    --delete-button-background-color: #d84315;
+    --delete-button-hover-color: #bf360c;
+    --confirm-button-background-color: #ffa726;
+    --confirm-button-hover-color: #ff9800;
+    --card-heading-color: #f57c00;
+    --card-heading-border-color: #ffd54f;
+    --carousel-background: #fffde7;
+    --carousel-shadow: rgba(255, 183, 77, 0.3);
+    --banner-background: rgba(255, 111, 97, 0.7);
+    --banner-color: #ffffff;
+    --input-border-color: #ffcc80;
+    --navbar-background-color: #37474f;
+    --navbar-text-color: #ffffff;
+    --navbar-link-color: #ffcc80;
+    --navbar-link-hover-color: #ffb300;
+    --navbar-shadow: rgba(255, 87, 34, 0.5);
+}
+
+/* Night Mode */
+/* Needs work */
+/* .theme-night {
+    --background-color: #121212;
+    --text-color: #ffffff;
+    --link-color: #1e88e5;
+    --button-background-color: #3949ab;
+    --button-text-color: #ffffff;
+    --form-background-color: #2e2e2e;
+    --form-border-color: #444;
+    --card-background-color: #1e1e1e;
+    --card-border-color: #444;
+    --card-shadow-color: rgba(0, 0, 0, 0.5);
+    --section-background-color: #232323;
+    --section-border-color: #555;
+    --section-heading-color: #888;
+    --hover-button-background-color: #0d47a1;
+    --delete-button-background-color: #f44336;
+    --delete-button-hover-color: #d32f2f;
+    --confirm-button-background-color: #4caf50;
+    --confirm-button-hover-color: #388e3c;
+    --card-heading-color: #3949ab;
+    --card-heading-border-color: #5c6bc0;
+    --carousel-background: #1e1e1e;
+    --carousel-shadow: rgba(255, 255, 255, 0.1);
+    --banner-background: rgba(0, 0, 0, 0.7);
+    --banner-color: #ffffff;
+    --input-border-color: #555;
+    --navbar-background-color: #1e1e1e;
+    --navbar-text-color: #ffffff;
+    --navbar-link-color: #1e88e5;
+    --navbar-link-hover-color: #00b0ff;
+    --navbar-shadow: rgba(0, 0, 0, 0.8);
+} */
+
+

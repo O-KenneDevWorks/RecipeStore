@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { RecipePreview } from '../interfaces/Recipe';
+import '../Styling/RecipeCarousel.css'
 
 const RecipeCard = ({ _id, image, name }: RecipePreview) => {
     return (

@@ -39,30 +39,36 @@ const ViewRecipes = () => {
 
       {/* Filter Controls */}
       <div className="filter-controls">
-        <label>Filter by tag:</label>
-        <select onChange={handleTagChange} value={selectedTag}>
-          <option value="">All</option>
-          {/* Dynamic tag options */}
-          {[...new Set(recipes.flatMap((recipe) => recipe.tags))].map((tag, index) => (
-            <option key={index} value={tag}>{tag}</option>
-          ))}
-        </select>
+        <div>
+          <label>Filter by tag:</label>
+          <select onChange={handleTagChange} value={selectedTag}>
+            <option value="">All</option>
+            {/* Dynamic tag options */}
+            {[...new Set(recipes.flatMap((recipe) => recipe.tags))].map((tag, index) => (
+              <option key={index} value={tag}>{tag}</option>
+            ))}
+          </select>
+        </div>
 
-        <label>Filter by course:</label>
-        <select onChange={handleCourseChange} value={selectedCourse}>
-          <option value="">All</option>
-          {COURSE_OPTIONS.map((course, index) => (
-            <option key={index} value={course}>{course}</option>
-          ))}
-        </select>
+        <div>
+          <label>Filter by course:</label>
+          <select onChange={handleCourseChange} value={selectedCourse}>
+            <option value="">All</option>
+            {COURSE_OPTIONS.map((course, index) => (
+              <option key={index} value={course}>{course}</option>
+            ))}
+          </select>
+        </div>
 
-        <label>Filter by cuisine:</label>
-        <select onChange={handleCuisineChange} value={selectedCuisine}>
-          <option value="">All</option>
-          {CUISINE_OPTIONS.map((cuisine, index) => (
-            <option key={index} value={cuisine}>{cuisine}</option>
-          ))}
-        </select>
+        <div>
+          <label>Filter by cuisine:</label>
+          <select onChange={handleCuisineChange} value={selectedCuisine}>
+            <option value="">All</option>
+            {CUISINE_OPTIONS.map((cuisine, index) => (
+              <option key={index} value={cuisine}>{cuisine}</option>
+            ))}
+          </select>
+        </div>
       </div>
 
       {/* Grid of Recipe Cards */}

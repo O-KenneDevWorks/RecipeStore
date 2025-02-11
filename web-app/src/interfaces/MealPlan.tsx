@@ -1,6 +1,7 @@
-export interface Recipe {
+export interface ShortRecipe {
     _id: string;
     name: string;
+    image?: string;
 }
 
 export interface MealPlan {
