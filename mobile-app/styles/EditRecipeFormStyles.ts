@@ -2,100 +2,150 @@ import { StyleSheet } from 'react-native';
 
 const EditRecipeFormStyles = StyleSheet.create({
   editRecipeForm: {
-    width: '100%', // React Native doesn't support max-width
+    width: '100%',
     maxWidth: 800,
-    alignSelf: 'center', // Equivalent to margin: auto
+    alignSelf: 'center',
     padding: 20,
-    backgroundColor: '#f9f9f9', // Replace with actual background color
+    backgroundColor: '#f9f9f9',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 8,
-    borderRadius: 8,
+    borderRadius: 12,
   },
 
-  ingredient: {
+  listContainer: {
+    marginBottom: 20,
+  },
+
+  listContentContainer: {
+    paddingBottom: 20,
+  },
+
+  ingredientItem: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    width: '100%', // Adjusted for proper alignment
-    marginBottom: 16, // Equivalent to 1rem
+    width: '100%',
+    paddingVertical: 10,
+    paddingHorizontal: 5,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    marginBottom: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
   },
 
   ingredientInput: {
-    flexGrow: 1,
-    marginHorizontal: 5,
-    padding: 10,
+    flex: 1,
+    marginHorizontal: 6,
+    padding: 12,
     borderWidth: 1,
     borderColor: '#ccc',
-    borderRadius: 5,
+    borderRadius: 8,
     backgroundColor: '#fff',
   },
 
-  ingredientLabel: {
-    marginRight: 5,
-    whiteSpace: 'nowrap', // Equivalent for text alignment
-  },
-
-  ingredientButton: {
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    backgroundColor: '#007bff', // Adjust button color
-    borderRadius: 5,
+  directionItem: {
+    flexDirection: 'row',
     alignItems: 'center',
-  },
-
-  direction: {
-    flexDirection: 'column',
-    marginBottom: 16,
-  },
-
-  directionLabel: {
-    marginBottom: 8, // Equivalent to 0.5rem
+    width: '100%',
+    paddingVertical: 10,
+    paddingHorizontal: 5,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    marginBottom: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
   },
 
   directionInput: {
-    width: '100%',
-    marginBottom: 8,
-    padding: 10,
+    flex: 1,
+    padding: 12,
     borderWidth: 1,
     borderColor: '#ccc',
-    borderRadius: 5,
+    borderRadius: 8,
     backgroundColor: '#fff',
-    textAlignVertical: 'top', // Ensures multi-line text input behaves properly
+    textAlignVertical: 'top',
+    minHeight: 50,
   },
 
-  directionButton: {
-    marginRight: 8, // Equivalent to 0.5rem
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    backgroundColor: '#28a745', // Green color for confirm actions
-    borderRadius: 5,
-    alignItems: 'center',
-  },
-
-  buttonsRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: 16,
-  },
-
-  buttons: {
+  buttonRow: {
     flexDirection: 'row',
     justifyContent: 'center',
-    gap: 20, // Ensures spacing between buttons
+    alignItems: 'center',
+    gap: 6,
+    marginLeft: 10,
+  },
+
+  button: {
+    paddingVertical: 8,
+    paddingHorizontal: 14,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+  },
+
+  moveUpButton: {
+    backgroundColor: '#ffcc00', // Yellow
+  },
+
+  moveDownButton: {
+    backgroundColor: '#ff5733', // Orange-Red
+  },
+
+  deleteButton: {
+    backgroundColor: '#dc3545', // Red
+  },
+
+  addButton: {
+    backgroundColor: '#007bff', // Blue
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 15,
+  },
+
+  addButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+
+  saveButton: {
+    backgroundColor: '#28a745', // Green
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
     marginTop: 20,
   },
 
-  textarea: {
-    width: '100%',
-    padding: 10,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 4,
-    backgroundColor: '#fff',
-    textAlignVertical: 'top',
+  saveButtonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: '700',
+  },
+
+  buttonText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: '600',
   },
 });
 
