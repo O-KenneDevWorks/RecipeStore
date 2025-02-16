@@ -10,6 +10,7 @@ export default function Home() {
       <Text style={styles.title}>Welcome to RecipeApp</Text>
       <Button title="View Recipes" onPress={() => navigation.navigate('ViewRecipes')} />
       <Button title="Add Recipe" onPress={() => navigation.navigate('AddRecipeForm')} />
+      <Button title="Edit Recipe" onPress={() => navigation.navigate('EditRecipe')} />
     </View>
   );
 }

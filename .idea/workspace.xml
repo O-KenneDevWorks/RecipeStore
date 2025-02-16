@@ -5,80 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b9b78b60-57b8-4638-9484-506b1ba2b05c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/mobile-app/app/EditRecipeForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile-app/styles/EditRecipeFormStyles.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/.expo/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/.expo/devices.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/.expo/types/router.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/App.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/api/recipeAPI.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/app.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/app/+not-found.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/app/AddRecipeForm.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/app/Home.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/app/MealPlanner.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/app/PantryView.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/app/RecipeDetail.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/app/ViewRecipes.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/app/_layout.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/app/index.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/app/navigation.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/assets/fonts/SpaceMono-Regular.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/assets/images/adaptive-icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/assets/images/favicon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/assets/images/icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/assets/images/react-logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/assets/images/splash-icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/components/Button.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/components/Card.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/components/Header.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/components/NavBar.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/components/RecipeCard.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/components/ThemeToggle.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/components/ThemedText.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/components/ThemedView.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/components/__tests__/ThemedText-test.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/components/__tests__/__snapshots__/ThemedText-test.tsx.snap" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/components/ui/Icon.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/components/ui/Modal.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/constants/Colors.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/constants/Config.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/constants/options.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/expo-env.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/hooks/useColorScheme.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/hooks/useColorScheme.web.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/hooks/useFetch.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/hooks/usePantry.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/hooks/useThemeColor.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/interfaces/Ingredient.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/interfaces/MealPlan.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/interfaces/Pantry.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/interfaces/Recipe.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/interfaces/UserData.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/interfaces/UserLogin.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/navigation/MainNavigator.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/navigation/TabNavigator.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/scripts/reset-project.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/services/api.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/services/auth.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/store/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/store/pantrySlice.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/store/recipeSlice.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/styles/Global.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/styles/RecipeCarousel.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/styles/RecipeDetailStyles.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/styles/ViewRecipes.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/styles/ViewRecipesStyles.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/styles/theme.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/tsconfig.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/utils/debounce.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/utils/formatDate.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/utils/validation.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile-app/app/EditRecipeForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/mobile-app/app/EditRecipeForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile-app/app/Home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/mobile-app/app/Home.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile-app/app/RecipeDetail.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/mobile-app/app/RecipeDetail.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile-app/app/_layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/mobile-app/app/_layout.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

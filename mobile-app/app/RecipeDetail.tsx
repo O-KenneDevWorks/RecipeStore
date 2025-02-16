@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, FlatList, ActivityIndicator } from 'react-native';
-import { useRoute } from '@react-navigation/native';
+import { View, Text, Image, FlatList, ActivityIndicator, Button } from 'react-native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 import { getRecipeById } from '../api/recipeAPI';
 import { Recipe } from '../interfaces/Recipe';
 import styles from '../styles/RecipeDetailStyles';
 
 const RecipeDetail = () => {
   const route = useRoute();
+  const navigation = useNavigation();
   const { id } = route.params as { id: string };
   const [recipe, setRecipe] = useState<Recipe | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -100,6 +101,7 @@ const RecipeDetail = () => {
       ListHeaderComponent={
         <View>
           <Text style={styles.title}>{recipe.name}</Text>
+          <Button title="Edit Recipe" onPress={() => navigation.navigate('EditDetail')} />
           {recipe.image && <Image source={{ uri: recipe.image }} style={styles.image} />}
           <View style={styles.detailSection}>
             <Text style={styles.sectionTitle}>Details</Text>
