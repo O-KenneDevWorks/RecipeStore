@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useRouter } from 'expo-router';
 import { RecipePreview } from '../interfaces/Recipe';
 import carouselStyles from '../styles/RecipeCarousel';
 
 const RecipeCard = ({ _id, image, name }: RecipePreview) => {
-  const navigation = useNavigation();
+  const router = useRouter();
+
   const handlePress = () => {
     console.log(`Navigating to RecipeDetail with id: ${_id}`);
-    navigation.navigate('RecipeDetail', { id: _id });
-//     navigation.navigate('ViewRecipes');
+    router.push({ pathname: '/RecipeDetail', params: { id: _id } });
   };
 
   return (

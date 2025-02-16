@@ -1,16 +1,21 @@
 import React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { Link } from 'expo-router';
 
 export default function Home() {
-  const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Welcome to RecipeApp</Text>
-      <Button title="View Recipes" onPress={() => navigation.navigate('ViewRecipes')} />
-      <Button title="Add Recipe" onPress={() => navigation.navigate('AddRecipeForm')} />
-      <Button title="Edit Recipe" onPress={() => navigation.navigate('EditRecipe')} />
+      <Link href="/ViewRecipes" style={styles.button}>
+            View Recipes
+      </Link>
+      <Link href="/AddRecipe" style={styles.button}>
+          Add Recipes
+    </Link>
+      <Link href="/EditRecipe" style={styles.button}>
+          Edit Recipe
+    </Link>
     </View>
   );
 }

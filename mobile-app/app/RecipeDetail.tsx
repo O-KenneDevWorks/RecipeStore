@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, FlatList, ActivityIndicator, Button } from 'react-native';
-import { useRoute, useNavigation } from '@react-navigation/native';
+import { useRouter, useLocalSearchParams  } from 'expo-router';
 import { getRecipeById } from '../api/recipeAPI';
 import { Recipe } from '../interfaces/Recipe';
 import styles from '../styles/RecipeDetailStyles';
 
 const RecipeDetail = () => {
-  const route = useRoute();
-  const navigation = useNavigation();
-  const { id } = route.params as { id: string };
+  const router = useRouter();
+
+//   const { id } = router.params as { id: string };
+  const { id } = useLocalSearchParams();
   const [recipe, setRecipe] = useState<Recipe | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -46,6 +47,16 @@ const RecipeDetail = () => {
     { type: 'directions', data: recipe.directions },
     ...(recipe.notes ? [{ type: 'notes', data: recipe.notes }] : []),
   ];
+
+//   const handlePress = () => {
+//       console.log(`Navigating to RecipeDetail with id: ${_id}`);
+//       router.push({ pathname: '/RecipeDetail', params: { id: _id } });
+//     };
+
+  const handlePress = () => {
+      console.log(`Navigating to EditDetail with id: ${id}`);
+      router.push({ pathname: '/EditRecipe', params: { id: id } });
+    };
 
   return (
     <FlatList
@@ -101,7 +112,7 @@ const RecipeDetail = () => {
       ListHeaderComponent={
         <View>
           <Text style={styles.title}>{recipe.name}</Text>
-          <Button title="Edit Recipe" onPress={() => navigation.navigate('EditDetail')} />
+          <Button title="Edit Recipe" onPress={handlePress} />
           {recipe.image && <Image source={{ uri: recipe.image }} style={styles.image} />}
           <View style={styles.detailSection}>
             <Text style={styles.sectionTitle}>Details</Text>

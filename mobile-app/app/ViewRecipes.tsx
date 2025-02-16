@@ -6,7 +6,7 @@ import { Ionicons } from '@expo/vector-icons'; // For filter icon
 import { Recipe, RecipePreview } from '../interfaces/Recipe';
 // import { RecipePreview } from '../interfaces/Recipe';
 import { COURSE_OPTIONS, CUISINE_OPTIONS } from '../constants/options';
-import RecipeCard from './RecipeCard';
+import RecipeCard from '../components/RecipeCard';
 import { getRecipes } from '../api/recipeAPI';
 import ViewRecipesStyles from '../styles/ViewRecipesStyles'; // Import external styles
 
