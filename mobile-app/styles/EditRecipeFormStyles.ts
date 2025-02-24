@@ -13,6 +13,13 @@ const EditRecipeFormStyles = StyleSheet.create({
     shadowRadius: 8,
     borderRadius: 12,
   },
+  
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 20,
+  },
 
   listContainer: {
     marginBottom: 20,

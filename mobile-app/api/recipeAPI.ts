@@ -86,7 +86,33 @@ export const updateRecipe = async (id: string, recipe: Recipe): Promise<void> =>
 };
 
 // Add a new recipe
+// export const addRecipe = async (recipe: Recipe): Promise<Recipe | null> => {
+//   console.log("Sending request to:", BASE_URL);
+
+//   try {
+//     const response = await fetch(`${BASE_URL}/recipes`, {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify(recipe),
+//     });
+
+//     if (!response.ok) {
+//       throw new Error("Failed to add recipe");
+//     }
+
+//     return await response.json();
+//   } catch (err) {
+//     console.error("Error adding recipe:", err);
+//     throw err;
+//   }
+// };
+
 export const addRecipe = async (recipe: Recipe): Promise<Recipe | null> => {
+  console.log("Sending request to:", `${BASE_URL}/recipes`);
+  console.log("Payload:", JSON.stringify(recipe, null, 2)); // ✅ Debugging
+
   try {
     const response = await fetch(`${BASE_URL}/recipes`, {
       method: "POST",
@@ -96,11 +122,16 @@ export const addRecipe = async (recipe: Recipe): Promise<Recipe | null> => {
       body: JSON.stringify(recipe),
     });
 
+    console.log("Response Status:", response.status);
     if (!response.ok) {
-      throw new Error("Failed to add recipe");
+      const errorText = await response.text();
+      console.error("Server Response:", errorText);
+      throw new Error("Failed to add recipe: " + errorText);
     }
 
-    return await response.json();
+    const data = await response.json();
+    console.log("Success:", data);
+    return data;
   } catch (err) {
     console.error("Error adding recipe:", err);
     throw err;

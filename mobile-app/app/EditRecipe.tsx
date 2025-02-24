@@ -91,6 +91,7 @@ const EditRecipeForm = () => {
     newIngredients.splice(index, 1);
     setRecipe(prev => ({ ...prev, ingredients: newIngredients }));
   };
+  
   const moveIngredient = (index: number, direction: 'up' | 'down') => {
     if (!recipe) return;
     const newIngredients = moveItem(recipe.ingredients, index, direction === 'up' ? index - 1 : index + 1);
