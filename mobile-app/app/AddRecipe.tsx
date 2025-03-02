@@ -187,7 +187,7 @@ const AddRecipeForm = () => {
                 ListHeaderComponent={
                     <>
                         <Text style={AddRecipeFormStyles.title}>Add Recipe</Text>
-    
+
                         {/* Recipe Name */}
                         <Text>Recipe Name *</Text>
                         <TextInput
@@ -196,7 +196,7 @@ const AddRecipeForm = () => {
                             value={recipeData.name}
                             onChangeText={(text) => handleChange('name', text)}
                         />
-    
+
                         {/* Recipe Times */}
                         <Text>Prep Time:</Text>
                         <TextInput
@@ -216,7 +216,7 @@ const AddRecipeForm = () => {
                             placeholder="Total Time"
                             onChangeText={(text) => handleChange('totalTime', text)}
                         />
-    
+
                         {/* Servings & Yield */}
                         <Text>Servings:</Text>
                         <TextInput
@@ -232,7 +232,7 @@ const AddRecipeForm = () => {
                             placeholder="Yield"
                             onChangeText={(text) => handleChange('yield', text)}
                         />
-    
+
                         {/* Course Picker */}
                         <Text>Course:</Text>
                         <Picker
@@ -245,7 +245,7 @@ const AddRecipeForm = () => {
                                 <Picker.Item key={course} label={course} value={course} />
                             ))}
                         </Picker>
-    
+
                         {/* Cuisine Picker */}
                         <Text>Cuisine:</Text>
                         <Picker
@@ -272,62 +272,70 @@ const AddRecipeForm = () => {
                                     keyExtractor={(_, index) => `ingredient-${index}`}
                                     renderItem={({ item, index }) => (
                                         <View style={AddRecipeFormStyles.ingredientItem}>
-                                            {/* Amount Input */}
+
+                                            {/* Row for Amount & Unit */}
+                                            <View style={AddRecipeFormStyles.ingredientRow}>
+                                                <TextInput
+                                                    style={AddRecipeFormStyles.ingredientInput}
+                                                    placeholder="Amount"
+                                                    value={item.amount}
+                                                    onChangeText={(text) => handleIngredientChange(index, 'amount', text)}
+                                                    keyboardType="numeric"
+                                                />
+
+                                                <View style={AddRecipeFormStyles.pickerContainer}>
+                                                    <Picker
+                                                        selectedValue={item.unit}
+                                                        onValueChange={(value) => handleIngredientChange(index, 'unit', value)}
+                                                        style={AddRecipeFormStyles.picker}
+                                                        mode="dropdown"
+                                                    >
+                                                        {UnitOptions.map((unit) => (
+                                                            <Picker.Item key={unit.value} label={unit.label} value={unit.value} />
+                                                        ))}
+                                                    </Picker>
+                                                </View>
+                                            </View>
+
+                                            {/* Ingredient Name Input on Next Line */}
                                             <TextInput
-                                                style={AddRecipeFormStyles.ingredientInput}
-                                                placeholder="Amount"
-                                                value={item.amount}
-                                                onChangeText={(text) => handleIngredientChange(index, 'amount', text)}
-                                            />
-    
-                                            {/* Unit Picker */}
-                                            <Picker
-                                                selectedValue={item.unit}
-                                                onValueChange={(value) => handleIngredientChange(index, 'unit', value)}
-                                                style={AddRecipeFormStyles.picker}
-                                            >
-                                                {UnitOptions.map((unit) => (
-                                                    <Picker.Item key={unit.value} label={unit.label} value={unit.value} />
-                                                ))}
-                                            </Picker>
-    
-                                            {/* Ingredient Name Input */}
-                                            <TextInput
-                                                style={AddRecipeFormStyles.ingredientInput}
+                                                style={AddRecipeFormStyles.ingredientNameInput}
                                                 placeholder="Ingredient Name"
                                                 value={item.name}
                                                 onChangeText={(text) => handleIngredientChange(index, 'name', text)}
                                             />
-    
-                                            {/* Move & Remove Buttons */}
+
+                                            {/* Move & Remove Buttons on a New Row */}
                                             <View style={AddRecipeFormStyles.buttonRow}>
                                                 <TouchableOpacity
                                                     onPress={() => moveIngredient(index, 'up')}
-                                                    style={[AddRecipeFormStyles.button, AddRecipeFormStyles.moveUpButton]}
+                                                    style={[AddRecipeFormStyles.button, AddRecipeFormStyles.moveUpButton, AddRecipeFormStyles.buttonFlex]}
                                                 >
                                                     <Text style={AddRecipeFormStyles.buttonText}>⬆</Text>
                                                 </TouchableOpacity>
                                                 <TouchableOpacity
                                                     onPress={() => moveIngredient(index, 'down')}
-                                                    style={[AddRecipeFormStyles.button, AddRecipeFormStyles.moveDownButton]}
+                                                    style={[AddRecipeFormStyles.button, AddRecipeFormStyles.moveDownButton, AddRecipeFormStyles.buttonFlex]}
                                                 >
                                                     <Text style={AddRecipeFormStyles.buttonText}>⬇</Text>
                                                 </TouchableOpacity>
                                                 <TouchableOpacity
                                                     onPress={() => handleRemoveIngredient(index)}
-                                                    style={[AddRecipeFormStyles.button, AddRecipeFormStyles.deleteButton]}
+                                                    style={[AddRecipeFormStyles.button, AddRecipeFormStyles.deleteButton, AddRecipeFormStyles.buttonFlex]}
                                                 >
                                                     <Text style={AddRecipeFormStyles.buttonText}>❌</Text>
                                                 </TouchableOpacity>
                                             </View>
+
                                         </View>
                                     )}
                                 />
+
                                 <Button title="Add Ingredient" onPress={handleAddIngredient} />
                             </>
                         );
                     }
-    
+
                     if (item.type === 'directions') {
                         return (
                             <>
@@ -387,7 +395,7 @@ const AddRecipeForm = () => {
                             </View>
                         );
                     }
-    
+
                     if (item.type === 'footer') {
                         return (
                             <>
@@ -395,10 +403,10 @@ const AddRecipeForm = () => {
                                 <TouchableOpacity onPress={handleImageChange} style={AddRecipeFormStyles.uploadButton}>
                                     <Text style={AddRecipeFormStyles.uploadButtonText}>Upload Image</Text>
                                 </TouchableOpacity>
-    
+
                                 {/* Display Image Preview If Available */}
                                 {imagePreview && <Image source={{ uri: imagePreview }} style={AddRecipeFormStyles.imagePreview} />}
-    
+
                                 {/* Submit Button */}
                                 <TouchableOpacity onPress={handleSubmit} style={AddRecipeFormStyles.submitButton}>
                                     <Text style={AddRecipeFormStyles.submitButtonText}>Add Recipe</Text>
@@ -406,13 +414,13 @@ const AddRecipeForm = () => {
                             </>
                         );
                     }
-    
+
                     return null;
                 }}
             />
         </KeyboardAvoidingView>
     );
-    
+
 };
 
 export default AddRecipeForm;

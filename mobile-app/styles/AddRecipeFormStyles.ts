@@ -15,7 +15,7 @@ const AddRecipeFormStyles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 8,
   },
-  
+
   scrollContainer: {
     flexGrow: 1,
     paddingBottom: 100,  // Ensures the last button isn't cut off
@@ -49,25 +49,47 @@ const AddRecipeFormStyles = StyleSheet.create({
 
   /** 📌 Ingredient Styles */
   ingredientItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: 'column',  // Stack vertically
+    alignItems: 'flex-start', // Align to left
     backgroundColor: '#fff',
     padding: 10,
     borderRadius: 5,
     borderBottomWidth: 1,
     borderBottomColor: '#ddd',
     marginBottom: 10,
+    width: '100%',
   },
 
-  ingredientInput: {
-    flex: 1,
-    marginHorizontal: 5,
+  ingredientRow: {
+    flexDirection: 'row',  // Amount & Unit side by side
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+    marginBottom: 5,  // Space between rows
+  },
+
+  pickerContainer: {
+    width: '75%', // Fixed width for Unit Picker
+  },
+
+  ingredientNameInput: {
+    width: '100%',  // Full width on second row
     padding: 10,
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 5,
     backgroundColor: '#fff',
+    marginBottom: 5,  // Space between name and buttons
+  },
+
+  ingredientInput: {
+    flex: 1,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    backgroundColor: '#fff',
+    marginRight: 10,  // Space between Amount & Unit
   },
 
   ingredientLabel: {
@@ -76,6 +98,7 @@ const AddRecipeFormStyles = StyleSheet.create({
     color: '#333',
   },
 
+
   /** 📌 Buttons */
   button: {
     paddingVertical: 10,
@@ -83,6 +106,10 @@ const AddRecipeFormStyles = StyleSheet.create({
     borderRadius: 5,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+
+  buttonFlex: {
+    flex: 1,
   },
 
   buttonText: {
@@ -158,8 +185,9 @@ const AddRecipeFormStyles = StyleSheet.create({
   buttonRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: 10,
+    alignSelf: 'stretch',   // Makes it take the full available width
+    // flexGrow: 1,            // Allows the row to expand as needed
+    // width: '100%',
   },
 
   submitButton: {
@@ -190,13 +218,13 @@ const AddRecipeFormStyles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 5,
   },
-  
+
   uploadButtonText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
   },
-  
+
 
   /** 📌 Image Upload */
   imagePreview: {
