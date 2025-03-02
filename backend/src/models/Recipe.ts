@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { COURSE_OPTIONS } from "../constants/options.js"
 
 /**
  * Recipe Schema
@@ -71,7 +72,7 @@ const RecipeSchema = new mongoose.Schema({
     // Course type of the recipe (required, restricted to specific values)
     course: {
         type: String,
-        enum: ['Main Course', 'Side', 'Salad', 'Soup', 'Appetizer', 'Dessert', 'Breakfast'],
+        enum: COURSE_OPTIONS,
         required: true,
     },
     // Cuisine type of the recipe (required)
