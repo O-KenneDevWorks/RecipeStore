@@ -143,6 +143,29 @@ const EditRecipeFormStyles = StyleSheet.create({
     marginTop: 20,
   },
 
+  uploadButton: {
+    backgroundColor: '#007bff',
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 15,
+  },
+
+  uploadButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+
+  imagePreview: {
+    width: '100%',
+    height: 200,
+    borderRadius: 10,
+    marginTop: 10,
+  },
+
   saveButtonText: {
     color: '#fff',
     fontSize: 18,

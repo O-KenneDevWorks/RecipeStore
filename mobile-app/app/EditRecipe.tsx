@@ -4,6 +4,7 @@ import {
   Text,
   TextInput,
   Alert,
+  Image,
   TouchableOpacity,
   FlatList
 } from 'react-native';
@@ -12,6 +13,9 @@ import { getRecipeById, updateRecipe } from '../api/recipeAPI';
 import { Recipe } from '../interfaces/Recipe';
 import EditRecipeFormStyles from '../styles/EditRecipeFormStyles';
 import { Picker } from '@react-native-picker/picker';
+import * as ImagePicker from 'expo-image-picker';
+import { UnitOptions, COURSE_OPTIONS, CUISINE_OPTIONS } from '../constants/options';
+
 
 const EditRecipeForm = () => {
   const router = useRouter();
@@ -28,6 +32,7 @@ const EditRecipeForm = () => {
     course: '',
     cuisine: '',
     notes: '',
+    image: '',
   });
 
   useEffect(() => {
@@ -47,6 +52,7 @@ const EditRecipeForm = () => {
           course: data.course || '',
           cuisine: data.cuisine || '',
           notes: data.notes || '',
+          image: data.image || '',
         });
       }
     };
@@ -62,9 +68,30 @@ const EditRecipeForm = () => {
       Alert.alert('Success', 'Recipe updated successfully!', [
         { text: 'OK', onPress: () => router.back() },
       ]);
+      // need to add function to go back to recipe
+      router.push({ pathname: '/RecipeDetail', params: { id: id } });
     } catch (err) {
       Alert.alert('Error', 'Failed to update recipe. Please try again.');
       console.error('Error updating recipe:', err);
+    }
+  };
+
+  const handleImageChange = async () => {
+    let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (!permissionResult.granted) {
+      Alert.alert('Permission Required', 'Please allow access to the media library.');
+      return;
+    }
+  
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+  
+    if (!result.canceled) {
+      setFormData((prev) => ({ ...prev, image: result.assets[0].uri }));
     }
   };
 
@@ -98,6 +125,12 @@ const EditRecipeForm = () => {
     setRecipe({ ...recipe, ingredients: newIngredients });
   };
 
+  const handleIngredientChange = (index: number, key: string, value: string) => {
+    const updatedIngredients = [...recipe.ingredients];
+    updatedIngredients[index] = { ...updatedIngredients[index], [key]: value };
+    setRecipe((prev) => ({ ...prev, ingredients: updatedIngredients }));
+};
+
   const addDirection = () => {
     setRecipe(prev => ({ ...prev, directions: [...prev.directions, ''] }));
   };
@@ -113,6 +146,12 @@ const EditRecipeForm = () => {
     const newDirections = moveItem(recipe.directions, index, direction === 'up' ? index - 1 : index + 1);
     setRecipe({ ...recipe, directions: newDirections });
   };
+
+  const handleDirectionChange = (index: number, value: string) => {
+    const updatedDirections = [...recipe.directions];
+    updatedDirections[index] = value;
+    setRecipe((prev) => ({ ...prev, directions: updatedDirections }));
+};
 
   if (!recipe) {
     return <Text style={EditRecipeFormStyles.title}>Loading...</Text>;
@@ -133,30 +172,40 @@ const EditRecipeForm = () => {
           case 'ingredients':
             return (
               <View>
-                <Text>Ingredients:</Text>
+                <Text style={EditRecipeFormStyles.sectionTitle}>Ingredients:</Text>
                 <FlatList
                   data={recipe.ingredients}
                   keyExtractor={(_, index) => `ingredient-${index}`}
                   renderItem={({ item, index }) => (
                     <View style={EditRecipeFormStyles.ingredientItem}>
-                      <TextInput
-                        style={EditRecipeFormStyles.ingredientInput}
-                        value={item.amount}
-                        onChangeText={(text) => handleIngredientChange(index, 'amount', text)}
-                        placeholder="Amount"
-                      />
-                      <TextInput
-                        style={EditRecipeFormStyles.ingredientInput}
-                        value={item.unit}
-                        onChangeText={(text) => handleIngredientChange(index, 'unit', text)}
-                        placeholder="Unit"
-                      />
+                      {/* Row for Amount & Unit */}
+                      <View style={EditRecipeFormStyles.row}>
+                        <TextInput
+                          style={EditRecipeFormStyles.ingredientInput}
+                          value={item.amount}
+                          onChangeText={(text) => handleIngredientChange(index, 'amount', text)}
+                          placeholder="Amount"
+                        />
+                        <Picker
+                          selectedValue={item.unit}
+                          onValueChange={(value) => handleIngredientChange(index, 'unit', value)}
+                          style={EditRecipeFormStyles.picker}
+                        >
+                          {UnitOptions.map((unit) => (
+                            <Picker.Item key={unit.value} label={unit.label} value={unit.value} />
+                          ))}
+                        </Picker>
+                      </View>
+
+                      {/* Ingredient Name Input */}
                       <TextInput
                         style={EditRecipeFormStyles.ingredientInput}
                         value={item.name}
                         onChangeText={(text) => handleIngredientChange(index, 'name', text)}
-                        placeholder="Ingredient"
+                        placeholder="Ingredient Name"
                       />
+
+                      {/* Move & Remove Buttons */}
                       <View style={EditRecipeFormStyles.buttonRow}>
                         <TouchableOpacity onPress={() => moveIngredient(index, 'up')} style={[EditRecipeFormStyles.button, EditRecipeFormStyles.moveUpButton]}>
                           <Text style={EditRecipeFormStyles.buttonText}>⬆</Text>
@@ -171,8 +220,6 @@ const EditRecipeForm = () => {
                     </View>
                   )}
                 />
-
-                {/* Add Ingredient Button at the End */}
                 <TouchableOpacity onPress={addIngredient} style={EditRecipeFormStyles.addButton}>
                   <Text style={EditRecipeFormStyles.addButtonText}>➕ Add Ingredient</Text>
                 </TouchableOpacity>
@@ -288,9 +335,24 @@ const EditRecipeForm = () => {
         </View>
       }
       ListFooterComponent={
-        <TouchableOpacity onPress={handleUpdate} style={[EditRecipeFormStyles.addButton, { backgroundColor: '#28a745' }]}>
-          <Text style={{ color: '#fff', textAlign: 'center' }}>Save Changes</Text>
-        </TouchableOpacity>
+        <View>
+          {/* Image Upload Button */}
+          <TouchableOpacity onPress={handleImageChange} style={EditRecipeFormStyles.uploadButton}>
+            <Text style={EditRecipeFormStyles.uploadButtonText}>Upload Image</Text>
+          </TouchableOpacity>
+      
+          {/* Display Image Preview If Available */}
+          {formData.image ? (
+            <Image source={{ uri: formData.image }} style={EditRecipeFormStyles.imagePreview} />
+          ) : (
+            <Text style={{ textAlign: 'center', marginTop: 10 }}>No Image Selected</Text>
+          )}
+      
+          {/* Save Button */}
+          <TouchableOpacity onPress={handleUpdate} style={[EditRecipeFormStyles.saveButton]}>
+            <Text style={EditRecipeFormStyles.saveButtonText}>Save Changes</Text>
+          </TouchableOpacity>
+        </View>
       }
     />
   );
