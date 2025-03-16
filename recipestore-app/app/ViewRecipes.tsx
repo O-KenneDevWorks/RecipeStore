@@ -35,13 +35,18 @@ const ViewRecipes = () => {
   const handleCuisineChange = (value: string) => setSelectedCuisine(value);
 
   const filteredRecipes = recipes
-    .filter((recipe) => recipe._id) // Ensure only recipes with _id are included
+    .filter((recipe) =>
+      (selectedTag ? (recipe.tags ?? []).includes(selectedTag) : true) &&
+      (selectedCourse ? recipe.course === selectedCourse : true) &&
+      (selectedCuisine ? recipe.cuisine === selectedCuisine : true)
+    )
+    .sort((a, b) => a.name.localeCompare(b.name)) // Sort alphabetically
     .map((recipe) => ({
       ...recipe,
-      _id: recipe._id || 'fallback-id', // Provide a fallback if needed
+      _id: recipe._id || 'fallback-id', // Provide fallback ID
     }));
 
-  return (
+    return (
       <View style={ViewRecipesStyles.container}>
         {/* Header Section */}
         <View style={ViewRecipesStyles.header}>
@@ -51,28 +56,31 @@ const ViewRecipes = () => {
             <Text style={ViewRecipesStyles.filterText}>Filter</Text>
           </TouchableOpacity>
         </View>
-
+  
         {/* Filter Section (conditionally rendered) */}
         {showFilters && (
           <View style={ViewRecipesStyles.filterControls}>
+            {/* Filter by Tag */}
             <Text style={ViewRecipesStyles.label}>Filter by Tag:</Text>
-            <Picker selectedValue={selectedTag} onValueChange={setSelectedTag} style={ViewRecipesStyles.picker}>
+            <Picker selectedValue={selectedTag} onValueChange={handleTagChange} style={ViewRecipesStyles.picker}>
               <Picker.Item label="All" value="" />
               {[...new Set(recipes.flatMap((recipe) => recipe.tags))].map((tag, index) => (
                 <Picker.Item key={index} label={tag} value={tag} />
               ))}
             </Picker>
-
+  
+            {/* Filter by Course */}
             <Text style={ViewRecipesStyles.label}>Filter by Course:</Text>
-            <Picker selectedValue={selectedCourse} onValueChange={setSelectedCourse} style={ViewRecipesStyles.picker}>
+            <Picker selectedValue={selectedCourse} onValueChange={handleCourseChange} style={ViewRecipesStyles.picker}>
               <Picker.Item label="All" value="" />
               {COURSE_OPTIONS.map((course, index) => (
                 <Picker.Item key={index} label={course} value={course} />
               ))}
             </Picker>
-
+  
+            {/* Filter by Cuisine */}
             <Text style={ViewRecipesStyles.label}>Filter by Cuisine:</Text>
-            <Picker selectedValue={selectedCuisine} onValueChange={setSelectedCuisine} style={ViewRecipesStyles.picker}>
+            <Picker selectedValue={selectedCuisine} onValueChange={handleCuisineChange} style={ViewRecipesStyles.picker}>
               <Picker.Item label="All" value="" />
               {CUISINE_OPTIONS.map((cuisine, index) => (
                 <Picker.Item key={index} label={cuisine} value={cuisine} />
@@ -80,7 +88,7 @@ const ViewRecipes = () => {
             </Picker>
           </View>
         )}
-
+  
         {/* Recipe Grid */}
         <FlatList
           data={filteredRecipes}
@@ -93,5 +101,6 @@ const ViewRecipes = () => {
       </View>
     );
   };
+  
 
 export default ViewRecipes;

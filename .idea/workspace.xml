@@ -5,77 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b9b78b60-57b8-4638-9484-506b1ba2b05c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/api/mealPlanAPI.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/api/pantryAPI.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/api/recipeAPI.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/app.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/app/(tabs)/_layout.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/app/(tabs)/explore.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/app/(tabs)/index.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/app/+not-found.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/app/AddRecipe.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/app/EditRecipe.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/app/Home.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/app/MealPlanner.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/app/PantryView.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/app/RecipeDetail.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/app/ViewRecipes.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/app/_layout.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/app/navigation.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/assets/fonts/SpaceMono-Regular.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/assets/images/adaptive-icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/assets/images/favicon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/assets/images/icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/assets/images/partial-react-logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/assets/images/react-logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/assets/images/react-logo@2x.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/assets/images/react-logo@3x.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/assets/images/splash-icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/components/Collapsible.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/components/ExternalLink.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/components/HapticTab.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/components/Header.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/components/HelloWave.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/components/ParallaxScrollView.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/components/RecipeCard.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/components/ThemedText.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/components/ThemedView.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/components/__tests__/ThemedText-test.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/components/__tests__/__snapshots__/ThemedText-test.tsx.snap" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/components/ui/IconSymbol.ios.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/components/ui/IconSymbol.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/components/ui/TabBarBackground.ios.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/components/ui/TabBarBackground.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/constants/Colors.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/constants/options.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/eas.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/hooks/useColorScheme.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/hooks/useColorScheme.web.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/hooks/useThemeColor.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/interfaces/Ingredient.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/interfaces/MealPlan.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/interfaces/Pantry.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/interfaces/Recipe.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/interfaces/UserData.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/interfaces/UserLogin.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/metro.config.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/scripts/reset-project.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/styles/AddRecipeFormStyles.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/styles/EditRecipeFormStyles.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/styles/Global.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/styles/RecipeCarousel.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/styles/RecipeDetailStyles.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/styles/ViewRecipes.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/styles/ViewRecipesStyles.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/styles/theme.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile-app/tsconfig.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/recipestore-app/app/ViewRecipes.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/recipestore-app/app/ViewRecipes.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
