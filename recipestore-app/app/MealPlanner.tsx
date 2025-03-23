@@ -3,7 +3,7 @@ import { View, Text, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { fetchRecipes, fetchMealPlan } from '../api/mealPlanAPI';
 import { Recipe } from '../interfaces/Recipe';
 import DayPlan from '../components/DayPlan';
-// import ShoppingList from '../components/ShoppingList';
+import ShoppingList from '../components/ShoppingList';
 import styles from '../styles/MealPlanStyles';
 
 
@@ -157,11 +157,11 @@ const MealPlannerScreen = ({ userId }: Props) => {
         ))}
       </View>
 
-      {/* <ShoppingList
-        isOpen={isShoppingListOpen}
+      <ShoppingList
+        isVisible={isShoppingListOpen}
         onClose={handleCloseShoppingList}
         shoppingList={shoppingList}
-      /> */}
+      />
     </ScrollView>
   );
 };
