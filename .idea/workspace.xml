@@ -6,6 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="b9b78b60-57b8-4638-9484-506b1ba2b05c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/recipestore-app/api/mealPlanAPI.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/recipestore-app/api/mealPlanAPI.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/recipestore-app/api/pantryAPI.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/recipestore-app/api/pantryAPI.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/recipestore-app/app/MealPlanner.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/recipestore-app/app/MealPlanner.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,6 +49,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\o_ken\Desktop\GitHub Projects\RecipeStore\recipestore-app\assets\images" />
       <recent name="C:\Users\o_ken\Desktop\GitHub Projects\RecipeStore\mobile-app\app" />
     </key>
   </component>

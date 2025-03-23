@@ -2,10 +2,12 @@ import { MealPlan,  } from '../interfaces/MealPlan';
 // import { ShortRecipe } from '../interfaces/MealPlan';
 import { Recipe } from '../interfaces/Recipe';
 
+const BASE_URL = "http://10.0.0.85:3001/api";
+
 // Fetch all recipes for a user
 export const fetchRecipes = async (): Promise<Recipe[]> => {
     try {
-        const response = await fetch('/api/recipes', {
+        const response = await fetch(`${BASE_URL}/recipes`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
         });
@@ -24,7 +26,7 @@ export const fetchRecipes = async (): Promise<Recipe[]> => {
 // Fetch the meal plan for a user
 export const fetchMealPlan = async (userId: string): Promise<MealPlan | null> => {
     try {
-        const response = await fetch(`/api/mealPlan/${userId}/2024/50`, {
+        const response = await fetch(`${BASE_URL}/mealPlan/${userId}/2024/50`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
         });
@@ -43,7 +45,7 @@ export const fetchMealPlan = async (userId: string): Promise<MealPlan | null> =>
 // Update or save the meal plan
 export const saveMealPlan = async (mealPlan: MealPlan): Promise<void> => {
     try {
-        const response = await fetch('/api/mealPlan', {
+        const response = await fetch(`${BASE_URL}/mealPlan`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(mealPlan),
