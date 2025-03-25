@@ -5,7 +5,7 @@ const BASE_URL = "http://10.0.0.85:3001/api";
 
 export const addPantryItem = async (pantryItem: PantryItem): Promise<PantryItem> => {
     try {
-        const response = await fetch('/api/pantry', {
+        const response = await fetch(`${BASE_URL}/pantry`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -26,7 +26,7 @@ export const addPantryItem = async (pantryItem: PantryItem): Promise<PantryItem>
 
 export const fetchPantryItems = async (): Promise<PantryItem[]> => {
     try {
-        const response = await fetch('/api/pantry', {
+        const response = await fetch(`${BASE_URL}/pantry`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

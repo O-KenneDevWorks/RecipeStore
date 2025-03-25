@@ -36,8 +36,8 @@ export default function RootLayout() {
         <Stack.Screen name="ViewRecipes" options={{ title: "View Recipes" }} />
         <Stack.Screen name="RecipeDetail" options={{ title: "Recipe Detail" }} />
         <Stack.Screen name="EditRecipe" options={{ title: "Edit Recipe" }} />
-        <Stack.Screen name="Pantry" options={{ title: "Pantry" }} />
-        <Stack.Screen name="AddPantry" options={{ title: "Add Pantry" }} />
+        <Stack.Screen name="PantryView" options={{ title: "Pantry" }} />
+        <Stack.Screen name="AddPantryItem" options={{ title: "Add Pantry" }} />
         <Stack.Screen name="RandomRecipe" options={{ title: "Random Recipe" }} />
         <Stack.Screen name="MealPlanner" options={{ title: "Meal Planner" }} />
         <Stack.Screen name="+not-found" />

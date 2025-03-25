@@ -16,8 +16,8 @@ export default function Home() {
       <Text style={styles.title}>Welcome to RecipeApp</Text>
       <Button title="View Recipes" onPress={() => handlePress('/ViewRecipes')} />
       <Button title="Add Recipes" onPress={() => handlePress('/AddRecipe')} />
-      <Button title="Pantry" onPress={() => handlePress('/Pantry')} />
-      <Button title="Add Pantry" onPress={() => handlePress('/AddPantry')} />
+      <Button title="Pantry" onPress={() => handlePress('/PantryView')} />
+      <Button title="Add Pantry" onPress={() => handlePress('/AddPantryItem')} />
       <Button title="Random Recipe" onPress={() => handlePress('/RandomRecipe')} />
       <Button title="Meal Planner" onPress={() => handlePress('/MealPlanner')} />
     </View>
