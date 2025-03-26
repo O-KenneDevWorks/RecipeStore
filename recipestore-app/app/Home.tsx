@@ -6,10 +6,9 @@ import { Link } from 'expo-router';
 export default function Home() {
     const router = useRouter();
 
-    const handlePress = (pathname: String) => {
-          console.log(`Navigating to ${pathname}`);
-          router.push({ pathname });
-        };
+    const handlePress = (pathname: string) => {
+      router.push({ pathname: pathname as typeof router.push.arguments[0]['pathname'] });
+    };
 
   return (
     <View style={styles.container}>

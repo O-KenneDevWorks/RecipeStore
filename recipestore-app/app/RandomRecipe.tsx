@@ -49,18 +49,19 @@ const RandomRecipeScreen = () => {
         <Text>Cuisine: {recipe.cuisine}</Text>
       </View>
 
-      {recipe.tags?.length > 0 && (
+      {Array.isArray(recipe.tags) && recipe.tags.length > 0 && (
         <View style={styles.detailSection}>
-            <Text style={styles.sectionTitle}>Tags</Text>
-            <FlatList
+          <Text style={styles.sectionTitle}>Tags</Text>
+          <FlatList
             data={recipe.tags}
             keyExtractor={(tag, index) => `tag-${index}`}
             renderItem={({ item: tag }) => <Text style={styles.tag}>{tag}</Text>}
             horizontal
             showsHorizontalScrollIndicator={false}
-            />
+          />
         </View>
-        )}
+      )}
+
 
       <View style={styles.section}>
         <Text style={styles.subheading}>Ingredients</Text>

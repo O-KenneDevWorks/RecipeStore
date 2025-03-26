@@ -58,5 +58,3 @@ const ViewRecipesStyles = StyleSheet.create({
 });
 
 export default ViewRecipesStyles;
-
-export default ViewRecipesStyles;

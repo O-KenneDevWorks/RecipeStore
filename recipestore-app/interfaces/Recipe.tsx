@@ -22,3 +22,17 @@ export interface RecipePreview {
     name: string;
     image?: string;
 }
+
+export interface RecipeFormData {
+  name: string;
+  prepTime: string;
+  cookTime: string;
+  totalTime: string;
+  servings: string;
+  yield: string;
+  tags: string[];
+  course: string;
+  cuisine: string;
+  notes: string;
+  image: string;
+}

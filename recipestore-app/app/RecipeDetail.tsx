@@ -15,15 +15,15 @@ const RecipeDetail = () => {
 
   useEffect(() => {
     const fetchRecipe = async () => {
-      if (!id) return;
-
+      if (typeof id !== 'string') return;
+  
       const data = await getRecipeById(id);
       if (data) {
         setRecipe(data);
       }
       setLoading(false);
     };
-
+  
     fetchRecipe();
   }, [id]);
 
@@ -42,7 +42,9 @@ const RecipeDetail = () => {
   // **Prepare FlatList Data (Combining all Sections)**
   const flatListData = [
     { type: 'header' },
-    ...(recipe.tags.length > 0 ? [{ type: 'tags', data: recipe.tags }] : []),
+    ...(Array.isArray(recipe.tags) && recipe.tags.length > 0
+      ? [{ type: 'tags', data: recipe.tags }]
+      : []),
     { type: 'ingredients', data: recipe.ingredients },
     { type: 'directions', data: recipe.directions },
     ...(recipe.notes ? [{ type: 'notes', data: recipe.notes }] : []),
@@ -65,45 +67,70 @@ const RecipeDetail = () => {
       renderItem={({ item }) => {
         switch (item.type) {
           case 'tags':
-            return (
-              <View style={styles.detailSection}>
-                <Text style={styles.sectionTitle}>Tags</Text>
-                <FlatList
-                  data={item.data}
-                  keyExtractor={(tag, index) => `tag-${index}`}
-                  renderItem={({ item: tag }) => <Text style={styles.tag}>{tag}</Text>}
-                  horizontal
-                />
-              </View>
-            );
+            if (Array.isArray(item.data) && typeof item.data[0] === 'string') {
+              const tags = item.data as string[];
+              return (
+                <View style={styles.detailSection}>
+                  <Text style={styles.sectionTitle}>Tags</Text>
+                  <FlatList
+                    data={tags}
+                    keyExtractor={(tag, index) => `tag-${index}`}
+                    renderItem={({ item: tag }) => <Text style={styles.tag}>{tag}</Text>}
+                    horizontal
+                  />
+                </View>
+              );
+            }
+            return null;
+
 
           case 'ingredients':
-            return (
-              <View style={styles.detailSection}>
-                <Text style={styles.sectionTitle}>Ingredients</Text>
-                {item.data.map((ingredient, index) => (
-                  <Text key={index}>{ingredient.amount} {ingredient.unit} {ingredient.name}</Text>
-                ))}
-              </View>
-            );
+            if (Array.isArray(item.data)) {
+              return (
+                <View style={styles.detailSection}>
+                  <Text style={styles.sectionTitle}>Ingredients</Text>
+                  {item.data.map((ingredient, index) => {
+                    // Ensure all required properties exist
+                    if (
+                      typeof ingredient === 'object' &&
+                      'amount' in ingredient &&
+                      'unit' in ingredient &&
+                      'name' in ingredient
+                    ) {
+                      return (
+                        <Text key={index}>
+                          {ingredient.amount} {ingredient.unit} {ingredient.name}
+                        </Text>
+                      );
+                    }
+                    return null;
+                  })}
+                </View>
+              );
+            }
+            return null;
 
-          case 'directions':
+          case 'directions': {
+            const directions = item.data as string[];
             return (
               <View style={styles.detailSection}>
                 <Text style={styles.sectionTitle}>Directions</Text>
-                {item.data.map((direction, index) => (
+                {directions.map((direction, index) => (
                   <Text key={index}>{index + 1}. {direction}</Text>
                 ))}
               </View>
             );
+          }
+            
 
           case 'notes':
             return (
               <View style={styles.detailSection}>
                 <Text style={styles.sectionTitle}>Notes</Text>
-                <Text>{item.data}</Text>
+                <Text>{typeof item.data === 'string' ? item.data : ''}</Text>
               </View>
             );
+                
 
           default:
             return null;
