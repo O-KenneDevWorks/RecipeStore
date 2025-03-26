@@ -10,18 +10,19 @@ import {
 } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { getRecipeById, updateRecipe } from '../api/recipeAPI';
-import { Recipe } from '../interfaces/Recipe';
+import { Recipe, RecipeFormData } from '../interfaces/Recipe';
 import EditRecipeFormStyles from '../styles/EditRecipeFormStyles';
 import { Picker } from '@react-native-picker/picker';
 import * as ImagePicker from 'expo-image-picker';
 import { UnitOptions, COURSE_OPTIONS, CUISINE_OPTIONS } from '../constants/options';
 
 
+
 const EditRecipeForm = () => {
   const router = useRouter();
-  const { id } = useLocalSearchParams();
+  const { id } = useLocalSearchParams<{ id: string }>();
   const [recipe, setRecipe] = useState<Recipe | null>(null);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<RecipeFormData>({
     name: '',
     prepTime: '',
     cookTime: '',
@@ -37,7 +38,7 @@ const EditRecipeForm = () => {
 
   useEffect(() => {
     const fetchRecipe = async () => {
-      if (!id) return;
+      if (typeof id !== 'string') return;
       const data = await getRecipeById(id);
       if (data) {
         setRecipe(data);
@@ -95,10 +96,10 @@ const EditRecipeForm = () => {
     }
   };
 
-  const handleTagChange = (e: ChangeEvent<HTMLInputElement>) => {
-          const tags = e.target.value.split(',').map(tag => tag.trim());
-          setRecipe(prev => ({ ...prev, tags }));
-      };
+  // const handleTagChange = (e: ChangeEvent<HTMLInputElement>) => {
+  //         const tags = e.target.value.split(',').map(tag => tag.trim());
+  //         setRecipe(prev => ({ ...prev, tags }));
+  //     };
 
   /*** 📌 Reordering Logic ***/
   const moveItem = <T,>(arr: T[], fromIndex: number, toIndex: number): T[] => {
@@ -110,13 +111,27 @@ const EditRecipeForm = () => {
   };
 
   const addIngredient = () => {
-    setRecipe(prev => ({ ...prev, ingredients: [...prev.ingredients, { amount: '', unit: '', name: '' }] }));
+    setRecipe(prev => {
+      if (!prev) return prev; // or return null;
+      return {
+        ...prev,
+        ingredients: [...prev.ingredients, { amount: '', unit: '', name: '' }]
+      };
+    });
   };
 
   const removeIngredient = (index: number) => {
-    const newIngredients = [...recipe.ingredients];
-    newIngredients.splice(index, 1);
-    setRecipe(prev => ({ ...prev, ingredients: newIngredients }));
+    setRecipe(prev => {
+      if (!prev) return prev; // Or return null;
+  
+      const newIngredients = [...prev.ingredients];
+      newIngredients.splice(index, 1);
+  
+      return {
+        ...prev,
+        ingredients: newIngredients,
+      };
+    });
   };
   
   const moveIngredient = (index: number, direction: 'up' | 'down') => {
@@ -126,19 +141,42 @@ const EditRecipeForm = () => {
   };
 
   const handleIngredientChange = (index: number, key: string, value: string) => {
-    const updatedIngredients = [...recipe.ingredients];
-    updatedIngredients[index] = { ...updatedIngredients[index], [key]: value };
-    setRecipe((prev) => ({ ...prev, ingredients: updatedIngredients }));
-};
+    setRecipe((prev) => {
+      if (!prev) return prev; // handles case where recipe is null
+  
+      const updatedIngredients = [...prev.ingredients];
+      updatedIngredients[index] = { ...updatedIngredients[index], [key]: value };
+  
+      return {
+        ...prev,
+        ingredients: updatedIngredients,
+      };
+    });
+  };
 
   const addDirection = () => {
-    setRecipe(prev => ({ ...prev, directions: [...prev.directions, ''] }));
+    setRecipe(prev => {
+      if (!prev) return prev;
+  
+      return {
+        ...prev,
+        directions: [...prev.directions, ''],
+      };
+    });
   };
 
   const removeDirection = (index: number) => {
-    const newDirections = [...recipe.directions];
-    newDirections.splice(index, 1);
-    setRecipe(prev => ({ ...prev, directions: newDirections }));
+    setRecipe(prev => {
+      if (!prev) return prev;
+  
+      const newDirections = [...prev.directions];
+      newDirections.splice(index, 1);
+  
+      return {
+        ...prev,
+        directions: newDirections,
+      };
+    });
   };
 
   const moveDirection = (index: number, direction: 'up' | 'down') => {
@@ -148,10 +186,19 @@ const EditRecipeForm = () => {
   };
 
   const handleDirectionChange = (index: number, value: string) => {
-    const updatedDirections = [...recipe.directions];
-    updatedDirections[index] = value;
-    setRecipe((prev) => ({ ...prev, directions: updatedDirections }));
-};
+    setRecipe((prev) => {
+      if (!prev) return prev;
+  
+      const updatedDirections = [...prev.directions];
+      updatedDirections[index] = value;
+  
+      return {
+        ...prev,
+        directions: updatedDirections,
+      };
+    });
+  };
+  
 
   if (!recipe) {
     return <Text style={EditRecipeFormStyles.title}>Loading...</Text>;
@@ -179,27 +226,29 @@ const EditRecipeForm = () => {
                   renderItem={({ item, index }) => (
                     <View style={EditRecipeFormStyles.ingredientItem}>
                       {/* Row for Amount & Unit */}
-                      <View style={EditRecipeFormStyles.row}>
+                      <View style={EditRecipeFormStyles.ingredientRow}>
                         <TextInput
                           style={EditRecipeFormStyles.ingredientInput}
                           value={item.amount}
                           onChangeText={(text) => handleIngredientChange(index, 'amount', text)}
                           placeholder="Amount"
                         />
-                        <Picker
-                          selectedValue={item.unit}
-                          onValueChange={(value) => handleIngredientChange(index, 'unit', value)}
-                          style={EditRecipeFormStyles.picker}
-                        >
-                          {UnitOptions.map((unit) => (
-                            <Picker.Item key={unit.value} label={unit.label} value={unit.value} />
-                          ))}
-                        </Picker>
+                        <View style={EditRecipeFormStyles.pickerContainer}>
+                          <Picker
+                            selectedValue={item.unit}
+                            onValueChange={(value) => handleIngredientChange(index, 'unit', value)}
+                            style={EditRecipeFormStyles.picker}
+                          >
+                            {UnitOptions.map((unit) => (
+                              <Picker.Item key={unit.value} label={unit.label} value={unit.value} />
+                            ))}
+                          </Picker>
+                        </View>
                       </View>
 
                       {/* Ingredient Name Input */}
                       <TextInput
-                        style={EditRecipeFormStyles.ingredientInput}
+                        style={EditRecipeFormStyles.ingredientNameInput}
                         value={item.name}
                         onChangeText={(text) => handleIngredientChange(index, 'name', text)}
                         placeholder="Ingredient Name"
@@ -207,16 +256,25 @@ const EditRecipeForm = () => {
 
                       {/* Move & Remove Buttons */}
                       <View style={EditRecipeFormStyles.buttonRow}>
-                        <TouchableOpacity onPress={() => moveIngredient(index, 'up')} style={[EditRecipeFormStyles.button, EditRecipeFormStyles.moveUpButton]}>
-                          <Text style={EditRecipeFormStyles.buttonText}>⬆</Text>
+                        <TouchableOpacity
+                            onPress={() => moveIngredient(index, 'up')}
+                            style={[EditRecipeFormStyles.button, EditRecipeFormStyles.moveUpButton, EditRecipeFormStyles.buttonFlex]}
+                        >
+                            <Text style={EditRecipeFormStyles.buttonText}>⬆</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => moveIngredient(index, 'down')} style={[EditRecipeFormStyles.button, EditRecipeFormStyles.moveDownButton]}>
-                          <Text style={EditRecipeFormStyles.buttonText}>⬇</Text>
+                        <TouchableOpacity
+                            onPress={() => moveIngredient(index, 'down')}
+                            style={[EditRecipeFormStyles.button, EditRecipeFormStyles.moveDownButton, EditRecipeFormStyles.buttonFlex]}
+                        >
+                            <Text style={EditRecipeFormStyles.buttonText}>⬇</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => removeIngredient(index)} style={[EditRecipeFormStyles.button, EditRecipeFormStyles.deleteButton]}>
-                          <Text style={EditRecipeFormStyles.buttonText}>❌</Text>
+                        <TouchableOpacity
+                            onPress={() => removeIngredient(index)}
+                            style={[EditRecipeFormStyles.button, EditRecipeFormStyles.deleteButton, EditRecipeFormStyles.buttonFlex]}
+                        >
+                            <Text style={EditRecipeFormStyles.buttonText}>❌</Text>
                         </TouchableOpacity>
-                      </View>
+                    </View>
                     </View>
                   )}
                 />
@@ -264,18 +322,21 @@ const EditRecipeForm = () => {
               </View>
             );
 
-          case 'notes':
-            return (
-              <View>
-                <Text style={EditRecipeFormStyles.sectionTitle}>Notes:</Text>
-                <TextInput
-                  style={EditRecipeFormStyles.ingredientInput}
-                  value={item.data}
-                  onChangeText={(text) => setFormData({ ...formData, notes: text })}
-                  multiline
-                />
-              </View>
-            );
+            case 'notes':
+              if (typeof item.data === 'string') {
+                return (
+                  <View>
+                    <Text style={EditRecipeFormStyles.sectionTitle}>Notes:</Text>
+                    <TextInput
+                      style={EditRecipeFormStyles.ingredientInput}
+                      value={item.data}
+                      onChangeText={(text) => setFormData({ ...formData, notes: text })}
+                      multiline
+                    />
+                  </View>
+                );
+              }
+              return null;
 
           default:
             return null;
@@ -317,8 +378,11 @@ const EditRecipeForm = () => {
           <Text>Tags:</Text>
           <TextInput
             style={EditRecipeFormStyles.ingredientInput}
-            value={formData.tags}
-            onChangeText={(text) => setFormData({ ...formData, tags: text })}
+            value={formData.tags.join(', ')} // convert string[] to string
+            onChangeText={(text) =>
+              setFormData({ ...formData, tags: text.split(',').map(tag => tag.trim()) }) // convert string back to string[]
+            }
+            placeholder="Enter tags separated by commas"
           />
 
           {/* Course Picker */}

@@ -40,6 +40,10 @@ const EditRecipeFormStyles = StyleSheet.create({
     marginVertical: 8,
   },
 
+  pickerContainer: {
+    width: '75%', // Fixed width for Unit Picker
+  },
+
   listContainer: {
     marginBottom: 20,
   },
@@ -49,31 +53,43 @@ const EditRecipeFormStyles = StyleSheet.create({
   },
 
   ingredientItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '100%',
-    paddingVertical: 10,
-    paddingHorizontal: 5,
+    flexDirection: 'column',  // Stack vertically
+    alignItems: 'flex-start', // Align to left
+    backgroundColor: '#fff',
+    padding: 10,
+    borderRadius: 5,
     borderBottomWidth: 1,
     borderBottomColor: '#ddd',
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    marginBottom: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
+    marginBottom: 10,
+    width: '100%',
+  },
+
+  ingredientRow: {
+    flexDirection: 'row',  // Amount & Unit side by side
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+    marginBottom: 5,  // Space between rows
   },
 
   ingredientInput: {
     flex: 1,
-    marginHorizontal: 6,
-    padding: 12,
+    padding: 10,
     borderWidth: 1,
     borderColor: '#ccc',
-    borderRadius: 8,
+    borderRadius: 5,
     backgroundColor: '#fff',
+    marginRight: 10,  // Space between Amount & Unit
+  },
+
+  ingredientNameInput: {
+    width: '100%',  // Full width on second row
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    backgroundColor: '#fff',
+    marginBottom: 5,  // Space between name and buttons
   },
 
   directionItem: {
@@ -106,10 +122,10 @@ const EditRecipeFormStyles = StyleSheet.create({
 
   buttonRow: {
     flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: 6,
-    marginLeft: 10,
+    justifyContent: 'space-between',
+    alignSelf: 'stretch',   // Makes it take the full available width
+    // flexGrow: 1,            // Allows the row to expand as needed
+    // width: '100%',
   },
 
   button: {
@@ -122,6 +138,10 @@ const EditRecipeFormStyles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
+  },
+
+  buttonFlex: {
+    flex: 1,
   },
 
   moveUpButton: {
