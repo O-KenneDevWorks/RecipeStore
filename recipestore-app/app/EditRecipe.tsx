@@ -229,7 +229,7 @@ const EditRecipeForm = () => {
           case 'directions':
             return (
               <View>
-                <Text>Directions:</Text>
+                <Text style={EditRecipeFormStyles.sectionTitle}>Directions:</Text>
                 <FlatList
                   data={recipe.directions}
                   keyExtractor={(_, index) => `direction-${index}`}
@@ -267,7 +267,7 @@ const EditRecipeForm = () => {
           case 'notes':
             return (
               <View>
-                <Text>Notes:</Text>
+                <Text style={EditRecipeFormStyles.sectionTitle}>Notes:</Text>
                 <TextInput
                   style={EditRecipeFormStyles.ingredientInput}
                   value={item.data}
@@ -315,23 +315,37 @@ const EditRecipeForm = () => {
             onChangeText={(text) => setFormData({ ...formData, servings: text })}
           />
           <Text>Tags:</Text>
-                    <TextInput
-                      style={EditRecipeFormStyles.ingredientInput}
-                      value={formData.tags}
-                      onChangeText={(text) => setFormData({ ...formData, tags: text })}
-                    />
+          <TextInput
+            style={EditRecipeFormStyles.ingredientInput}
+            value={formData.tags}
+            onChangeText={(text) => setFormData({ ...formData, tags: text })}
+          />
+
+          {/* Course Picker */}
           <Text>Course:</Text>
-          <TextInput
-            style={EditRecipeFormStyles.ingredientInput}
-            value={formData.course}
-            onChangeText={(text) => setFormData({ ...formData, course: text })}
-          />
+          <Picker
+              selectedValue={formData.course}
+              onValueChange={(value) => setFormData({ ...formData, course: value })}
+              style={EditRecipeFormStyles.picker}
+          >
+              <Picker.Item label="Select Course" value="" />
+              {COURSE_OPTIONS.map((course) => (
+                  <Picker.Item key={course} label={course} value={course} />
+              ))}
+          </Picker>
+
+          {/* Cuisine Picker */}
           <Text>Cuisine:</Text>
-          <TextInput
-            style={EditRecipeFormStyles.ingredientInput}
-            value={formData.cuisine}
-            onChangeText={(text) => setFormData({ ...formData, cuisine: text })}
-          />
+          <Picker
+              selectedValue={formData.cuisine}
+              onValueChange={(value) => setFormData({ ...formData, cuisine: value })}
+              style={EditRecipeFormStyles.picker}
+          >
+              <Picker.Item label="Select Cuisine" value="" />
+              {CUISINE_OPTIONS.map((cuisine) => (
+                  <Picker.Item key={cuisine} label={cuisine} value={cuisine} />
+              ))}
+          </Picker>
         </View>
       }
       ListFooterComponent={

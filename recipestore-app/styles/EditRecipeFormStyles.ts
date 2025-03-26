@@ -21,6 +21,25 @@ const EditRecipeFormStyles = StyleSheet.create({
     marginBottom: 20,
   },
 
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 10,
+    paddingVertical: 5,
+    borderBottomWidth: 2,
+    borderBottomColor: '#007bff', // Blue underline
+  },
+  
+  picker: {
+    height: 50,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    backgroundColor: '#fff',
+    marginVertical: 8,
+  },
+
   listContainer: {
     marginBottom: 20,
   },
