@@ -6,13 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="b9b78b60-57b8-4638-9484-506b1ba2b05c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/recipestore-app/app/EditRecipe.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/recipestore-app/app/EditRecipe.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/recipestore-app/app/Home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/recipestore-app/app/Home.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/recipestore-app/app/RandomRecipe.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/recipestore-app/app/RandomRecipe.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/recipestore-app/app/RecipeDetail.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/recipestore-app/app/RecipeDetail.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/recipestore-app/interfaces/Recipe.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/recipestore-app/interfaces/Recipe.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/recipestore-app/styles/EditRecipeFormStyles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/recipestore-app/styles/EditRecipeFormStyles.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/recipestore-app/styles/ViewRecipesStyles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/recipestore-app/styles/ViewRecipesStyles.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/recipestore-app/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/recipestore-app/app.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/recipestore-app/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/recipestore-app/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
