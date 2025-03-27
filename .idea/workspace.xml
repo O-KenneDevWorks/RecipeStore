@@ -5,18 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b9b78b60-57b8-4638-9484-506b1ba2b05c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/MobileApp/interfaces/Ingredient.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MobileApp/interfaces/MealPlan.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MobileApp/interfaces/Pantry.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MobileApp/interfaces/Recipe.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MobileApp/interfaces/UserData.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MobileApp/interfaces/UserLogin.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MobileApp/styles/RecipeCarousel.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MobileApp/styles/ViewRecipesStyles.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/app/ViewRecipes.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/MobileApp/app/ViewRecipes.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MobileApp/components/RecipeCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/MobileApp/components/RecipeCard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-app/src/constants/options.ts" beforeDir="false" afterPath="$PROJECT_DIR$/web-app/src/constants/options.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/recipestore-app/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/recipestore-app/app.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/recipestore-app/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/recipestore-app/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,21 +28,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "RunOnceActivity.readMode.enableVisualFormatting": "true",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "mobile-app-setup",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/o_ken/Desktop/GitHub Projects/RecipeStore",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;mobile-app-setup&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/o_ken/Desktop/GitHub Projects/StickerSmash&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;AndroidSdkUpdater&quot;,
+    &quot;settings.editor.splitter.proportion&quot;: &quot;0.26911315&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\o_ken\Desktop\GitHub Projects\RecipeStore\recipestore-app\assets\images" />
+      <recent name="C:\Users\o_ken\Desktop\GitHub Projects\RecipeStore\mobile-app\app" />
+    </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="y" />
+    </option>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
