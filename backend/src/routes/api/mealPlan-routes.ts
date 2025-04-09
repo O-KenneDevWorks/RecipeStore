@@ -34,7 +34,7 @@ router.post('/', createMealPlan);
  * @description Fetch a meal plan for a specific user, year, and week
  * @access Public
  */
-router.get('/:userId/:year/:weekOfYear', getMealPlan);
+router.get('/',  getMealPlan);
 
 // ==========================
 // Export

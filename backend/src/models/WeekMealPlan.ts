@@ -1,18 +1,18 @@
 import mongoose from "mongoose";
 
-const mealSchema = new mongoose.Schema({
+const mealSchema2 = new mongoose.Schema({
     dayOfWeek: String,
     mainCourse: { type: mongoose.Schema.Types.ObjectId, ref: 'Recipe' },
     sides: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Recipe' }]
 });
 
-const weekMealPlanSchema = new mongoose.Schema({
+const weekMealPlanSchema2 = new mongoose.Schema({
     year: Number,
     weekOfYear: Number,
-    meals: [mealSchema],
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }  // Assuming user authentication
+    meals: [mealSchema2]
+    // userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }  // Assuming user authentication
 });
 
-const WeekMealPlan = mongoose.model('WeekMealPlan', weekMealPlanSchema);
+const WeekMealPlans = mongoose.model('WeekMealPlan', weekMealPlanSchema2);
 
-export default WeekMealPlan;
+export default WeekMealPlans;
