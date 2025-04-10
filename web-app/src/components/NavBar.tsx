@@ -11,6 +11,7 @@ const NavBar = () => {
         { path: '/add-pantry-item', name: 'Add Pantry Item' },
         { path: '/random-recipe', name: 'Random Recipe' },
         { path: '/meal-planner', name: 'Meal Planner' },
+        { path: '/shopping-list', name: 'Shopping List' },
     ]
     
     return (

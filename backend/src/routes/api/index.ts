@@ -9,6 +9,7 @@ import { Router } from 'express';
 import { recipeRouter } from './recipe-routes.js';
 import { pantryRouter } from './pantry-routes.js';
 import { mealPlanRouter } from './mealPlan-routes.js';
+import { shoppingListRouter } from './shoppingListRoutes.js'
 
 // ==========================
 // Router Initialization
@@ -38,6 +39,12 @@ router.use('/pantry', pantryRouter);
  * @description Routes for managing meal plans (saving and retrieving meal plans)
  */
 router.use('/mealPlan', mealPlanRouter);
+
+/**
+ * @route /shoppingList
+ * @description Routes for managing shopping list (saving and retrieving shopping lists)
+ */
+router.use('/shoppingList', shoppingListRouter);
 
 // ==========================
 // Export

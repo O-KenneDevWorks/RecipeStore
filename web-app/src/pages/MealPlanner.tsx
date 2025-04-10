@@ -1,10 +1,21 @@
 import { useState, useEffect } from 'react';
-import { fetchRecipes, fetchMealPlan, saveMealPlan } from '../api/mealPlanAPI';
-import { Recipe } from '../interfaces/Recipe';
-import DayPlan from '../components/DayPlan';
-import ShoppingList from '../components/ShoppingList';
-import '../Styling/MealPlanner.css';
 import { startOfWeek, endOfWeek, addWeeks, format } from 'date-fns';
+
+import { fetchRecipes, fetchMealPlan, saveMealPlan } from '../api/mealPlanAPI';
+import { saveShoppingList } from '../api/shoppingListAPI';
+
+import { Recipe } from '../interfaces/Recipe';
+import { ShoppingListItem } from '../interfaces/shoppingList';
+
+import DayPlan from '../components/DayPlan';
+import ShoppingListModal from '../components/ShoppingList';
+
+import '../Styling/MealPlanner.css';
+
+type IngredientTotals = Record<
+  string,                     // ingredient name
+  { amount: number; unit: string }[]
+>;
 
 const MealPlanner = () => {
     const [weekPlan, setWeekPlan] = useState(
@@ -13,7 +24,8 @@ const MealPlanner = () => {
     const [recipes, setRecipes] = useState<Recipe[]>([]);
     const [currentWeekDate, setCurrentWeekDate] = useState(new Date());
     const [isShoppingListOpen, setIsShoppingListOpen] = useState(false);
-    const [shoppingList, setShoppingList] = useState<Record<string, number>>({});
+
+    const [shoppingItems, setShoppingItems] = useState<any[]>([]);
 
     const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
@@ -125,15 +137,8 @@ const MealPlanner = () => {
     const saveWeek = async () => {
         try {
             const weekKey = getWeekKey(currentWeekDate);
-            // const response = await fetch('/api/mealPlan', {
-            //     method: 'POST',
-            //     headers: { 'Content-Type': 'application/json' },
-            //     body: JSON.stringify({ week: weekKey, meals: weekPlan }),
-            // });
 
             saveMealPlan(weekKey, weekPlan)
-
-            // if (!response.ok) throw new Error('Failed to save meal plan');
 
             console.log('Meal plan saved.');
         } catch (error) {
@@ -142,30 +147,42 @@ const MealPlanner = () => {
     };
 
     const handleShowShoppingList = () => {
-        const ingredientsMap: Record<string, number> = {};
+        const map: IngredientTotals = {};
+      
+        const add = (name: string, amount: number, unit: string) => {
+          if (!map[name]) map[name] = [];
+          map[name].push({ amount, unit });   // <- keep as separate entry
+        };
+      
         weekPlan.forEach((day) => {
-            if (day.main) {
-                const main = recipes.find((r) => r._id === day.main);
-                main?.ingredients?.forEach(({ name, amount }) => {
-                    if (name && amount !== undefined) {
-                        ingredientsMap[name] = (ingredientsMap[name] || 0) + Number(amount);
-                    }
-                });
-            }
-
-            day.sides.forEach((sideId: string) => {
-                const side = recipes.find((r) => r._id === sideId);
-                side?.ingredients?.forEach(({ name, amount }) => {
-                    if (name && amount !== undefined) {
-                        ingredientsMap[name] = (ingredientsMap[name] || 0) + Number(amount);
-                    }
-                });
+          if (day.main) {
+            const main = recipes.find((r) => r._id === day.main);
+            main?.ingredients?.forEach(({ name, amount, unit }) => {
+              if (name && amount && unit) add(name, Number(amount), unit);
             });
+          }
+      
+          day.sides.forEach((sideId: string) => {
+            const side = recipes.find((r) => r._id === sideId);
+            side?.ingredients?.forEach(({ name, amount, unit }) => {
+              if (name && amount && unit) add(name, Number(amount), unit);
+            });
+          });
         });
-
-        setShoppingList(ingredientsMap);
+      
+        const list = Object.entries(map).flatMap(([name, arr]) =>
+          arr.map(({ amount, unit }) => ({ name, amount, unit })),
+        );
+      
+        setShoppingItems(list);
         setIsShoppingListOpen(true);
-    };
+      };
+      
+
+    const handleSaveShopping = async (items: ShoppingListItem[]) => {
+        const weekKey = getWeekKey(currentWeekDate);
+        await saveShoppingList(items, weekKey);
+      };
 
     return (
         <div className="meal-planner">
@@ -204,10 +221,11 @@ const MealPlanner = () => {
                 ))}
             </div>
 
-            <ShoppingList
+            <ShoppingListModal
                 isOpen={isShoppingListOpen}
                 onClose={() => setIsShoppingListOpen(false)}
-                shoppingList={shoppingList}
+                onSave={handleSaveShopping}
+                initialItems={shoppingItems}
             />
         </div>
     );
