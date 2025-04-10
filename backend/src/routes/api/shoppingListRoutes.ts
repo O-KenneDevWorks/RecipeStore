@@ -1,5 +1,5 @@
 import express from 'express';
-import { saveShoppingList, getShoppingList } from '../../controllers/shoppingListController.js';
+import { saveShoppingList, getShoppingList, deleteShoppingList } from '../../controllers/shoppingListController.js';
 
 const router = express.Router();
 
@@ -16,5 +16,12 @@ router.post('/', saveShoppingList);
  * @access Public
  */
 router.get('/',  getShoppingList);
+
+/**
+ * @route GET /shoppingList?week=YYYY-W##
+ * @description Get the shopping list for that week
+ * @access Public
+ */
+router.delete('/', deleteShoppingList);
 
 export { router as shoppingListRouter };

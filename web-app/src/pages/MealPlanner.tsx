@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { startOfWeek, endOfWeek, addWeeks, format } from 'date-fns';
 
 import { fetchRecipes, fetchMealPlan, saveMealPlan } from '../api/mealPlanAPI';
-import { saveShoppingList } from '../api/shoppingListAPI';
+import { fetchShoppingList, saveShoppingList } from '../api/shoppingListAPI';
 
 import { Recipe } from '../interfaces/Recipe';
 import { ShoppingListItem } from '../interfaces/shoppingList';
@@ -13,8 +13,8 @@ import ShoppingListModal from '../components/ShoppingList';
 import '../Styling/MealPlanner.css';
 
 type IngredientTotals = Record<
-  string,                     // ingredient name
-  { amount: number; unit: string }[]
+    string,
+    { amount: number; unit: string }[]
 >;
 
 const MealPlanner = () => {
@@ -29,7 +29,6 @@ const MealPlanner = () => {
 
     const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
-    // Format to something like "2025-W15"
     const getWeekKey = (date: Date) => {
         const start = startOfWeek(date, { weekStartsOn: 1 });
         return format(start, "yyyy-'W'II");
@@ -43,6 +42,21 @@ const MealPlanner = () => {
 
     const getYearFromDate = (date: Date): string => {
         return format(date, 'yyyy');
+    };
+
+    const mergeAndSort = (list: ShoppingListItem[]) => {
+        const map = new Map<string, ShoppingListItem>();
+        list.forEach((it) => {
+            const key = `${it.name.toLowerCase()}|${it.unit.toLowerCase()}`;
+            if (map.has(key)) {
+                map.get(key)!.amount += it.amount;
+            } else {
+                map.set(key, { ...it });
+            }
+        });
+        return Array.from(map.values()).sort((a, b) =>
+            a.name.localeCompare(b.name, undefined, { sensitivity: 'base' }),
+        );
     };
 
     useEffect(() => {
@@ -148,41 +162,47 @@ const MealPlanner = () => {
 
     const handleShowShoppingList = () => {
         const map: IngredientTotals = {};
-      
+
         const add = (name: string, amount: number, unit: string) => {
-          if (!map[name]) map[name] = [];
-          map[name].push({ amount, unit });   // <- keep as separate entry
+            if (!map[name]) map[name] = [];
+            map[name].push({ amount, unit });
         };
-      
+
         weekPlan.forEach((day) => {
-          if (day.main) {
-            const main = recipes.find((r) => r._id === day.main);
-            main?.ingredients?.forEach(({ name, amount, unit }) => {
-              if (name && amount && unit) add(name, Number(amount), unit);
+            if (day.main) {
+                const main = recipes.find((r) => r._id === day.main);
+                main?.ingredients?.forEach(({ name, amount, unit }) => {
+                    if (name && amount && unit) add(name, Number(amount), unit);
+                });
+            }
+
+            day.sides.forEach((sideId: string) => {
+                const side = recipes.find((r) => r._id === sideId);
+                side?.ingredients?.forEach(({ name, amount, unit }) => {
+                    if (name && amount && unit) add(name, Number(amount), unit);
+                });
             });
-          }
-      
-          day.sides.forEach((sideId: string) => {
-            const side = recipes.find((r) => r._id === sideId);
-            side?.ingredients?.forEach(({ name, amount, unit }) => {
-              if (name && amount && unit) add(name, Number(amount), unit);
-            });
-          });
         });
-      
+
         const list = Object.entries(map).flatMap(([name, arr]) =>
-          arr.map(({ amount, unit }) => ({ name, amount, unit })),
+            arr.map(({ amount, unit }) => ({ name, amount, unit })),
         );
-      
+
         setShoppingItems(list);
         setIsShoppingListOpen(true);
-      };
-      
+    };
 
-    const handleSaveShopping = async (items: ShoppingListItem[]) => {
+
+    const handleSaveShopping = async (newItems: ShoppingListItem[]) => {
         const weekKey = getWeekKey(currentWeekDate);
-        await saveShoppingList(items, weekKey);
-      };
+
+        const existing = await fetchShoppingList(weekKey);
+        const merged = mergeAndSort([...(existing?.items ?? []), ...newItems]);
+
+        await saveShoppingList(merged, weekKey);
+
+        setShoppingItems(merged);
+    };
 
     return (
         <div className="meal-planner">
