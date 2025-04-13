@@ -10,7 +10,7 @@ const EditRecipe = () => {
     const [recipe, setRecipe] = useState<Recipe>({
         _id: '',
         name: '',
-        ingredients: [{ amount: '', unit: '', name: '' }],
+        ingredients: [{ amount: '', unit: UnitOptions[0].value, name: '' }],
         directions: [''],
         prepTime: '',
         cookTime: '',
@@ -71,7 +71,7 @@ const EditRecipe = () => {
     };
 
     const addIngredient = () => {
-        setRecipe(prev => ({ ...prev, ingredients: [...prev.ingredients, { amount: '', unit: '', name: '' }] }));
+        setRecipe(prev => ({ ...prev, ingredients: [...prev.ingredients, { amount: '', unit: UnitOptions[0].value, name: '' }] }));
     };
 
     const removeIngredient = (index: number) => {
