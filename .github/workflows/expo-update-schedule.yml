@@ -1,0 +1,66 @@
+name: Monthly APK Build
+
+on:
+  schedule:
+    # Build a fresh APK on the 1st of every month at 2 AM UTC
+    # - cron: '0 2 1 * *'
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  scheduled-build:
+    name: Monthly APK Build
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: recipestore-app/package-lock.json
+
+      - name: Setup Expo
+        uses: expo/expo-github-action@v8
+        with:
+          expo-version: latest
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Install dependencies
+        working-directory: ./recipestore-app
+        run: npm ci
+
+      - name: Build Android APK
+        working-directory: ./recipestore-app
+        run: |
+          eas build --platform android --profile production --non-interactive --wait
+        env:
+          EXPO_PUBLIC_API_BASE_URL: ${{ secrets.API_BASE_URL }}
+
+      - name: Get Build URL
+        working-directory: ./recipestore-app
+        id: build-url
+        run: |
+          BUILD_URL=$(eas build:list --platform=android --limit=1 --json | jq -r '.[0].artifacts.buildUrl')
+          echo "url=$BUILD_URL" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const buildUrl = '${{ steps.build-url.outputs.url }}';
+            const now = new Date();
+            const tagName = `app-v${now.getFullYear()}.${String(now.getMonth() + 1).padStart(2, '0')}`;
+            
+            await github.rest.repos.createRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              tag_name: tagName,
+              name: `RecipeStore - Monthly Build ${tagName}`,
+              body: `📱 **Monthly Production Build**\n\n[📥 Download APK](${buildUrl})\n\n---\n\n### For Your Wife:\n1. Click the download link above\n2. Open the downloaded APK on your phone\n3. Install the update (allow installation from unknown sources if prompted)\n\nThe app will automatically get smaller updates between monthly builds!`,
+              draft: false,
+              prerelease: false
+            });

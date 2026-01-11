@@ -1,7 +1,7 @@
 import { Recipe } from "../interfaces/Recipe";
 import { RecipePreview } from "../interfaces/Recipe";
 
-const BASE_URL = "http://10.0.0.85:3001/api"; // Replace with your backend's base URL
+const BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL || "http://10.0.0.5:3001/api";
 
 // Fetch a single recipe by ID
 export const getRecipeById = async (id: string): Promise<Recipe | null> => {
