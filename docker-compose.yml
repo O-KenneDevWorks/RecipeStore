@@ -1,8 +1,6 @@
-version: '3.8'
-
 services:
   mongodb:
-    image: mongo:7
+    image: mongo:4.4
     container_name: recipestore-mongodb
     restart: unless-stopped
     environment:
@@ -15,7 +13,7 @@ services:
     networks:
       - recipestore-network
     healthcheck:
-      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/recipeStore --quiet
+      test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/recipeStore --quiet
       interval: 10s
       timeout: 5s
       retries: 5
