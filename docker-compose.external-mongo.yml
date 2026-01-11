@@ -1,24 +1,8 @@
-services:
-  mongodb:
-    image: mongo:7
-    container_name: recipestore-mongodb
-    restart: unless-stopped
-    environment:
-      MONGO_INITDB_DATABASE: recipeStore
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongodb_data:/data/db
-      - mongodb_config:/data/configdb
-    networks:
-      - recipestore-network
-    healthcheck:
-      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/recipeStore --quiet
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 20s
+# Docker Compose configuration for external MongoDB
+# Use this when MongoDB is running on a separate server/host
+# Usage: docker compose -f docker-compose.external-mongo.yml up -d
 
+services:
   backend:
     build:
       context: ./backend
@@ -28,12 +12,10 @@ services:
     environment:
       NODE_ENV: production
       PORT: 3001
-      MONGODB_URI: mongodb://mongodb:27017/recipeStore
+      # MONGODB_URI from backend/.env - set to external MongoDB server
+      MONGODB_URI: ${MONGODB_URI}
     ports:
       - "3001:3001"
-    depends_on:
-      mongodb:
-        condition: service_healthy
     networks:
       - recipestore-network
     volumes:
@@ -68,9 +50,3 @@ services:
 networks:
   recipestore-network:
     driver: bridge
-
-volumes:
-  mongodb_data:
-    driver: local
-  mongodb_config:
-    driver: local
