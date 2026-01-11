@@ -2,7 +2,7 @@ import { MealPlan,  } from '../interfaces/MealPlan';
 // import { ShortRecipe } from '../interfaces/MealPlan';
 import { Recipe } from '../interfaces/Recipe';
 
-const BASE_URL = "http://10.0.0.85:3001/api";
+const BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL || "http://10.0.0.5:3001/api";
 
 // Fetch all recipes for a user
 export const fetchRecipes = async (): Promise<Recipe[]> => {
