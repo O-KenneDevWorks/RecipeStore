@@ -1,6 +1,3 @@
-# Simplified version for using MongoDB on host machine
-version: '3.8'
-
 services:
   backend:
     build:
