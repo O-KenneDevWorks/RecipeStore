@@ -84,25 +84,23 @@ export const updateRecipe = async (id: string, recipe: Recipe): Promise<void> =>
 };
 
 // Add a new recipe
-export const addRecipe = async (recipe: Recipe): Promise<Recipe | null> => {
-    try {
-        const response = await fetch("/api/recipes", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(recipe),
-        });
+export const addRecipe = async (recipe: Recipe): Promise<Recipe> => {
+  // strip any existing ids from duplicates/edits
+  const { _id, ...cleanedRecipe } = recipe;
 
-        if (!response.ok) {
-            throw new Error("Failed to add recipe");
-        }
+  const response = await fetch("/api/recipes", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(cleanedRecipe),
+  });
 
-        return await response.json();
-    } catch (err) {
-        console.error("Error adding recipe:", err);
-        throw err;
-    }
+  if (!response.ok) {
+    const text = await response.text().catch(() => "");
+    throw new Error(`Failed to add recipe (${response.status}): ${text}`);
+  }
+
+  const created: Recipe = await response.json();
+  return created;
 };
 
 export const getRecipePreviews = async (): Promise<RecipePreview[]> => {

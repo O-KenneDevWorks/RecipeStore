@@ -14,6 +14,7 @@ import PantryView from './pages/PantryView';
 import RandomRecipe from './pages/RandomRecipe';
 import MealPlanner from './pages/MealPlanner';
 import EditRecipeForm from './pages/EditRecipeForm';
+import DuplicateRecipeForm from './pages/DuplicateRecipeForm';
 
 import './Styling/Global.css';
 
@@ -31,6 +32,7 @@ const router = createBrowserRouter([
       { path: "random-recipe", element: <RandomRecipe /> },
       { path: "meal-planner", element: <MealPlanner userId="dummyUserId" /> },
       { path: "edit-recipe/:id", element: <EditRecipeForm /> },
+      { path: "duplicate-recipe/:id", element: <DuplicateRecipeForm /> },
     ],
   },
 ], {

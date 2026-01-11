@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import '../Styling/RecipeDetail.css';
+import BurgerMenu from '../components/BurgerMenu';
 import { getRecipeById } from '../api/recipeAPI';
 import { Recipe } from '../interfaces/Recipe';
 
@@ -29,8 +30,14 @@ const RecipeDetail = () => {
 
   return (
     <div className="recipe-detail">
+      <BurgerMenu
+        buttonLabel=""
+        items={[
+        { label: 'Edit', to: `/edit-recipe/${id}` },
+        { label: 'Duplicate', to: `/duplicate-recipe/${id}` },
+        ]}
+      />
       <h1>{recipe.name}</h1>
-      <Link to={`/edit-recipe/${recipe._id}`}>Edit Recipe</Link>
       {recipe.image && <img src={recipe.image} alt={recipe.name} />}
       <ul>
         <li>Prep Time: {recipe.prepTime}</li>
