@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import imageCompression from 'browser-image-compression';
 import '../Styling/EditRecipeForm.css';
 import { addRecipe } from "../api/recipeAPI";
-import { getRecipeById, updateRecipe } from '../api/recipeAPI';
+import { getRecipeById } from '../api/recipeAPI';
 import { Recipe } from '../interfaces/Recipe';
 import { UnitOptions } from '../constants/options';
 
