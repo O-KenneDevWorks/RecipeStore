@@ -59,6 +59,24 @@ app.use(express.json({ limit: '10mb' }));
 // Parse incoming URL-encoded payloads with extended option enabled
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
+// ==========================
+// Health Check Endpoint
+// ==========================
+
+// Health check endpoint for monitoring and Docker health checks
+app.get('/health', (_req, res) => {
+    const healthStatus = {
+        status: 'ok',
+        timestamp: new Date().toISOString(),
+        uptime: process.uptime(),
+        mongodb: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected'
+    };
+    
+    // Return 200 if MongoDB is connected, 503 if not
+    const statusCode = mongoose.connection.readyState === 1 ? 200 : 503;
+    res.status(statusCode).json(healthStatus);
+});
+
 // Attach imported routes for handling API endpoints
 app.use(routes);
 
