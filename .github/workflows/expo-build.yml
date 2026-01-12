@@ -119,7 +119,7 @@ jobs:
           sleep 10
           
           # Get the build list
-          BUILD_LIST=$(eas build:list --platform=android --limit=1 --json 2>&1)
+          BUILD_LIST=$(eas build:list --platform=android --limit=1 --json --non-interactive 2>&1)
           EAS_EXIT_CODE=$?
           
           echo "EAS exit code: $EAS_EXIT_CODE"
