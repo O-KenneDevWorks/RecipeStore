@@ -48,7 +48,27 @@ jobs:
         working-directory: ./recipestore-app
         id: build-url
         run: |
-          BUILD_URL=$(eas build:list --platform=android --limit=1 --json | jq -r '.[0].artifacts.buildUrl')
+          # Wait for build to be indexed
+          echo "Waiting for build to be indexed..."
+          sleep 10
+          
+          # Get the build list and check if valid
+          BUILD_LIST=$(eas build:list --platform=android --limit=1 --json 2>&1)
+          echo "Build list response: $BUILD_LIST"
+          
+          # Check if the response is valid JSON
+          if echo "$BUILD_LIST" | jq empty 2>/dev/null; then
+            BUILD_URL=$(echo "$BUILD_LIST" | jq -r '.[0].artifacts.buildUrl // ""')
+            if [ -z "$BUILD_URL" ] || [ "$BUILD_URL" = "null" ]; then
+              echo "⚠️ No build URL found in response"
+              BUILD_URL="https://expo.dev/accounts/$(whoami)/projects/recipestore-app/builds"
+            fi
+          else
+            echo "⚠️ Invalid JSON response from eas build:list"
+            BUILD_URL="https://expo.dev/accounts/$(whoami)/projects/recipestore-app/builds"
+          fi
+          
+          echo "Final build URL: $BUILD_URL"
           echo "url=$BUILD_URL" >> $GITHUB_OUTPUT
 
       - name: Create Release
