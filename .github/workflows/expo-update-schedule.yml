@@ -44,9 +44,22 @@ jobs:
         env:
           EXPO_PUBLIC_API_BASE_URL: ${{ secrets.API_BASE_URL }}
 
-      - name: Get Build URL
+      - name: Generate Version Tag
+        id: version
         working-directory: ./recipestore-app
-        id: build-url
+        run: |
+          # Extract version from package.json
+          VERSION=$(jq -r '.version' package.json)
+          # Create monthly release identifier
+          YEAR_MONTH=$(date +%Y.%m)
+          # Semantic version with monthly identifier: v1.0.0-monthly.2026.01
+          TAG_NAME="v${VERSION}-monthly.${YEAR_MONTH}"
+          echo "tag=$TAG_NAME" >> $GITHUB_OUTPUT
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Generated tag: $TAG_NAME"
+
+      - name: Download APK
+        working-directory: ./recipestore-app
         run: |
           set +e  # Don't exit on error
           
@@ -67,31 +80,44 @@ jobs:
             BUILD_URL=$(echo "$BUILD_LIST" | jq -r '.[0].artifacts.buildUrl // ""' 2>/dev/null || echo "")
           fi
           
-          # Use fallback URL if needed
-          if [ -z "$BUILD_URL" ] || [ "$BUILD_URL" = "null" ]; then
-            echo "⚠️ Could not get build URL, using builds page"
-            BUILD_URL="https://expo.dev/accounts/o-kennedevworks/projects/recipestore-app/builds"
+          # Download APK if URL is available
+          if [ -n "$BUILD_URL" ] && [ "$BUILD_URL" != "null" ] && [[ "$BUILD_URL" == http* ]]; then
+            echo "Downloading APK from: $BUILD_URL"
+            curl -L -o RecipeStore.apk "$BUILD_URL"
+            
+            if [ -f "RecipeStore.apk" ]; then
+              echo "✅ APK downloaded successfully"
+              ls -lh RecipeStore.apk
+            else
+              echo "⚠️ Failed to download APK"
+              exit 1
+            fi
+          else
+            echo "⚠️ Could not get valid build URL"
+            exit 1
           fi
-          
-          echo "Final build URL: $BUILD_URL"
-          echo "url=$BUILD_URL" >> $GITHUB_OUTPUT
           
           set -e  # Re-enable exit on error
 
-      - name: Create Release
-        uses: actions/github-script@v7
+      - name: Create Release with APK
+        uses: softprops/action-gh-release@v1
         with:
-          script: |
-            const buildUrl = '${{ steps.build-url.outputs.url }}';
-            const now = new Date();
-            const tagName = `app-v${now.getFullYear()}.${String(now.getMonth() + 1).padStart(2, '0')}`;
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: RecipeStore ${{ steps.version.outputs.tag }} (Monthly)
+          body: |
+            📱 **Monthly Production Build**
             
-            await github.rest.repos.createRelease({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              tag_name: tagName,
-              name: `RecipeStore - Monthly Build ${tagName}`,
-              body: `📱 **Monthly Production Build**\n\n[📥 Download APK](${buildUrl})\n\n---\n\n### For Your Wife:\n1. Click the download link above\n2. Open the downloaded APK on your phone\n3. Install the update (allow installation from unknown sources if prompted)\n\nThe app will automatically get smaller updates between monthly builds!`,
-              draft: false,
-              prerelease: false
-            });
+            Download the APK file below and install it on your Android device.
+            
+            ---
+            
+            ### Installation Instructions:
+            1. Download `RecipeStore.apk` from the assets below
+            2. Open the downloaded APK on your phone
+            3. Allow installation from unknown sources if prompted
+            4. Install and enjoy!
+            
+            The app will automatically get smaller updates between monthly builds!
+          files: recipestore-app/RecipeStore.apk
+          draft: false
+          prerelease: false
