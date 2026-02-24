@@ -19,13 +19,24 @@ const MealPlanner = ({ userId }: Props) => {
     const [isShoppingListOpen, setIsShoppingListOpen] = useState(false);
     const [shoppingList, setShoppingList] = useState<Record<string, number>>({});
 
+    // Helper function to get current week number
+    const getCurrentWeekNumber = () => {
+        const now = new Date();
+        const start = new Date(now.getFullYear(), 0, 1);
+        const diff = now.getTime() - start.getTime();
+        const oneWeek = 1000 * 60 * 60 * 24 * 7;
+        return Math.ceil(diff / oneWeek);
+    };
+
     useEffect(() => {
         const loadData = async () => {
             try {
                 const recipeData = await fetchRecipes();
                 setRecipes(recipeData);
 
-                const mealPlanData = await fetchMealPlan(userId);
+                const currentYear = new Date().getFullYear();
+                const currentWeek = getCurrentWeekNumber();
+                const mealPlanData = await fetchMealPlan(currentYear, currentWeek);
                 if (mealPlanData) {
                     setWeekPlan(mealPlanData.meals);
                 }
