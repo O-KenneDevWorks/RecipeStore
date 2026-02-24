@@ -1,4 +1,4 @@
-import { MealPlan, DayPlan } from '../interfaces/MealPlan';
+import { MealPlan } from '../interfaces/MealPlan';
 // import { ShortRecipe } from '../interfaces/MealPlan';
 import { Recipe } from '../interfaces/Recipe';
 import { fetchWithAuth } from '../utils/auth';

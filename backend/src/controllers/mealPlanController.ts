@@ -21,9 +21,17 @@ export const createMealPlan = async (req: Request, res: Response) => {
 
         const { meals, year, weekOfYear } = req.body;
 
+        console.log('Request body:', { meals, year, weekOfYear, userId });
+
         // Validate week of year
         if (weekOfYear < 1 || weekOfYear > 53) {
             res.status(400).send('weekOfYear must be between 1 and 53');
+            return;
+        }
+
+        // Validate required fields
+        if (!meals || !year || !weekOfYear) {
+            res.status(400).send('Missing required fields: meals, year, or weekOfYear');
             return;
         }
 
@@ -41,7 +49,7 @@ export const createMealPlan = async (req: Request, res: Response) => {
         // Save or update the meal plan in the database
         const mealPlan = await WeekMealPlan.findOneAndUpdate(filter, update, options);
 
-        console.log(mealPlan);
+        console.log('Saved meal plan:', mealPlan);
 
         res.status(201).json(mealPlan);
     } catch (err: any) {

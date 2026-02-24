@@ -47,7 +47,7 @@ const router = createBrowserRouter([
           { path: "add-pantry-item", element: <AddPantryItem /> },
           { path: "pantry", element: <PantryView /> },
           { path: "random-recipe", element: <RandomRecipe /> },
-          { path: "meal-planner", element: <MealPlanner userId="dummyUserId" /> },
+          { path: "meal-planner", element: <MealPlanner /> },
           { path: "edit-recipe/:id", element: <EditRecipeForm /> },
           { path: "duplicate-recipe/:id", element: <DuplicateRecipeForm /> },
           { path: "shopping-list", element: <ShoppingListPage /> },

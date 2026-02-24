@@ -6,6 +6,7 @@ export interface DayPlan {
 }
 
 interface MealPlanDoc extends mongoose.Document {
+  userId: string;
   year: number;
   weekOfYear: number;
   meals: DayPlan[];
@@ -21,6 +22,7 @@ const dayPlanSchema = new mongoose.Schema<DayPlan>(
 
 const mealPlanSchema = new mongoose.Schema<MealPlanDoc>(
   {
+    userId:     { type: String, required: true },
     year:       { type: Number, required: true },
     weekOfYear: { type: Number, required: true },
     meals:      [dayPlanSchema],
@@ -28,8 +30,8 @@ const mealPlanSchema = new mongoose.Schema<MealPlanDoc>(
   { timestamps: true },
 );
 
-// The combination of year + week must be unique
-mealPlanSchema.index({ year: 1, weekOfYear: 1 }, { unique: true });
+// The combination of userId + year + week must be unique
+mealPlanSchema.index({ userId: 1, year: 1, weekOfYear: 1 }, { unique: true });
 
 const WeekMealPlan =
 mongoose.models.WeekMealPlan || mongoose.model<MealPlanDoc>('WeekMealPlan', mealPlanSchema);

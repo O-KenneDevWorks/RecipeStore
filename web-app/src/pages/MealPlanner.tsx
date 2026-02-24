@@ -66,10 +66,18 @@ const MealPlanner = () => {
                 setRecipes(recipeData);
 
                 const weekKey = getWeekKey(currentWeekDate);
-                const mealPlanData = await fetchMealPlan(weekKey);
+                // Extract year and week number from weekKey (format: "YYYY-WNN")
+                const match = weekKey.match(/^(\d{4})-W(\d{1,2})$/);
+                if (match) {
+                    const year = Number(match[1]);
+                    const weekOfYear = Number(match[2]);
+                    const mealPlanData = await fetchMealPlan(year, weekOfYear);
 
-                if (mealPlanData) {
-                    setWeekPlan(mealPlanData.meals);
+                    if (mealPlanData) {
+                        setWeekPlan(mealPlanData.meals);
+                    } else {
+                        setWeekPlan(Array(7).fill({ main: null, sides: [] }));
+                    }
                 } else {
                     setWeekPlan(Array(7).fill({ main: null, sides: [] }));
                 }
@@ -151,10 +159,16 @@ const MealPlanner = () => {
     const saveWeek = async () => {
         try {
             const weekKey = getWeekKey(currentWeekDate);
-
-            saveMealPlan(weekKey, weekPlan)
-
-            console.log('Meal plan saved.');
+            // Extract year and week number from weekKey (format: "YYYY-WNN")
+            const match = weekKey.match(/^(\d{4})-W(\d{1,2})$/);
+            if (match) {
+                const year = Number(match[1]);
+                const weekOfYear = Number(match[2]);
+                await saveMealPlan({ meals: weekPlan, year, weekOfYear });
+                console.log('Meal plan saved.');
+            } else {
+                console.error('Invalid week format');
+            }
         } catch (error) {
             console.error(error);
         }
