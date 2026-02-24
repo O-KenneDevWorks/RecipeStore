@@ -23,7 +23,8 @@ export default function ShoppingListPage() {
         list.forEach((it) => {
             const key = `${it.name.toLowerCase()}|${it.unit.toLowerCase()}`;
             if (map.has(key)) {
-                map.get(key)!.amount += it.amount;
+                const existing = map.get(key)!;
+                existing.amount = existing.amount ? `${existing.amount} + ${it.amount}` : it.amount;
             } else {
                 map.set(key, { ...it });
             }

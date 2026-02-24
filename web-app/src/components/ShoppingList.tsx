@@ -24,10 +24,10 @@ export default function ShoppingListModal({
 
     const addItem = () => {
         if (!newName.trim()) return;
-        setItems((prev) => [...prev, { name: newName.trim(), amount: Number(newAmt) || 1, unit: newUnit }]);
+        setItems((prev) => [...prev, { name: newName.trim(), amount: newAmt.trim() || '1', unit: newUnit }]);
         setNewName('');
         setNewAmt('');
-        setNewUnit('');
+        setNewUnit(UnitOptions[0].value);
     };
 
     useEffect(() => {
@@ -55,6 +55,7 @@ export default function ShoppingListModal({
             className="shopping-modal"
             overlayClassName="shopping-overlay"
             ariaHideApp={false}
+            shouldCloseOnOverlayClick={false}
         >
             <h2>Shopping List</h2>
 
@@ -66,12 +67,14 @@ export default function ShoppingListModal({
                 />
                 <input
                     placeholder="Qty"
-                    type="number"
-                    min={1}
+                    type="text"
                     value={newAmt}
                     onChange={(e) => setNewAmt(e.target.value)}
                 />
-                <select value={newUnit} onChange={(e) => setNewUnit(e.target.value)}>
+                <select
+                    value={newUnit}
+                    onChange={(e) => setNewUnit(e.target.value)}
+                >
                     {UnitOptions.map((opt) => (
                         <option key={opt.value} value={opt.value}>
                             {opt.label}

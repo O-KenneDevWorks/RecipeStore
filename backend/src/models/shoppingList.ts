@@ -2,7 +2,7 @@ import mongoose, { Schema, Document } from 'mongoose';
 
 export interface ShoppingItem {
   name: string;
-  amount: number;
+  amount: string;
   unit: string;
   checked?: boolean;
 }
@@ -15,7 +15,7 @@ interface ShoppingListDoc extends Document {
 const itemSchema = new Schema<ShoppingItem>(
   {
     name:   { type: String, required: true },
-    amount: { type: Number, required: false },
+    amount: { type: String, required: false },
     unit:   { type: String, required: true },
     checked:{ type: Boolean, default: false },
   },

@@ -1,5 +1,5 @@
 export type ShoppingListItem = { 
     name: string; 
-    amount: number; 
+    amount: string; 
     unit: string;
     checked?: boolean };

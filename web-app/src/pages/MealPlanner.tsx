@@ -14,7 +14,7 @@ import '../Styling/MealPlanner.css';
 
 type IngredientTotals = Record<
     string,
-    { amount: number; unit: string }[]
+    { amount: string; unit: string }[]
 >;
 
 const MealPlanner = () => {
@@ -49,7 +49,8 @@ const MealPlanner = () => {
         list.forEach((it) => {
             const key = `${it.name.toLowerCase()}|${it.unit.toLowerCase()}`;
             if (map.has(key)) {
-                map.get(key)!.amount += it.amount;
+                const existing = map.get(key)!;
+                existing.amount = existing.amount ? `${existing.amount} + ${it.amount}` : it.amount;
             } else {
                 map.set(key, { ...it });
             }
@@ -177,7 +178,7 @@ const MealPlanner = () => {
     const handleShowShoppingList = () => {
         const map: IngredientTotals = {};
 
-        const add = (name: string, amount: number, unit: string) => {
+        const add = (name: string, amount: string, unit: string) => {
             if (!map[name]) map[name] = [];
             map[name].push({ amount, unit });
         };
@@ -186,14 +187,14 @@ const MealPlanner = () => {
             if (day.main) {
                 const main = recipes.find((r) => r._id === day.main);
                 main?.ingredients?.forEach(({ name, amount, unit }) => {
-                    if (name && amount && unit) add(name, Number(amount), unit);
+                    if (name && amount && unit) add(name, amount, unit);
                 });
             }
 
             day.sides.forEach((sideId: string) => {
                 const side = recipes.find((r) => r._id === sideId);
                 side?.ingredients?.forEach(({ name, amount, unit }) => {
-                    if (name && amount && unit) add(name, Number(amount), unit);
+                    if (name && amount && unit) add(name, amount, unit);
                 });
             });
         });
