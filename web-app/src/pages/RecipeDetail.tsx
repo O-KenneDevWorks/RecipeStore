@@ -31,7 +31,7 @@ const RecipeDetail = () => {
     if (window.confirm('Are you sure you want to delete this recipe?')) {
       try {
         await deleteRecipe(id);
-        navigate('/recipes');
+        navigate('/view-recipes');
       } catch (err) {
         console.error('Error deleting recipe:', err);
         alert('Failed to delete recipe. Please try again.');
