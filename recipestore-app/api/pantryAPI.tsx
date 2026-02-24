@@ -1,15 +1,11 @@
 // api/pantryAPI.tsx
 import { PantryItem } from '../interfaces/Pantry';
-
-const BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL || "http://10.0.0.5:3001/api";
+import { fetchWithAuth, buildApiUrl } from '../utils/auth';
 
 export const addPantryItem = async (pantryItem: PantryItem): Promise<PantryItem> => {
     try {
-        const response = await fetch(`${BASE_URL}/pantry`, {
+        const response = await fetchWithAuth(buildApiUrl('/api/pantry'), {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
             body: JSON.stringify(pantryItem),
         });
 
@@ -26,12 +22,7 @@ export const addPantryItem = async (pantryItem: PantryItem): Promise<PantryItem>
 
 export const fetchPantryItems = async (): Promise<PantryItem[]> => {
     try {
-        const response = await fetch(`${BASE_URL}/pantry`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
+        const response = await fetchWithAuth(buildApiUrl('/api/pantry'));
 
         if (!response.ok) {
             throw new Error('Failed to fetch pantry items');

@@ -8,12 +8,22 @@ import { PantryItem } from '../models/index.js';
 /**
  * @route POST /pantry
  * @description Add a new pantry item to the database
- * @access Public
+ * @access Private
  */
 export const createPantryItem = async (req: Request, res: Response) => {
     try {
+        const userId = req.user?.userId;
+        
+        if (!userId) {
+            res.status(401).send('User not authenticated');
+            return;
+        }
+
         // Create a new PantryItem document using the request body
-        const pantryItem = new PantryItem(req.body);
+        const pantryItem = new PantryItem({
+            ...req.body,
+            userId
+        });
 
         // Save the new pantry item to the database
         await pantryItem.save();
@@ -29,13 +39,20 @@ export const createPantryItem = async (req: Request, res: Response) => {
 
 /**
  * @route GET /pantry
- * @description Retrieve all pantry items from the database
- * @access Public
+ * @description Retrieve all pantry items from the database for the authenticated user
+ * @access Private
  */
-export const getPantry = async (_req: Request, res: Response) => {
+export const getPantry = async (req: Request, res: Response) => {
     try {
-        // Fetch all pantry items from the database
-        const pantryItems = await PantryItem.find({});
+        const userId = req.user?.userId;
+        
+        if (!userId) {
+            res.status(401).send('User not authenticated');
+            return;
+        }
+
+        // Fetch all pantry items for the authenticated user from the database
+        const pantryItems = await PantryItem.find({ userId });
 
         // Respond with the retrieved pantry items
         res.status(200).send(pantryItems);

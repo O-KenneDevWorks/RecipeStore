@@ -1,13 +1,11 @@
 // api/pantryAPI.tsx
 import { PantryItem } from '../interfaces/Pantry';
+import { fetchWithAuth } from '../utils/auth';
 
 export const addPantryItem = async (pantryItem: PantryItem): Promise<PantryItem> => {
     try {
-        const response = await fetch('/api/pantry', {
+        const response = await fetchWithAuth('/api/pantry', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
             body: JSON.stringify(pantryItem),
         });
 
@@ -24,12 +22,7 @@ export const addPantryItem = async (pantryItem: PantryItem): Promise<PantryItem>
 
 export const fetchPantryItems = async (): Promise<PantryItem[]> => {
     try {
-        const response = await fetch('/api/pantry', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
+        const response = await fetchWithAuth('/api/pantry');
 
         if (!response.ok) {
             throw new Error('Failed to fetch pantry items');

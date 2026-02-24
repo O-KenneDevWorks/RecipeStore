@@ -13,7 +13,11 @@ import {
     getRecipePreviews,
     getRecipeRandom,
     updateRecipes,
+    deleteRecipe,
 } from '../../controllers/recipesController.js';
+
+// Import authentication middleware
+import { authenticateToken } from '../../middleware/auth.js';
 
 // ==========================
 // Router Initialization
@@ -28,55 +32,52 @@ const router = express.Router();
 
 /**
  * @route GET /recipes
- * @description Fetch all recipes
- * @access Public
+ * @description Fetch all recipes for authenticated user
+ * @access Private
  */
-router.get('/', getRecipes);
+router.get('/', authenticateToken, getRecipes);
 
 /**
  * @route GET /recipes/previews
  * @description Fetch recipe previews with name and image only
- * @access Public
+ * @access Private
  */
-router.get('/previews', getRecipePreviews);
+router.get('/previews', authenticateToken, getRecipePreviews);
 
 /**
  * @route GET /recipes/random-recipe
  * @description Fetch a random recipe
- * @access Public
+ * @access Private
  */
-router.get('/random-recipe', getRecipeRandom);
+router.get('/random-recipe', authenticateToken, getRecipeRandom);
 
 /**
  * @route GET /recipes/:id
  * @description Fetch a specific recipe by ID
- * @access Public
+ * @access Private
  */
-router.get('/:id', getRecipeById);
+router.get('/:id', authenticateToken, getRecipeById);
 
 /**
  * @route POST /recipes
  * @description Create a new recipe
- * @access Public
+ * @access Private
  */
-router.post('/', createRecipes);
+router.post('/', authenticateToken, createRecipes);
 
 /**
  * @route PUT /recipes/:id
  * @description Update an existing recipe by ID
- * @access Public
+ * @access Private
  */
-router.put('/:id', updateRecipes);
+router.put('/:id', authenticateToken, updateRecipes);
 
 /**
  * @route DELETE /recipes/:id
  * @description Delete a specific recipe by ID
- * @access Public
- * 
- * Note: Uncomment the route below and implement the deleteRecipe controller
- * in `recipesController.js` to enable this functionality.
+ * @access Private
  */
-// router.delete('/:id', deleteRecipe);
+router.delete('/:id', authenticateToken, deleteRecipe);
 
 // ==========================
 // Export

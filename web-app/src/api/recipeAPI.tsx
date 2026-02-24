@@ -1,14 +1,11 @@
 import { Recipe } from "../interfaces/Recipe"
 import { RecipePreview } from "../interfaces/Recipe";
+import { fetchWithAuth } from "../utils/auth";
 
 // Fetch a single recipe by ID
 export const getRecipeById = async (id: string): Promise<Recipe | null> => {
     try {
-        const response = await fetch(`/api/recipes/${id}`, {
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
+        const response = await fetchWithAuth(`/api/recipes/${id}`);
 
         if (!response.ok) {
             throw new Error('Invalid recipe API response, check network tab!');
@@ -24,11 +21,7 @@ export const getRecipeById = async (id: string): Promise<Recipe | null> => {
 // Fetch all recipes
 export const getRecipes = async (): Promise<Recipe[]> => {
     try {
-        const response = await fetch('/api/recipes', {
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
+        const response = await fetchWithAuth('/api/recipes');
 
         if (!response.ok) {
             throw new Error('Invalid recipes API response, check network tab!');
@@ -44,11 +37,7 @@ export const getRecipes = async (): Promise<Recipe[]> => {
 // Fetch a random recipe
 export const getRandomRecipe = async (): Promise<Recipe | null> => {
     try {
-        const response = await fetch('/api/recipes/random-recipe', {
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
+        const response = await fetchWithAuth('/api/recipes/random-recipe');
 
         const data: Recipe = await response.json();
 
@@ -66,11 +55,8 @@ export const getRandomRecipe = async (): Promise<Recipe | null> => {
 // Update a single recipe by ID
 export const updateRecipe = async (id: string, recipe: Recipe): Promise<void> => {
     try {
-        const response = await fetch(`/api/recipes/${id}`, {
+        const response = await fetchWithAuth(`/api/recipes/${id}`, {
             method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
             body: JSON.stringify(recipe),
         });
 
@@ -88,9 +74,8 @@ export const addRecipe = async (recipe: Recipe): Promise<Recipe> => {
   // strip any existing ids from duplicates/edits
   const { _id, ...cleanedRecipe } = recipe;
 
-  const response = await fetch("/api/recipes", {
+  const response = await fetchWithAuth("/api/recipes", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(cleanedRecipe),
   });
 
@@ -105,11 +90,7 @@ export const addRecipe = async (recipe: Recipe): Promise<Recipe> => {
 
 export const getRecipePreviews = async (): Promise<RecipePreview[]> => {
     try {
-      const response = await fetch('/api/recipes/previews', {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const response = await fetchWithAuth('/api/recipes/previews');
   
       if (!response.ok) {
         throw new Error('Failed to fetch recipe previews');
@@ -121,3 +102,19 @@ export const getRecipePreviews = async (): Promise<RecipePreview[]> => {
       return [];
     }
   };
+
+// Delete a recipe by ID
+export const deleteRecipe = async (id: string): Promise<void> => {
+    try {
+        const response = await fetchWithAuth(`/api/recipes/${id}`, {
+            method: 'DELETE',
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to delete recipe');
+        }
+    } catch (err) {
+        console.error('Error deleting recipe:', err);
+        throw err;
+    }
+};
