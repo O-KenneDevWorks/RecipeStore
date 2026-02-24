@@ -11,6 +11,9 @@ import {
     createMealPlan,
 } from '../../controllers/mealPlanController.js';
 
+// Import authentication middleware
+import { authenticateToken } from '../../middleware/auth.js';
+
 // ==========================
 // Router Initialization
 // ==========================
@@ -24,17 +27,17 @@ const router = express.Router();
 
 /**
  * @route POST /mealPlan
- * @description Save or update a meal plan for a specific user, year, and week
- * @access Public
+ * @description Save or update a meal plan for the authenticated user
+ * @access Private
  */
-router.post('/', createMealPlan);
+router.post('/', authenticateToken, createMealPlan);
 
 /**
- * @route GET /mealPlan/:userId/:year/:weekOfYear
- * @description Fetch a meal plan for a specific user, year, and week
- * @access Public
+ * @route GET /mealPlan/:year/:weekOfYear
+ * @description Fetch a meal plan for the authenticated user
+ * @access Private
  */
-router.get('/',  getMealPlan);
+router.get('/:year/:weekOfYear', authenticateToken, getMealPlan);
 
 // ==========================
 // Export

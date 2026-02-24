@@ -1,5 +1,6 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import imageCompression from 'browser-image-compression';
 import '../Styling/EditRecipeForm.css';
 
 import { getRecipeById, updateRecipe } from '../api/recipeAPI';
@@ -10,7 +11,7 @@ const EditRecipe = () => {
     const [recipe, setRecipe] = useState<Recipe>({
         _id: '',
         name: '',
-        ingredients: [{ amount: '', unit: '', name: '' }],
+        ingredients: [{ amount: '', unit: UnitOptions[0].value, name: '' }],
         directions: [''],
         prepTime: '',
         cookTime: '',
@@ -22,6 +23,7 @@ const EditRecipe = () => {
         course: '',
         notes: '',
     });
+    const [imagePreview, setImagePreview] = useState<string>('');
     const { id } = useParams();
     const navigate = useNavigate();
 
@@ -31,21 +33,53 @@ const EditRecipe = () => {
           const data = await getRecipeById(id);
           if (data) setRecipe(data);
         };
-    
         fetchRecipe();
       }, [id]);
 
-    useEffect(() => {
-        document.querySelectorAll<HTMLTextAreaElement>('textarea[name="direction"]').forEach(textarea => {
-            textarea.style.height = "auto";
-            textarea.style.height = `${textarea.scrollHeight}px`;
-        });
-    }, [recipe]);
+      useEffect(() => {
+        if (recipe.image) setImagePreview(recipe.image);
+      }, [recipe.image]);
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+      useEffect(() => {
+        document
+          .querySelectorAll<HTMLTextAreaElement>('textarea[name="direction"]')
+          .forEach((ta) => {
+            ta.style.height = 'auto';
+            ta.style.height = `${ta.scrollHeight}px`;
+          });
+      }, [recipe]);
+
+    const handleChange = (
+        e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+      ) => {
         const { name, value } = e.target;
-        setRecipe(prev => ({ ...prev, [name]: value }));
+        setRecipe((prev) => ({ ...prev, [name]: value }));
     };
+
+    const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+    
+        try {
+          const compressed = await imageCompression(file, {
+            maxSizeMB: 1,
+            maxWidthOrHeight: 1920,
+            useWebWorker: true,
+          });
+    
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            const result = reader.result;
+            if (typeof result === 'string') {
+              setImagePreview(result);                 // live preview
+              setRecipe((prev) => ({ ...prev, image: result })); // base‑64 in recipe
+            }
+          };
+          reader.readAsDataURL(compressed);
+        } catch (err) {
+          console.error('Error compressing image:', err);
+        }
+      };
 
     const handleAutoSize = (e: ChangeEvent<HTMLTextAreaElement>) => {
         e.target.style.height = 'inherit';
@@ -71,7 +105,7 @@ const EditRecipe = () => {
     };
 
     const addIngredient = () => {
-        setRecipe(prev => ({ ...prev, ingredients: [...prev.ingredients, { amount: '', unit: '', name: '' }] }));
+        setRecipe(prev => ({ ...prev, ingredients: [...prev.ingredients, { amount: '', unit: UnitOptions[0].value, name: '' }] }));
     };
 
     const removeIngredient = (index: number) => {
@@ -89,18 +123,6 @@ const EditRecipe = () => {
         newDirections.splice(index, 1);
         setRecipe(prev => ({ ...prev, directions: newDirections }));
     };
-
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        if (!id) return;
-    
-        try {
-          await updateRecipe(id, recipe);
-          navigate(`/recipes/${id}`);
-        } catch (err) {
-          console.error('Error updating recipe:', err);
-        }
-      };
 
     const moveItem = <T,>(arr: T[], fromIndex: number, toIndex: number): T[] => {
         const item = arr[fromIndex];
@@ -137,6 +159,18 @@ const EditRecipe = () => {
         }
     };
 
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if (!id) return;
+    
+        try {
+          await updateRecipe(id, recipe);
+          navigate(`/recipes/${id}`);
+        } catch (err) {
+          console.error('Error updating recipe:', err);
+        }
+      };
+
     return (
         <div className="edit-recipe-form">
             <h1>Edit Recipe</h1>
@@ -165,10 +199,10 @@ const EditRecipe = () => {
                     Yield:
                     <input type="text" name="yield" value={recipe.yield} onChange={handleChange} />
                 </label>
-                <label>
+                {/* <label>
                     Image:
                     <input type="text" name="image" value={recipe.image} onChange={handleChange} />
-                </label>
+                </label> */}
                 <label>
                     Tags:
                     <input type="text" value={(recipe.tags ?? []).join(', ')} onChange={handleTagChange} />
@@ -257,6 +291,21 @@ const EditRecipe = () => {
                         onChange={handleChange}
                     />
                 </div>
+                <label>
+                    Image
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageChange}
+                    />
+                </label>
+                {imagePreview && (
+                    <img
+                        src={imagePreview}
+                        alt="Recipe preview"
+                        className="image-preview"
+                    />
+                )}
                 
                 <div className="buttons">
                     <button type="submit">Update Recipe</button>

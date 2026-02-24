@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import '../Styling/RecipeDetail.css';
-import { getRecipeById } from '../api/recipeAPI';
+import BurgerMenu from '../components/BurgerMenu';
+import { getRecipeById, deleteRecipe } from '../api/recipeAPI';
 import { Recipe } from '../interfaces/Recipe';
 
 const RecipeDetail = () => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const [recipe, setRecipe] = useState<Recipe | null>(null);
 
   console.log('Recipe ID:', id);
@@ -23,14 +25,35 @@ const RecipeDetail = () => {
     fetchRecipe();
   }, [id]);
 
+  const handleDelete = async () => {
+    if (!id) return;
+    
+    if (window.confirm('Are you sure you want to delete this recipe?')) {
+      try {
+        await deleteRecipe(id);
+        navigate('/view-recipes');
+      } catch (err) {
+        console.error('Error deleting recipe:', err);
+        alert('Failed to delete recipe. Please try again.');
+      }
+    }
+  };
+
   if (!recipe) {
     return <div>Loading...</div>;
   }
 
   return (
     <div className="recipe-detail">
+      <BurgerMenu
+        buttonLabel=""
+        items={[
+        { label: 'Edit', to: `/edit-recipe/${id}` },
+        { label: 'Duplicate', to: `/duplicate-recipe/${id}` },
+        { label: 'Delete', onClick: handleDelete },
+        ]}
+      />
       <h1>{recipe.name}</h1>
-      <Link to={`/edit-recipe/${recipe._id}`}>Edit Recipe</Link>
       {recipe.image && <img src={recipe.image} alt={recipe.name} />}
       <ul>
         <li>Prep Time: {recipe.prepTime}</li>

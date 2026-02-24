@@ -2,8 +2,6 @@
     --background-color: #ffffff;
     --text-color: #000000;
     --link-color: #007bff;
-    --button-background-color: #333333;
-    --button-text-color: #ffffff;
     --form-background-color: #f9f9f9;
     --form-border-color: #ddd;
     --card-background-color: #f9f9f9;
@@ -12,6 +10,8 @@
     --section-background-color: #fff;
     --section-border-color: #ddd;
     --section-heading-color: #555;
+    --button-background-color: #333333;
+    --button-text-color: #ffffff;
     --hover-button-background-color: #0056b3;
     --delete-button-background-color: #dc3545;
     --delete-button-hover-color: #c82333;
@@ -35,8 +35,6 @@
     --background-color: #121212;
     --text-color: #ffffff;
     --link-color: #1e90ff;
-    --button-background-color: #1e1e1e;
-    --button-text-color: #ffffff;
     --form-background-color: #2c2c2c;
     --form-border-color: #444;
     --card-background-color: #333333;
@@ -45,6 +43,8 @@
     --section-background-color: #1e1e1e;
     --section-border-color: #555;
     --section-heading-color: #ddd;
+    --button-background-color: #1e1e1e;
+    --button-text-color: #ffffff;
     --hover-button-background-color: #0d6efd;
     --delete-button-background-color: #f44336;
     --delete-button-hover-color: #d32f2f;
@@ -69,8 +69,6 @@
     --background-color: #f8f9fa;
     --text-color: #212529;
     --link-color: #007bff;
-    --button-background-color: #ffffff;
-    --button-text-color: #212529;
     --form-background-color: #ffffff;
     --form-border-color: #ddd;
     --card-background-color: #ffffff;
@@ -79,6 +77,8 @@
     --section-background-color: #ffffff;
     --section-border-color: #ccc;
     --section-heading-color: #333;
+    --button-background-color: #ffffff;
+    --button-text-color: #212529;
     --hover-button-background-color: #0056b3;
     --delete-button-background-color: #dc3545;
     --delete-button-hover-color: #bd2130;
@@ -103,8 +103,6 @@
     --background-color: #fff8e1;
     --text-color: #3e2723;
     --link-color: #ff5722;
-    --button-background-color: #ff5722;
-    --button-text-color: #ffffff;
     --form-background-color: #ffccbc;
     --form-border-color: #ffab91;
     --card-background-color: #fff3e0;
@@ -113,6 +111,8 @@
     --section-background-color: #ffe0b2;
     --section-border-color: #ffab91;
     --section-heading-color: #bf360c;
+    --button-background-color: #ff5722;
+    --button-text-color: #ffffff;
     --hover-button-background-color: #e64a19;
     --delete-button-background-color: #d84315;
     --delete-button-hover-color: #bf360c;
@@ -137,8 +137,6 @@
     --background-color: #f1f8e9;
     --text-color: #2e7d32;
     --link-color: #4caf50;
-    --button-background-color: #8bc34a;
-    --button-text-color: #ffffff;
     --form-background-color: #c8e6c9;
     --form-border-color: #a5d6a7;
     --card-background-color: #dcedc8;
@@ -147,6 +145,8 @@
     --section-background-color: #dcedc8;
     --section-border-color: #a5d6a7;
     --section-heading-color: #388e3c;
+    --button-background-color: #8bc34a;
+    --button-text-color: #ffffff;
     --hover-button-background-color: #66bb6a;
     --delete-button-background-color: #e53935;
     --delete-button-hover-color: #c62828;
@@ -171,8 +171,6 @@
     --background-color: #f5f5f5;
     --text-color: #202124;
     --link-color: #1a73e8;
-    --button-background-color: #4285f4;
-    --button-text-color: #ffffff;
     --form-background-color: #ffffff;
     --form-border-color: #ddd;
     --card-background-color: #ffffff;
@@ -181,6 +179,8 @@
     --section-background-color: #ffffff;
     --section-border-color: #ddd;
     --section-heading-color: #5f6368;
+    --button-background-color: #4285f4;
+    --button-text-color: #ffffff;
     --hover-button-background-color: #3367d6;
     --delete-button-background-color: #ea4335;
     --delete-button-hover-color: #d93025;
@@ -205,8 +205,6 @@
     --background-color: #f3e5f5;
     --text-color: #3e2723;
     --link-color: #8d6e63;
-    --button-background-color: #795548;
-    --button-text-color: #ffffff;
     --form-background-color: #efebe9;
     --form-border-color: #d7ccc8;
     --card-background-color: #fafafa;
@@ -215,6 +213,8 @@
     --section-background-color: #f3e5f5;
     --section-border-color: #d7ccc8;
     --section-heading-color: #5d4037;
+    --button-background-color: #795548;
+    --button-text-color: #ffffff;
     --hover-button-background-color: #6d4c41;
     --delete-button-background-color: #bf360c;
     --delete-button-hover-color: #8d2b08;
@@ -239,8 +239,6 @@
     --background-color: #fffde7;
     --text-color: #37474f;
     --link-color: #ff5722;
-    --button-background-color: #ff5722;
-    --button-text-color: #ffffff;
     --form-background-color: #ffe082;
     --form-border-color: #ffcc80;
     --card-background-color: #ffecb3;
@@ -249,6 +247,8 @@
     --section-background-color: #fff9c4;
     --section-border-color: #ffe082;
     --section-heading-color: #ff7043;
+    --button-background-color: #ff5722;
+    --button-text-color: #ffffff;
     --hover-button-background-color: #ff7043;
     --delete-button-background-color: #d84315;
     --delete-button-hover-color: #bf360c;
@@ -274,8 +274,6 @@
     --background-color: #121212;
     --text-color: #ffffff;
     --link-color: #1e88e5;
-    --button-background-color: #3949ab;
-    --button-text-color: #ffffff;
     --form-background-color: #2e2e2e;
     --form-border-color: #444;
     --card-background-color: #1e1e1e;
@@ -284,6 +282,8 @@
     --section-background-color: #232323;
     --section-border-color: #555;
     --section-heading-color: #888;
+    --button-background-color: #3949ab;
+    --button-text-color: #ffffff;
     --hover-button-background-color: #0d47a1;
     --delete-button-background-color: #f44336;
     --delete-button-hover-color: #d32f2f;

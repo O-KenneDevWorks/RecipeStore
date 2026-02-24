@@ -1,14 +1,12 @@
-import { DayPlan } from '../interfaces/MealPlan';
+import { MealPlan, DayPlan } from '../interfaces/MealPlan';
 // import { ShortRecipe } from '../interfaces/MealPlan';
 import { Recipe } from '../interfaces/Recipe';
+import { fetchWithAuth } from '../utils/auth';
 
 // Fetch all recipes for a user
 export const fetchRecipes = async (): Promise<Recipe[]> => {
     try {
-        const response = await fetch('/api/recipes', {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
-        });
+        const response = await fetchWithAuth('/api/recipes');
 
         if (!response.ok) {
             throw new Error('Failed to fetch recipes');
@@ -22,12 +20,9 @@ export const fetchRecipes = async (): Promise<Recipe[]> => {
 };
 
 // Fetch the meal plan for a user
-export const fetchMealPlan = async (weekKey: string) => {
+export const fetchMealPlan = async (year: number, weekOfYear: number): Promise<MealPlan | null> => {
     try {
-        const response = await fetch(`/api/mealPlan?week=${encodeURIComponent(weekKey)}`, {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
-        });
+        const response = await fetchWithAuth(`/api/mealPlan/${year}/${weekOfYear}`);
 
         if (response.status === 404) return null;
 
@@ -43,12 +38,11 @@ export const fetchMealPlan = async (weekKey: string) => {
 };
 
 // Update or save the meal plan
-export const saveMealPlan = async (weekKey: string, meals: DayPlan[]): Promise<void> => {
+export const saveMealPlan = async (mealPlan: MealPlan): Promise<void> => {
     try {
-        const response = await fetch('/api/mealPlan', {
+        const response = await fetchWithAuth('/api/mealPlan', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ week: weekKey, meals }),
+            body: JSON.stringify(mealPlan),
         });
 
         if (!response.ok) {

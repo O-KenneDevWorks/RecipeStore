@@ -1,0 +1,67 @@
+/* Minimal, theme‑friendly styles (adjust variables to match your app)
+============================================= */
+.burger-menu {
+    position: relative;
+    display: inline-block;
+}
+
+.burger-btn {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .5rem .75rem;
+    border: 1px solid var(--form-border-color);
+    background: var(--card-background-color, #fff);
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px var(--carousel-shadow);
+}
+
+.burger-btn.square {
+    width: 40px;
+    height: 40px;
+    justify-content: center;
+    padding: 0;
+}
+
+.burger-icon {
+    font-size: 1.1rem;
+    line-height: 1;
+}
+
+.burger-dropdown {
+    position: absolute;
+    right: 0;
+    margin-top: .5rem;
+    min-width: 12rem;
+    background: var(--card-background-color, #fff);
+    border: 1px solid var(--form-border-color);
+    border-radius: 8px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, .15);
+    padding: .25rem;
+    z-index: 50;
+}
+
+.burger-item {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: .6rem .75rem;
+    border-radius: 6px;
+    text-decoration: none;
+    color: inherit !important;
+    background: none !important;
+    border: none;
+    cursor: pointer;
+    font-size: inherit;
+    font-family: inherit;
+}
+
+.burger-item:hover {
+    background: rgba(0, 0, 0, .06) !important;
+}
+
+.burger-item.disabled {
+    opacity: .5;
+    pointer-events: none;
+}

@@ -1,66 +1,83 @@
 import type { Request, Response } from 'express';
 import WeekMealPlan from '../models/MealPlan.js';
 
-// ───────────────────────────────────────────────────────────
-// POST /mealPlan        body: { week: '2025-W15', meals:[…] }
-// ───────────────────────────────────────────────────────────
+// ==========================
+// Meal Plan Controller
+// ==========================
+
+/**
+ * @route POST /mealPlan
+ * @description Save or update a weekly meal plan for the authenticated user
+ * @access Private
+ */
 export const createMealPlan = async (req: Request, res: Response) => {
-  const { week, meals } = req.body;
+    try {
+        const userId = req.user?.userId;
+        
+        if (!userId) {
+            res.status(401).send('User not authenticated');
+            return;
+        }
 
-  if (typeof week !== 'string' || !Array.isArray(meals)) {
-    return res.status(400).send('Body must contain { week:string, meals:DayPlan[] }');
-  }
+        const { meals, year, weekOfYear } = req.body;
 
-  // Extract year & week number from the ISO‑like key  YYYY-W##
-  const match = week.match(/^(\d{4})-W(\d{1,2})$/);
-  if (!match) return res.status(400).send('Invalid week format (expected YYYY-W##)');
+        // Validate week of year
+        if (weekOfYear < 1 || weekOfYear > 53) {
+            res.status(400).send('weekOfYear must be between 1 and 53');
+            return;
+        }
 
-  const year       = Number(match[1]);
-  const weekOfYear = Number(match[2]);
+        // Define the filter to identify the specific meal plan by user, year, and week of the year
+        const filter = { userId, year, weekOfYear };
 
-  // Accept only 1‑53 to avoid DB junk
-  if (weekOfYear < 1 || weekOfYear > 53) {
-    return res.status(400).send('weekOfYear must be between 1 and 53');
-  }
+        // Define the update object with the new data
+        const update = { userId, meals, year, weekOfYear };
 
-  try {
-    const filter  = { year, weekOfYear };
-    const update = {
-        $set: { meals },                // cast & validate each DayPlan
-        $setOnInsert: { year, weekOfYear },
-      };
-    const options = { upsert: true, new: true, setDefaultsOnInsert: true, runValidators: true };
+        // Options for findOneAndUpdate to create a new document if none exists
+        const options = { upsert: true, new: true, setDefaultsOnInsert: true, runValidators: true };
 
-    console.log('Data sent from client:', meals);
+        console.log('Data sent from client:', meals);
 
-    const mealPlan = await WeekMealPlan.findOneAndUpdate(filter, update, options);
+        // Save or update the meal plan in the database
+        const mealPlan = await WeekMealPlan.findOneAndUpdate(filter, update, options);
 
-    console.log(mealPlan)
+        console.log(mealPlan);
 
-    return res.status(201).json(mealPlan);
-  } catch (err: any) {
-    return res.status(500).send('Error saving meal plan: ' + err.message);
-  }
+        res.status(201).json(mealPlan);
+    } catch (err: any) {
+        res.status(500).send('Error saving meal plan: ' + err.message);
+    }
 };
 
-// ───────────────────────────────────────────────────────────
-// GET /mealPlan?week=2025-W15
-// ───────────────────────────────────────────────────────────
+/**
+ * @route GET /mealPlan/:year/:weekOfYear
+ * @description Retrieve a specific weekly meal plan for the authenticated user
+ * @access Private
+ */
 export const getMealPlan = async (req: Request, res: Response) => {
-  const week = req.query.week as string | undefined;
-  if (!week) return res.status(400).send('Query param "week" is required');
+    try {
+        const userId = req.user?.userId;
+        
+        if (!userId) {
+            res.status(401).send('User not authenticated');
+            return;
+        }
 
-  const match = week.match(/^(\d{4})-W(\d{1,2})$/);
-  if (!match) return res.status(400).send('Invalid week format (expected YYYY-W##)');
-
-  const year       = Number(match[1]);
-  const weekOfYear = Number(match[2]);
-
-  try {
-    const mealPlan = await WeekMealPlan.findOne({ year, weekOfYear });
-    if (!mealPlan) return res.status(404).send('Meal plan not found');
-    return res.status(200).json(mealPlan);
-  } catch (err: any) {
-    return res.status(500).send('Error fetching meal plan: ' + err.message);
-  }
+        const { year, weekOfYear } = req.params;
+        
+        const mealPlan = await WeekMealPlan.findOne({ 
+            userId, 
+            year: Number(year), 
+            weekOfYear: Number(weekOfYear) 
+        });
+        
+        if (!mealPlan) {
+            res.status(404).send('Meal plan not found');
+            return;
+        }
+        
+        res.status(200).json(mealPlan);
+    } catch (err: any) {
+        res.status(500).send('Error fetching meal plan: ' + err.message);
+    }
 };

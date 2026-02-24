@@ -11,6 +11,9 @@ import {
     createPantryItem
 } from "../../controllers/pantryController.js";
 
+// Import authentication middleware
+import { authenticateToken } from '../../middleware/auth.js';
+
 // ==========================
 // Router Initialization
 // ==========================
@@ -24,17 +27,17 @@ const router = express.Router();
 
 /**
  * @route GET /pantry
- * @description Fetch all pantry items
- * @access Public
+ * @description Fetch all pantry items for authenticated user
+ * @access Private
  */
-router.get('/', getPantry);
+router.get('/', authenticateToken, getPantry);
 
 /**
  * @route POST /pantry
  * @description Add a new pantry item
- * @access Public
+ * @access Private
  */
-router.post('/', createPantryItem);
+router.post('/', authenticateToken, createPantryItem);
 
 // ==========================
 // Export
