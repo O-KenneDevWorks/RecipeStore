@@ -1,16 +1,11 @@
 import { Recipe } from "../interfaces/Recipe";
 import { RecipePreview } from "../interfaces/Recipe";
-
-const BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL || "http://10.0.0.5:3001/api";
+import { fetchWithAuth, buildApiUrl } from "../utils/auth";
 
 // Fetch a single recipe by ID
 export const getRecipeById = async (id: string): Promise<Recipe | null> => {
   try {
-    const response = await fetch(`${BASE_URL}/recipes/${id}`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetchWithAuth(buildApiUrl(`/api/recipes/${id}`));
 
     if (!response.ok) {
       throw new Error("Invalid recipe API response, check network tab!");
@@ -26,11 +21,7 @@ export const getRecipeById = async (id: string): Promise<Recipe | null> => {
 // Fetch all recipes
 export const getRecipes = async (): Promise<Recipe[]> => {
   try {
-    const response = await fetch(`${BASE_URL}/recipes`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetchWithAuth(buildApiUrl('/api/recipes'));
 
     if (!response.ok) {
       throw new Error("Invalid recipes API response, check network tab!");
@@ -46,11 +37,7 @@ export const getRecipes = async (): Promise<Recipe[]> => {
 // Fetch a random recipe
 export const getRandomRecipe = async (): Promise<Recipe | null> => {
   try {
-    const response = await fetch(`${BASE_URL}/recipes/random-recipe`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetchWithAuth(buildApiUrl('/api/recipes/random-recipe'));
 
     const data: Recipe = await response.json();
 
@@ -68,11 +55,8 @@ export const getRandomRecipe = async (): Promise<Recipe | null> => {
 // Update a single recipe by ID
 export const updateRecipe = async (id: string, recipe: Recipe): Promise<void> => {
   try {
-    const response = await fetch(`${BASE_URL}/recipes/${id}`, {
+    const response = await fetchWithAuth(buildApiUrl(`/api/recipes/${id}`), {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
       body: JSON.stringify(recipe),
     });
 
@@ -110,15 +94,12 @@ export const updateRecipe = async (id: string, recipe: Recipe): Promise<void> =>
 // };
 
 export const addRecipe = async (recipe: Recipe): Promise<Recipe | null> => {
-  console.log("Sending request to:", `${BASE_URL}/recipes`);
+  console.log("Sending request to add recipe");
   console.log("Payload:", JSON.stringify(recipe, null, 2)); // ✅ Debugging
 
   try {
-    const response = await fetch(`${BASE_URL}/recipes`, {
+    const response = await fetchWithAuth(buildApiUrl('/api/recipes'), {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
       body: JSON.stringify(recipe),
     });
 
@@ -141,11 +122,7 @@ export const addRecipe = async (recipe: Recipe): Promise<Recipe | null> => {
 // Fetch recipe previews
 export const getRecipePreviews = async (): Promise<RecipePreview[]> => {
   try {
-    const response = await fetch(`${BASE_URL}/recipes/previews`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetchWithAuth(buildApiUrl('/api/recipes/previews'));
 
     if (!response.ok) {
       throw new Error("Failed to fetch recipe previews");
@@ -155,5 +132,21 @@ export const getRecipePreviews = async (): Promise<RecipePreview[]> => {
   } catch (error) {
     console.error("Error fetching recipe previews:", error);
     return [];
+  }
+};
+
+// Delete a recipe by ID
+export const deleteRecipe = async (id: string): Promise<void> => {
+  try {
+    const response = await fetchWithAuth(buildApiUrl(`/api/recipes/${id}`), {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to delete recipe");
+    }
+  } catch (err) {
+    console.error("Error deleting recipe:", err);
+    throw err;
   }
 };

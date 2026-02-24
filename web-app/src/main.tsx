@@ -4,8 +4,12 @@ import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import App from './App';
+import { AuthProvider } from './contexts/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
 
 import Home from './pages/Home';
+import Login from './pages/Login';
+import Register from './pages/Register';
 import AddRecipeForm from './pages/Add_Recipe';
 import ViewRecipes from './pages/View_Recipes';
 import RecipeDetail from './pages/RecipeDetail';
@@ -20,19 +24,32 @@ import './Styling/Global.css';
 
 const router = createBrowserRouter([
   {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
+  },
+  {
     path: "/",
-    element: <App />,
+    element: <ProtectedRoute />,
     children: [
-      { index: true, element: <Home /> },
-      { path: "add-recipe", element: <AddRecipeForm /> },
-      { path: "view-recipes", element: <ViewRecipes /> },
-      { path: "recipes/:id", element: <RecipeDetail /> },
-      { path: "add-pantry-item", element: <AddPantryItem /> },
-      { path: "pantry", element: <PantryView /> },
-      { path: "random-recipe", element: <RandomRecipe /> },
-      { path: "meal-planner", element: <MealPlanner userId="dummyUserId" /> },
-      { path: "edit-recipe/:id", element: <EditRecipeForm /> },
-      { path: "duplicate-recipe/:id", element: <DuplicateRecipeForm /> },
+      {
+        element: <App />,
+        children: [
+          { index: true, element: <Home /> },
+          { path: "add-recipe", element: <AddRecipeForm /> },
+          { path: "view-recipes", element: <ViewRecipes /> },
+          { path: "recipes/:id", element: <RecipeDetail /> },
+          { path: "add-pantry-item", element: <AddPantryItem /> },
+          { path: "pantry", element: <PantryView /> },
+          { path: "random-recipe", element: <RandomRecipe /> },
+          { path: "meal-planner", element: <MealPlanner userId="dummyUserId" /> },
+          { path: "edit-recipe/:id", element: <EditRecipeForm /> },
+          { path: "duplicate-recipe/:id", element: <DuplicateRecipeForm /> },
+        ],
+      },
     ],
   },
 ], {
@@ -51,6 +68,8 @@ const root = ReactDOM.createRoot(rootElement);
 
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </React.StrictMode>
 );

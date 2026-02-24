@@ -25,6 +25,41 @@
     color: var(--link-hover-color, var(--link-color)); /* Slight color change on hover */
 }
 
+/* Header Controls Container */
+.header .header-controls {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* User Menu */
+.header .user-menu {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.header .user-name {
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+
+.header .logout-button {
+    padding: 6px 16px;
+    background-color: var(--link-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.header .logout-button:hover {
+    background-color: var(--link-hover-color);
+    transform: translateY(-1px);
+}
+
 /* Theme Selector Container */
 .header .theme-selector {
     display: flex;
@@ -56,7 +91,14 @@
         padding: 10px; /* Add padding for better spacing */
     }
 
-    .header .theme-selector {
-        margin-top: 10px; /* Add spacing from other elements */
+    .header .header-controls {
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .header .user-menu {
+        flex-direction: column;
+        gap: 8px;
     }
 }

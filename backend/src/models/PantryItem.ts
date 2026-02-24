@@ -5,6 +5,12 @@ import mongoose from "mongoose";
  * Defines the structure of documents for the PantryItem collection in MongoDB.
  */
 const PantryItemSchema = new mongoose.Schema({
+    // User who owns the pantry item (required)
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
     // Name of the pantry item (required)
     name: {
         type: String,

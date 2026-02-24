@@ -8,11 +8,21 @@ import { Recipe, PantryItem } from '../models/index.js';
 /**
  * @route POST /recipes
  * @description Create a new recipe and save it to the database
- * @access Public
+ * @access Private
  */
 export const createRecipes = async (req: Request, res: Response) => {
     try {
-        const recipe = new Recipe(req.body);
+        const userId = req.user?.userId;
+        
+        if (!userId) {
+            res.status(401).send('User not authenticated');
+            return;
+        }
+
+        const recipe = new Recipe({
+            ...req.body,
+            userId
+        });
         await recipe.save();
         res.status(201).send(recipe);
     } catch (error) {
@@ -23,12 +33,19 @@ export const createRecipes = async (req: Request, res: Response) => {
 
 /**
  * @route GET /recipes
- * @description Fetch all recipes from the database
- * @access Public
+ * @description Fetch all recipes from the database for the authenticated user
+ * @access Private
  */
-export const getRecipes = async (_req: Request, res: Response) => {
+export const getRecipes = async (req: Request, res: Response) => {
     try {
-        const recipes = await Recipe.find({});
+        const userId = req.user?.userId;
+        
+        if (!userId) {
+            res.status(401).send('User not authenticated');
+            return;
+        }
+
+        const recipes = await Recipe.find({ userId });
         res.status(200).send(recipes);
     } catch (error) {
         const errorMessage = error instanceof Error ? error.message : 'Unknown error';
@@ -39,12 +56,19 @@ export const getRecipes = async (_req: Request, res: Response) => {
 /**
  * @route GET /recipes/previews
  * @description Fetch recipe previews for the homepage
- * @access Public
+ * @access Private
  */
-export const getRecipePreviews = async (_req: Request, res: Response) => {
+export const getRecipePreviews = async (req: Request, res: Response) => {
     try {
+        const userId = req.user?.userId;
+        
+        if (!userId) {
+            res.status(401).send('User not authenticated');
+            return;
+        }
+
         // Select only the fields needed for the recipe previews: name, image, and _id
-        const recipes = await Recipe.find({}, 'name image _id');
+        const recipes = await Recipe.find({ userId }, 'name image _id');
         res.status(200).json(recipes);
     } catch (error) {
         const errorMessage = error instanceof Error ? error.message : 'Unknown error';
@@ -55,11 +79,18 @@ export const getRecipePreviews = async (_req: Request, res: Response) => {
 /**
  * @route GET /recipes/:id
  * @description Fetch a specific recipe by its ID
- * @access Public
+ * @access Private
  */
 export const getRecipeById = async (req: Request, res: Response) => {
     try {
-        const recipe = await Recipe.findById(req.params.id);
+        const userId = req.user?.userId;
+        
+        if (!userId) {
+            res.status(401).send('User not authenticated');
+            return;
+        }
+
+        const recipe = await Recipe.findOne({ _id: req.params.id, userId });
         if (!recipe) {
             res.status(404).send('Recipe not found');
             return;
@@ -74,11 +105,22 @@ export const getRecipeById = async (req: Request, res: Response) => {
 /**
  * @route PUT /recipes/:id
  * @description Update a specific recipe by its ID
- * @access Public
+ * @access Private
  */
 export const updateRecipes = async (req: Request, res: Response) => {
     try {
-        const recipe = await Recipe.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+        const userId = req.user?.userId;
+        
+        if (!userId) {
+            res.status(401).send('User not authenticated');
+            return;
+        }
+
+        const recipe = await Recipe.findOneAndUpdate(
+            { _id: req.params.id, userId },
+            req.body,
+            { new: true, runValidators: true }
+        );
         if (!recipe) {
             console.log(`Recipe ${req.params.id} not found`);
             res.status(404).send('Recipe not found');
@@ -95,16 +137,23 @@ export const updateRecipes = async (req: Request, res: Response) => {
 /**
  * @route GET /recipes/random-recipe
  * @description Fetch a random recipe that matches ingredients from the pantry
- * @access Public
+ * @access Private
  */
-export const getRecipeRandom = async (_req: Request, res: Response) => {
+export const getRecipeRandom = async (req: Request, res: Response) => {
     try {
-        // Fetch pantry items and extract their names
-        const pantryItems = await PantryItem.find();
+        const userId = req.user?.userId;
+        
+        if (!userId) {
+            res.status(401).send('User not authenticated');
+            return;
+        }
+
+        // Fetch pantry items and extract their names for the authenticated user
+        const pantryItems = await PantryItem.find({ userId });
         const pantryIngredients = pantryItems.map(item => item.name.toLowerCase());
 
-        // Find recipes that match pantry ingredients
-        const recipes = await Recipe.find();
+        // Find recipes that match pantry ingredients for the authenticated user
+        const recipes = await Recipe.find({ userId });
         const matchingRecipes = recipes.filter(recipe =>
             recipe.ingredients.some(ingredient => pantryIngredients.includes(ingredient.name.toLowerCase()))
         );
@@ -120,5 +169,31 @@ export const getRecipeRandom = async (_req: Request, res: Response) => {
     } catch (error) {
         const errorMessage = error instanceof Error ? error.message : 'Unknown error';
         res.status(500).send({ error: 'Error fetching random recipe: ' + errorMessage });
+    }
+};
+
+/**
+ * @route DELETE /recipes/:id
+ * @description Delete a specific recipe by its ID
+ * @access Private
+ */
+export const deleteRecipe = async (req: Request, res: Response) => {
+    try {
+        const userId = req.user?.userId;
+        
+        if (!userId) {
+            res.status(401).send('User not authenticated');
+            return;
+        }
+
+        const recipe = await Recipe.findOneAndDelete({ _id: req.params.id, userId });
+        if (!recipe) {
+            res.status(404).send('Recipe not found');
+            return;
+        }
+        res.status(200).send({ message: 'Recipe deleted successfully' });
+    } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        res.status(500).send('Error deleting recipe: ' + errorMessage);
     }
 };

@@ -9,6 +9,7 @@ import { Router } from 'express';
 import { recipeRouter } from './recipe-routes.js';
 import { pantryRouter } from './pantry-routes.js';
 import { mealPlanRouter } from './mealPlan-routes.js';
+import authRouter from './auth-routes.js';
 
 // ==========================
 // Router Initialization
@@ -20,6 +21,12 @@ const router = Router();
 // ==========================
 // Route Definitions
 // ==========================
+
+/**
+ * @route /auth
+ * @description Routes for authentication (register, login, logout, etc.)
+ */
+router.use('/auth', authRouter);
 
 /**
  * @route /recipes

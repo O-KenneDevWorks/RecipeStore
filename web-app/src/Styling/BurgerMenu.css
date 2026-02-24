@@ -49,13 +49,16 @@
     padding: .6rem .75rem;
     border-radius: 6px;
     text-decoration: none;
-    color: inherit;
-    background: none;
+    color: inherit !important;
+    background: none !important;
     border: none;
+    cursor: pointer;
+    font-size: inherit;
+    font-family: inherit;
 }
 
 .burger-item:hover {
-    background: rgba(0, 0, 0, .06);
+    background: rgba(0, 0, 0, .06) !important;
 }
 
 .burger-item.disabled {

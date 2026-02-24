@@ -1,30 +1,35 @@
 import type { Request, Response } from 'express';
 import { WeekMealPlan } from '../models/index.js';
 
-const TEST_USER_ID = '12341234512413'; // Placeholder User ID for demonstration purposes
-
 // ==========================
 // Meal Plan Controller
 // ==========================
 
 /**
  * @route POST /mealPlan
- * @description Save or update a weekly meal plan for a specific user
- * @access Public
+ * @description Save or update a weekly meal plan for the authenticated user
+ * @access Private
  */
 export const createMealPlan = async (req: Request, res: Response) => {
-    const { meals, year, weekOfYear } = req.body;
-
-    // Define the filter to identify the specific meal plan by user, year, and week of the year
-    const filter = { userId: TEST_USER_ID, year, weekOfYear };
-
-    // Define the update object with the new data
-    const update = { userId: TEST_USER_ID, meals, year, weekOfYear };
-
-    // Options for findOneAndUpdate to create a new document if none exists
-    const options = { upsert: true, new: true, setDefaultsOnInsert: true };
-
     try {
+        const userId = req.user?.userId;
+        
+        if (!userId) {
+            res.status(401).send('User not authenticated');
+            return;
+        }
+
+        const { meals, year, weekOfYear } = req.body;
+
+        // Define the filter to identify the specific meal plan by user, year, and week of the year
+        const filter = { userId, year, weekOfYear };
+
+        // Define the update object with the new data
+        const update = { userId, meals, year, weekOfYear };
+
+        // Options for findOneAndUpdate to create a new document if none exists
+        const options = { upsert: true, new: true, setDefaultsOnInsert: true };
+
         // Save or update the meal plan in the database
         const mealPlan = await WeekMealPlan.findOneAndUpdate(filter, update, options);
 
@@ -38,13 +43,20 @@ export const createMealPlan = async (req: Request, res: Response) => {
 };
 
 /**
- * @route GET /mealPlan/:userId/:year/:weekOfYear
- * @description Retrieve a specific weekly meal plan for a user by year and week of the year
- * @access Public
+ * @route GET /mealPlan/:year/:weekOfYear
+ * @description Retrieve a specific weekly meal plan for the authenticated user
+ * @access Private
  */
 export const getMealPlan = async (req: Request, res: Response) => {
     try {
-        const { userId, year, weekOfYear } = req.params;
+        const userId = req.user?.userId;
+        
+        if (!userId) {
+            res.status(401).send('User not authenticated');
+            return;
+        }
+
+        const { year, weekOfYear } = req.params;
 
         // Query the database for the specified meal plan
         const mealPlan = await WeekMealPlan.findOne({ userId, year, weekOfYear });

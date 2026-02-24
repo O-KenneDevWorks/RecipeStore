@@ -6,6 +6,12 @@ import { COURSE_OPTIONS } from "../constants/options.js"
  * Defines the structure of documents for the Recipe collection in MongoDB.
  */
 const RecipeSchema = new mongoose.Schema({
+    // User who created the recipe (required for authenticated users)
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
     // Recipe name (required)
     name: {
         type: String,
