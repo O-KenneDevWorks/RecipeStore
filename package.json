@@ -20,18 +20,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "autoprefixer": "^10.4.24",
     "concurrently": "^8.2.2",
-    "postcss": "^8.5.6",
-    "tailwindcss": "^4.2.1",
     "wait-on": "^7.2.0"
-  },
-  "dependencies": {
-    "@radix-ui/react-select": "^2.2.6",
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
-    "lucide-react": "^0.575.0",
-    "tailwind-merge": "^3.5.0",
-    "tailwindcss-animate": "^1.0.7"
   }
 }
