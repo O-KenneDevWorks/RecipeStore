@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import ReactModal from 'react-modal';
+import { createPortal } from 'react-dom';
 import { ShoppingListItem } from '../interfaces/shoppingList'
 import { UnitOptions } from '../constants/options';
+import CustomSelect from './SelectElement';
 import '../Styling/ShoppingList.css';
 
 interface Props {
@@ -34,6 +35,8 @@ export default function ShoppingListModal({
         if (isOpen) setItems(initialItems);
     }, [isOpen, initialItems]);
 
+    if (!isOpen) return null;
+
     const removeItem = (idx: number) =>
         setItems((prev) => prev.filter((_, i) => i !== idx));
 
@@ -47,18 +50,10 @@ export default function ShoppingListModal({
         onClose();
     };
 
-    return (
-        <ReactModal
-            isOpen={isOpen}
-            onRequestClose={onClose}
-            contentLabel="Shopping List"
-            className="shopping-modal"
-            overlayClassName="shopping-overlay"
-            ariaHideApp={false}
-            shouldCloseOnOverlayClick={false}
-        >
-            <h2>Shopping List</h2>
-
+    return createPortal(
+        <div className="shopping-overlay" onClick={onClose}>
+            <div className="shopping-modal" onClick={(e) => e.stopPropagation()}>
+                <h2>Shopping List</h2>
             <div className="add-row">
                 <input
                     placeholder="Item"
@@ -71,16 +66,11 @@ export default function ShoppingListModal({
                     value={newAmt}
                     onChange={(e) => setNewAmt(e.target.value)}
                 />
-                <select
+                <CustomSelect
                     value={newUnit}
-                    onChange={(e) => setNewUnit(e.target.value)}
-                >
-                    {UnitOptions.map((opt) => (
-                        <option key={opt.value} value={opt.value}>
-                            {opt.label}
-                        </option>
-                    ))}
-                </select>
+                    onChange={setNewUnit}
+                    options={UnitOptions}
+                />
                 <button onClick={addItem}>Add</button>
             </div>
 
@@ -104,6 +94,8 @@ export default function ShoppingListModal({
                 <button onClick={handleSave}>Save</button>
                 <button onClick={onClose}>Close</button>
             </div>
-        </ReactModal>
+             </div>
+    </div>,
+    document.body
     );
 }

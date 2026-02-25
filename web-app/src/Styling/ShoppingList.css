@@ -5,6 +5,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 1000;
 }
 
 .shopping-modal {
@@ -15,6 +16,8 @@
   background: #fff;
   border-radius: 12px;
   padding: 1.5rem;
+  overflow: visible;
+  pointer-events: all;
 }
 
 .add-row {
@@ -39,6 +42,7 @@
   background: white;
   font-size: 1em;
   cursor: pointer;
+  position: relative;
 }
 
 .add-row select:hover {
