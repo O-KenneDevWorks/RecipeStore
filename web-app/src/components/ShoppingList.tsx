@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { ShoppingListItem } from '../interfaces/shoppingList'
 import { UnitOptions } from '../constants/options';
-import CustomSelect from './SelectElement';
+import RecipeSelect from './RecipeSelect';
 import '../Styling/ShoppingList.css';
 
 interface Props {
@@ -66,10 +66,11 @@ export default function ShoppingListModal({
                     value={newAmt}
                     onChange={(e) => setNewAmt(e.target.value)}
                 />
-                <CustomSelect
+                <RecipeSelect
                     value={newUnit}
                     onChange={setNewUnit}
                     options={UnitOptions}
+                    placeholder="Unit"
                 />
                 <button onClick={addItem}>Add</button>
             </div>
