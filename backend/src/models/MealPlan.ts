@@ -1,28 +1,39 @@
 import mongoose from "mongoose";
 
-const MealPlanSchema = new mongoose.Schema({
-    userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
-    },
-    weekOfYear: {
-        type: Number,
-        required: true
-    },
-    year: {
-        type: Number,
-        required: true
-    },
-    days: [{
-        date: Date,
-        meals: [{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Recipe'
-        }]
-    }]
-});
+export interface DayPlan {
+  main: string | null;
+  sides: string[];
+}
 
-const MealPlan = mongoose.model('MealPlan', MealPlanSchema);
+interface MealPlanDoc extends mongoose.Document {
+  userId: string;
+  year: number;
+  weekOfYear: number;
+  meals: DayPlan[];
+}
 
-export default MealPlan;
+const dayPlanSchema = new mongoose.Schema<DayPlan>(
+  {
+    main:  { type: String, ref: 'Recipe', default: null },
+    sides: { type: [String], ref: 'Recipe', default: [] },
+  },
+  { _id: false },
+);
+
+const mealPlanSchema = new mongoose.Schema<MealPlanDoc>(
+  {
+    userId:     { type: String, required: true },
+    year:       { type: Number, required: true },
+    weekOfYear: { type: Number, required: true },
+    meals:      [dayPlanSchema],
+  },
+  { timestamps: true },
+);
+
+// The combination of userId + year + week must be unique
+mealPlanSchema.index({ userId: 1, year: 1, weekOfYear: 1 }, { unique: true });
+
+const WeekMealPlan =
+mongoose.models.WeekMealPlan || mongoose.model<MealPlanDoc>('WeekMealPlan', mealPlanSchema);
+
+export default WeekMealPlan;

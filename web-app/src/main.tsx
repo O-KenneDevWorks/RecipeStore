@@ -2,6 +2,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import ReactModal from 'react-modal';
 
 import App from './App';
 import { AuthProvider } from './contexts/AuthContext';
@@ -18,6 +19,7 @@ import PantryView from './pages/PantryView';
 import RandomRecipe from './pages/RandomRecipe';
 import MealPlanner from './pages/MealPlanner';
 import EditRecipeForm from './pages/EditRecipeForm';
+import ShoppingListPage from './pages/ShoppingListPage';
 import DuplicateRecipeForm from './pages/DuplicateRecipeForm';
 
 import './Styling/Global.css';
@@ -45,9 +47,10 @@ const router = createBrowserRouter([
           { path: "add-pantry-item", element: <AddPantryItem /> },
           { path: "pantry", element: <PantryView /> },
           { path: "random-recipe", element: <RandomRecipe /> },
-          { path: "meal-planner", element: <MealPlanner userId="dummyUserId" /> },
+          { path: "meal-planner", element: <MealPlanner /> },
           { path: "edit-recipe/:id", element: <EditRecipeForm /> },
           { path: "duplicate-recipe/:id", element: <DuplicateRecipeForm /> },
+          { path: "shopping-list", element: <ShoppingListPage /> },
         ],
       },
     ],
@@ -59,6 +62,8 @@ const router = createBrowserRouter([
 });
 
 const rootElement = document.getElementById('root');
+
+ReactModal.setAppElement('#root'); 
 
 if (!rootElement) {
   throw new Error("Root element not found. Check your HTML file.");

@@ -1,38 +1,117 @@
-.modal {
-    background-color: var(--form-background-color);
-    border: 1px solid var(--form-border-color);
-    border-radius: 8px;
-    padding: 20px;
-    max-width: 500px;
-    margin: 0 auto;
-    position: relative;
-    box-shadow: 0 4px 10px var(--card-shadow-color);
-    color: var(--text-color);
+.shopping-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
 }
 
-.overlay {
-    background-color: rgba(0, 0, 0, 0.6);
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
+.shopping-modal {
+  width: min(90vw, 500px);
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  overflow: visible;
+  pointer-events: all;
 }
 
-.close-button {
-    margin-top: 20px;
-    padding: 10px 15px;
-    background-color: var(--delete-button-background-color);
-    color: var(--button-text-color);
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+.add-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
 }
 
-.close-button:hover {
-    background-color: var(--delete-button-hover-color);
+.add-row input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
+
+.add-row select {
+  flex: 1;
+  min-width: 120px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: white;
+  font-size: 1em;
+  cursor: pointer;
+  position: relative;
+}
+
+.add-row select:hover {
+  border-color: #999;
+}
+
+.add-row button {
+  flex-shrink: 0;
+  padding: 8px 16px;
+}
+
+.list-wrapper {
+  flex: 1;
+  min-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  padding: 0.5rem;
+  border-radius: 6px;
+}
+
+.list-item {
+  display: flex;
+  align-items: center;
+  padding: 0.25rem 0;
+  gap: 0.5rem;
+}
+
+.list-item input[type="checkbox"] {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+}
+
+.list-item span {
+  flex: 1;
+}
+
+.list-item span.checked {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.list-item button {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: #dc3545;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.list-item button:hover {
+  background: #c82333;
+}
+
+.btn-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+button {
+  cursor: pointer;
+}
+  

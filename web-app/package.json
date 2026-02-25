@@ -11,9 +11,11 @@
   },
   "dependencies": {
     "@apollo/client": "^3.10.6",
+    "@radix-ui/react-select": "^2.2.6",
     "@types/react-router-dom": "^5.3.3",
     "axios": "^1.7.2",
     "browser-image-compression": "^2.0.2",
+    "date-fns": "^4.1.0",
     "graphql": "^16.9.0",
     "mongodb": "^6.6.2",
     "react": "^18.3.1",
@@ -21,7 +23,6 @@
     "react-dom": "^18.3.1",
     "react-modal": "^3.16.3",
     "react-router-dom": "^7.0.2",
-    "react-select": "^5.8.0",
     "react-slick": "^0.30.2",
     "slick-carousel": "^1.8.1",
     "web-vitals": "^2.1.4"

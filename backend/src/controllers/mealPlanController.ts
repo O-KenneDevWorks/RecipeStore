@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express';
-import { WeekMealPlan } from '../models/index.js';
+import WeekMealPlan from '../models/MealPlan.js';
 
 // ==========================
 // Meal Plan Controller
@@ -21,6 +21,20 @@ export const createMealPlan = async (req: Request, res: Response) => {
 
         const { meals, year, weekOfYear } = req.body;
 
+        console.log('Request body:', { meals, year, weekOfYear, userId });
+
+        // Validate week of year
+        if (weekOfYear < 1 || weekOfYear > 53) {
+            res.status(400).send('weekOfYear must be between 1 and 53');
+            return;
+        }
+
+        // Validate required fields
+        if (!meals || !year || !weekOfYear) {
+            res.status(400).send('Missing required fields: meals, year, or weekOfYear');
+            return;
+        }
+
         // Define the filter to identify the specific meal plan by user, year, and week of the year
         const filter = { userId, year, weekOfYear };
 
@@ -28,17 +42,18 @@ export const createMealPlan = async (req: Request, res: Response) => {
         const update = { userId, meals, year, weekOfYear };
 
         // Options for findOneAndUpdate to create a new document if none exists
-        const options = { upsert: true, new: true, setDefaultsOnInsert: true };
+        const options = { upsert: true, new: true, setDefaultsOnInsert: true, runValidators: true };
+
+        console.log('Data sent from client:', meals);
 
         // Save or update the meal plan in the database
         const mealPlan = await WeekMealPlan.findOneAndUpdate(filter, update, options);
 
-        // Respond with the updated or newly created meal plan
-        res.status(201).send(mealPlan);
-    } catch (error) {
-        // Handle any errors during the save/update process
-        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-        res.status(500).send('Error saving meal plan: ' + errorMessage);
+        console.log('Saved meal plan:', mealPlan);
+
+        res.status(201).json(mealPlan);
+    } catch (err: any) {
+        res.status(500).send('Error saving meal plan: ' + err.message);
     }
 };
 
@@ -57,21 +72,20 @@ export const getMealPlan = async (req: Request, res: Response) => {
         }
 
         const { year, weekOfYear } = req.params;
-
-        // Query the database for the specified meal plan
-        const mealPlan = await WeekMealPlan.findOne({ userId, year, weekOfYear });
-
-        // If no meal plan is found, return a 404 error
+        
+        const mealPlan = await WeekMealPlan.findOne({ 
+            userId, 
+            year: Number(year), 
+            weekOfYear: Number(weekOfYear) 
+        });
+        
         if (!mealPlan) {
-            res.status(404).send('Meal plan not found.');
+            res.status(404).send('Meal plan not found');
             return;
         }
-
-        // Respond with the retrieved meal plan
-        res.status(200).send(mealPlan);
-    } catch (error) {
-        // Handle any errors during the retrieval process
-        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-        res.status(500).send('Error fetching meal plan: ' + errorMessage);
+        
+        res.status(200).json(mealPlan);
+    } catch (err: any) {
+        res.status(500).send('Error fetching meal plan: ' + err.message);
     }
 };

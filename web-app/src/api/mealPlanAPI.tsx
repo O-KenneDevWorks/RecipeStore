@@ -1,4 +1,4 @@
-import { MealPlan,  } from '../interfaces/MealPlan';
+import { MealPlan } from '../interfaces/MealPlan';
 // import { ShortRecipe } from '../interfaces/MealPlan';
 import { Recipe } from '../interfaces/Recipe';
 import { fetchWithAuth } from '../utils/auth';
@@ -23,6 +23,8 @@ export const fetchRecipes = async (): Promise<Recipe[]> => {
 export const fetchMealPlan = async (year: number, weekOfYear: number): Promise<MealPlan | null> => {
     try {
         const response = await fetchWithAuth(`/api/mealPlan/${year}/${weekOfYear}`);
+
+        if (response.status === 404) return null;
 
         if (!response.ok) {
             throw new Error('Failed to fetch meal plan');

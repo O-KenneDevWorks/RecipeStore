@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../Styling/DayPlan.css'; // Import the CSS file
 import { Recipe } from '../interfaces/Recipe';
+import RecipeSelect from './RecipeSelect';
 
 interface DayPlanProps {
     day: string;
@@ -16,6 +17,7 @@ interface DayPlanProps {
     onClearDay: (dayIndex: number) => void;
 }
 
+
 const DayPlan: React.FC<DayPlanProps> = ({
     day,
     dayIndex,
@@ -26,6 +28,9 @@ const DayPlan: React.FC<DayPlanProps> = ({
     onRandomRecipe,
     onClearDay,
 }) => {
+    const [mainValue, setMainValue] = useState('');
+    const [sideValue, setSideValue] = useState('');
+
     return (
         <div className="day-plan">
             <h2>{day}</h2>
@@ -41,14 +46,13 @@ const DayPlan: React.FC<DayPlanProps> = ({
                 ) : (
                     <p>No main course selected</p>
                 )}
-                <select onChange={(e) => onAddRecipe(dayIndex, 'main', e.target.value)} value={selectedRecipes.main || ''}>
-                    <option value="">Select Main Course</option>
-                    {recipes.map((recipe) => (
-                        <option key={recipe._id} value={recipe._id}>
-                            {recipe.name}
-                        </option>
-                    ))}
-                </select>
+                <RecipeSelect
+                    value={mainValue}
+                    onChange={(val) => { onAddRecipe(dayIndex, 'main', val); setMainValue(''); }}
+                    options={recipes.filter(r => r._id).map(r => ({ value: r._id!, label: r.name }))}
+                    placeholder="Select Main Course"
+
+                />
                 <button onClick={() => onRandomRecipe(dayIndex, 'main')}>Randomize Main</button>
             </div>
 
@@ -63,14 +67,12 @@ const DayPlan: React.FC<DayPlanProps> = ({
                 ))}
                 {selectedRecipes.sides.length < 2 && (
                     <div>
-                        <select onChange={(e) => onAddRecipe(dayIndex, 'side', e.target.value, selectedRecipes.sides.length)}>
-                            <option value="">Select Side</option>
-                            {recipes.map((recipe) => (
-                                <option key={recipe._id} value={recipe._id}>
-                                    {recipe.name}
-                                </option>
-                            ))}
-                        </select>
+                        <RecipeSelect
+                            value={sideValue}
+                            onChange={(val) => { onAddRecipe(dayIndex, 'side', val, selectedRecipes.sides.length); setSideValue(''); }}
+                            options={recipes.filter(r => r._id).map(r => ({ value: r._id!, label: r.name }))}
+                            placeholder="Select Side"
+                        />
                         
                         <button onClick={() => onRandomRecipe(dayIndex, 'side', selectedRecipes.sides.length)}>Randomize Side</button>
                     </div>
