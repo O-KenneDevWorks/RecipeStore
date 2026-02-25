@@ -10,7 +10,7 @@ export interface DayPlan {
   }
 
 export interface MealPlan {
-    userId: string;
+    userId?: string;
     weekOfYear: number;
     year: number;
     meals: string[][];
