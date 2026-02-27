@@ -1,4 +1,4 @@
-import { Ingredient } from "./Ingredient";
+import { IngredientSection, DirectionSection } from "./Ingredient";
 
 export interface Recipe {
     _id?: string;
@@ -12,8 +12,8 @@ export interface Recipe {
     course: string;
     cuisine?: string;
     tags?: string[];
-    ingredients: Ingredient[];
-    directions: string[];
+    ingredients: IngredientSection[];
+    directions: DirectionSection[];
     notes: string;
   }
 

@@ -75,19 +75,29 @@ const RecipeDetail = () => {
         </div>
       )}
       <h2>Ingredients</h2>
-      <ul>
-        {recipe.ingredients.map((ingredient, index) => (
-          <li key={index}>
-            {ingredient.amount} {ingredient.unit} {ingredient.name}
-          </li>
-        ))}
-      </ul>
+      {recipe.ingredients.map((section, si) => (
+        <div key={si}>
+          {section.title && <h3>{section.title}</h3>}
+          <ul>
+            {section.items.map((ingredient, ii) => (
+              <li key={ii}>
+                {ingredient.amount} {ingredient.unit} {ingredient.name}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
       <h2>Directions</h2>
-      <ol>
-        {recipe.directions.map((direction, index) => (
-          <li key={index}>{direction}</li>
-        ))}
-      </ol>
+      {recipe.directions.map((section, si) => (
+        <div key={si}>
+          {section.title && <h3>{section.title}</h3>}
+          <ol>
+            {section.steps.map((step, di) => (
+              <li key={di}>{step}</li>
+            ))}
+          </ol>
+        </div>
+      ))}
       <h2>Notes</h2>
       {recipe.notes && (
         <>

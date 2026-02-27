@@ -1,6 +1,8 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { addPantryItem } from '../api/pantryAPI';
 import { PantryItem } from '../interfaces/Pantry';
+import RecipeSelect from '../components/RecipeSelect';
+import { UnitOptions } from '../constants/options';
 
 const AddPantryItem = () => {
     const [pantryItem, setPantryItem] = useState<PantryItem>({
@@ -9,9 +11,13 @@ const AddPantryItem = () => {
         unit: '',
     });
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setPantryItem({ ...pantryItem, [name]: value });
+    };
+
+    const handleUnitChange = (val: string) => {
+        setPantryItem({ ...pantryItem, unit: val });
     };
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -51,21 +57,12 @@ const AddPantryItem = () => {
             />
 
             <label>Unit *</label>
-            <select
-                name="unit"
+            <RecipeSelect
                 value={pantryItem.unit}
-                onChange={handleChange}
-                required
-            >
-                <option value="" disabled>
-                    Select Unit
-                </option>
-                <option value="cup">Cup</option>
-                <option value="tablespoon">Tablespoon</option>
-                <option value="teaspoon">Teaspoon</option>
-                <option value="ounce">Ounce</option>
-                <option value="pound">Pound</option>
-            </select>
+                onChange={handleUnitChange}
+                placeholder="Select Unit"
+                options={UnitOptions}
+            />
 
             <button type="submit">Add Pantry Item</button>
         </form>

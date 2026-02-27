@@ -195,15 +195,19 @@ const MealPlanner = () => {
         weekPlan.forEach((day) => {
             if (day.main) {
                 const main = recipes.find((r) => r._id === day.main);
-                main?.ingredients?.forEach(({ name, amount, unit }) => {
-                    if (name && amount && unit) add(name, amount, unit);
+                main?.ingredients?.forEach((section) => {
+                    section.items.forEach(({ name, amount, unit }) => {
+                        if (name && amount && unit) add(name, amount, unit);
+                    });
                 });
             }
 
             day.sides.forEach((sideId: string) => {
                 const side = recipes.find((r) => r._id === sideId);
-                side?.ingredients?.forEach(({ name, amount, unit }) => {
-                    if (name && amount && unit) add(name, amount, unit);
+                side?.ingredients?.forEach((section) => {
+                    section.items.forEach(({ name, amount, unit }) => {
+                        if (name && amount && unit) add(name, amount, unit);
+                    });
                 });
             });
         });
