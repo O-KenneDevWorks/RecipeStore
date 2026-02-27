@@ -1,10 +1,11 @@
-import { useEffect, useState, ChangeEvent } from 'react';
+import { useEffect, useState } from 'react';
 import '../Styling/ViewRecipes.css';
 import { Recipe } from "../interfaces/Recipe"
 import RecipeCard from '../components/RecipeCard';
 import { RecipePreview } from '../interfaces/Recipe';
 import { getRecipes } from '../api/recipeAPI';
 import { COURSE_OPTIONS, CUISINE_OPTIONS } from "../constants/options";
+import RecipeSelect from '../components/RecipeSelect';
 
 const ViewRecipes = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -22,9 +23,9 @@ const ViewRecipes = () => {
     fetchRecipes();
   }, []);
 
-  const handleTagChange = (e: ChangeEvent<HTMLSelectElement>) => setSelectedTag(e.target.value);
-  const handleCourseChange = (e: ChangeEvent<HTMLSelectElement>) => setSelectedCourse(e.target.value);
-  const handleCuisineChange = (e: ChangeEvent<HTMLSelectElement>) => setSelectedCuisine(e.target.value);
+  const handleTagChange = (val: string) => setSelectedTag(val === '__all__' ? '' : val);
+  const handleCourseChange = (val: string) => setSelectedCourse(val === '__all__' ? '' : val);
+  const handleCuisineChange = (val: string) => setSelectedCuisine(val === '__all__' ? '' : val);
 
   const filteredRecipes = recipes.filter(
     (recipe) =>
@@ -41,33 +42,41 @@ const ViewRecipes = () => {
       <div className="filter-controls">
         <div>
           <label>Filter by tag:</label>
-          <select onChange={handleTagChange} value={selectedTag}>
-            <option value="">All</option>
-            {/* Dynamic tag options */}
-            {[...new Set(recipes.flatMap((recipe) => recipe.tags))].map((tag, index) => (
-              <option key={index} value={tag}>{tag}</option>
-            ))}
-          </select>
+          <RecipeSelect
+            value={selectedTag || '__all__'}
+            onChange={handleTagChange}
+            placeholder="All"
+            options={[
+              { value: '__all__', label: 'All' },
+              ...[...new Set(recipes.flatMap((recipe) => recipe.tags))].filter((tag): tag is string => !!tag).map((tag) => ({ value: tag, label: tag })),
+            ]}
+          />
         </div>
 
         <div>
           <label>Filter by course:</label>
-          <select onChange={handleCourseChange} value={selectedCourse}>
-            <option value="">All</option>
-            {COURSE_OPTIONS.map((course, index) => (
-              <option key={index} value={course}>{course}</option>
-            ))}
-          </select>
+          <RecipeSelect
+            value={selectedCourse || '__all__'}
+            onChange={handleCourseChange}
+            placeholder="All"
+            options={[
+              { value: '__all__', label: 'All' },
+              ...COURSE_OPTIONS.map((c) => ({ value: c, label: c })),
+            ]}
+          />
         </div>
 
         <div>
           <label>Filter by cuisine:</label>
-          <select onChange={handleCuisineChange} value={selectedCuisine}>
-            <option value="">All</option>
-            {CUISINE_OPTIONS.map((cuisine, index) => (
-              <option key={index} value={cuisine}>{cuisine}</option>
-            ))}
-          </select>
+          <RecipeSelect
+            value={selectedCuisine || '__all__'}
+            onChange={handleCuisineChange}
+            placeholder="All"
+            options={[
+              { value: '__all__', label: 'All' },
+              ...CUISINE_OPTIONS.map((c) => ({ value: c, label: c })),
+            ]}
+          />
         </div>
       </div>
 
