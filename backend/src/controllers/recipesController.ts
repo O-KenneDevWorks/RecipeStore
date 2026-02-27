@@ -155,7 +155,9 @@ export const getRecipeRandom = async (req: Request, res: Response) => {
         // Find recipes that match pantry ingredients for the authenticated user
         const recipes = await Recipe.find({ userId });
         const matchingRecipes = recipes.filter(recipe =>
-            recipe.ingredients.some(ingredient => pantryIngredients.includes(ingredient.name.toLowerCase()))
+            recipe.ingredients.some(section =>
+                section.items.some(item => pantryIngredients.includes(item.name.toLowerCase()))
+            )
         );
 
         if (matchingRecipes.length > 0) {

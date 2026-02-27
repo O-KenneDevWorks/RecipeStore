@@ -8,6 +8,7 @@
     "start": "npm run build && node dist/server.js --ignore client",
     "dev": "npx nodemon",
     "seed": "node dist/seeds/index.js",
+    "migrate:sections": "node dist/scripts/migrateToSections.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "nodemonConfig": {

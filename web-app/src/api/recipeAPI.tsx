@@ -1,6 +1,32 @@
 import { Recipe } from "../interfaces/Recipe"
 import { RecipePreview } from "../interfaces/Recipe";
+import { IngredientSection, DirectionSection } from "../interfaces/Ingredient";
 import { fetchWithAuth } from "../utils/auth";
+
+// Normalize old flat ingredients/directions arrays from pre-subsection recipes
+function normalizeIngredients(raw: any[]): IngredientSection[] {
+    if (!raw || raw.length === 0) return [{ title: '', items: [] }];
+    // New format has an 'items' property
+    if ('items' in raw[0]) return raw as IngredientSection[];
+    // Old flat format — wrap in a single untitled section
+    return [{ title: '', items: raw }];
+}
+
+function normalizeDirections(raw: any[]): DirectionSection[] {
+    if (!raw || raw.length === 0) return [{ title: '', steps: [] }];
+    // New format has a 'steps' property
+    if (typeof raw[0] === 'object' && 'steps' in raw[0]) return raw as DirectionSection[];
+    // Old flat format — wrap in a single untitled section
+    return [{ title: '', steps: raw as string[] }];
+}
+
+function normalizeRecipe(data: any): Recipe {
+    return {
+        ...data,
+        ingredients: normalizeIngredients(data.ingredients ?? []),
+        directions: normalizeDirections(data.directions ?? []),
+    };
+}
 
 // Fetch a single recipe by ID
 export const getRecipeById = async (id: string): Promise<Recipe | null> => {
@@ -11,7 +37,7 @@ export const getRecipeById = async (id: string): Promise<Recipe | null> => {
             throw new Error('Invalid recipe API response, check network tab!');
         }
 
-        return await response.json();
+        return normalizeRecipe(await response.json());
     } catch (err) {
         console.error('Error fetching recipe:', err);
         return null;
@@ -27,7 +53,8 @@ export const getRecipes = async (): Promise<Recipe[]> => {
             throw new Error('Invalid recipes API response, check network tab!');
         }
 
-        return await response.json();
+        const data = await response.json();
+        return (data as any[]).map(normalizeRecipe);
     } catch (err) {
         console.error('Error fetching recipes:', err);
         return [];
@@ -39,13 +66,13 @@ export const getRandomRecipe = async (): Promise<Recipe | null> => {
     try {
         const response = await fetchWithAuth('/api/recipes/random-recipe');
 
-        const data: Recipe = await response.json();
+        const data = await response.json();
 
         if (!response.ok) {
             throw new Error('Error fetching random recipe');
         }
 
-        return data;
+        return normalizeRecipe(data);
     } catch (err) {
         console.error('Error fetching random recipe:', err);
         return null;

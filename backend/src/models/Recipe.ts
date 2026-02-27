@@ -17,31 +17,27 @@ const RecipeSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    // List of ingredients for the recipe
+    // List of ingredient sections (each with an optional title and items)
     ingredients: [
         {
-            // Quantity of the ingredient (required)
-            amount: {
-                type: String,
-                required: true,
-            },
-            // Measurement unit of the ingredient (required)
-            unit: {
-                type: String,
-                required: true,
-            },
-            // Name of the ingredient (required)
-            name: {
-                type: String,
-                required: true,
-            },
+            _id: false,
+            title: { type: String, default: '' },
+            items: [
+                {
+                    _id: false,
+                    amount: { type: String, required: true },
+                    unit:   { type: String, required: true },
+                    name:   { type: String, required: true },
+                },
+            ],
         },
     ],
-    // Step-by-step directions for preparing the recipe (required)
+    // Sections of step-by-step directions (each with an optional title and steps)
     directions: [
         {
-            type: String,
-            required: true,
+            _id: false,
+            title: { type: String, default: '' },
+            steps: [{ type: String }],
         },
     ],
     notes: {
