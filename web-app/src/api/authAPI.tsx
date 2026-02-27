@@ -100,3 +100,28 @@ export const getCurrentUser = async (accessToken: string): Promise<User> => {
     const data = await response.json();
     return data.user;
 };
+
+/**
+ * Update current user profile (name, email, password)
+ */
+export const updateProfile = async (
+    updates: { name?: string; email?: string; currentPassword?: string; newPassword?: string },
+    accessToken: string
+): Promise<User> => {
+    const response = await fetch(`${API_BASE_URL}/profile`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify(updates),
+    });
+
+    if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || 'Profile update failed');
+    }
+
+    const data = await response.json();
+    return data.user;
+};

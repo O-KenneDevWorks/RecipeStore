@@ -261,3 +261,67 @@ export const getCurrentUser = async (req: Request, res: Response): Promise<void>
         });
     }
 };
+
+/**
+ * @route PUT /api/auth/profile
+ * @description Update current user's name, email, and/or password
+ * @access Private (requires authentication)
+ */
+export const updateProfile = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const userId = req.user?.userId;
+        if (!userId) {
+            res.status(401).json({ message: 'User not authenticated.' });
+            return;
+        }
+
+        const { name, email, currentPassword, newPassword } = req.body;
+
+        const user = await User.findById(userId);
+        if (!user) {
+            res.status(404).json({ message: 'User not found.' });
+            return;
+        }
+
+        // Update name
+        if (name && name.trim()) {
+            user.name = name.trim();
+        }
+
+        // Update email
+        if (email && email.trim() && email.toLowerCase() !== user.email) {
+            const existing = await User.findOne({ email: email.toLowerCase() });
+            if (existing) {
+                res.status(400).json({ message: 'Email already in use.' });
+                return;
+            }
+            user.email = email.toLowerCase().trim();
+        }
+
+        // Change password
+        if (newPassword) {
+            if (!currentPassword) {
+                res.status(400).json({ message: 'Current password is required to set a new password.' });
+                return;
+            }
+            const valid = await user.comparePassword(currentPassword);
+            if (!valid) {
+                res.status(400).json({ message: 'Current password is incorrect.' });
+                return;
+            }
+            if (newPassword.length < 6) {
+                res.status(400).json({ message: 'New password must be at least 6 characters.' });
+                return;
+            }
+            user.password = newPassword;
+        }
+
+        await user.save();
+
+        res.status(200).json({ message: 'Profile updated successfully.', user: user.toJSON() });
+    } catch (error) {
+        console.error('Update profile error:', error);
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        res.status(500).json({ message: 'Error updating profile: ' + errorMessage });
+    }
+};

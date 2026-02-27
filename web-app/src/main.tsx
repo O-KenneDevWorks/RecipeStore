@@ -6,6 +6,7 @@ import ReactModal from 'react-modal';
 
 import App from './App';
 import { AuthProvider } from './contexts/AuthContext';
+import { ThemeProvider } from './contexts/ThemeContext';
 import ProtectedRoute from './components/ProtectedRoute';
 
 import Home from './pages/Home';
@@ -21,6 +22,7 @@ import MealPlanner from './pages/MealPlanner';
 import EditRecipeForm from './pages/EditRecipeForm';
 import ShoppingListPage from './pages/ShoppingListPage';
 import DuplicateRecipeForm from './pages/DuplicateRecipeForm';
+import Profile from './pages/Profile';
 
 import './Styling/Global.css';
 
@@ -51,6 +53,7 @@ const router = createBrowserRouter([
           { path: "edit-recipe/:id", element: <EditRecipeForm /> },
           { path: "duplicate-recipe/:id", element: <DuplicateRecipeForm /> },
           { path: "shopping-list", element: <ShoppingListPage /> },
+          { path: "profile", element: <Profile /> },
         ],
       },
     ],
@@ -74,7 +77,9 @@ const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>
     <AuthProvider>
-      <RouterProvider router={router} />
+      <ThemeProvider>
+        <RouterProvider router={router} />
+      </ThemeProvider>
     </AuthProvider>
   </React.StrictMode>
 );

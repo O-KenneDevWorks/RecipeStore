@@ -13,7 +13,8 @@ import {
     login,
     refresh,
     logout,
-    getCurrentUser
+    getCurrentUser,
+    updateProfile
 } from '../../controllers/authController.js';
 import { authenticateToken } from '../../middleware/auth.js';
 
@@ -61,6 +62,13 @@ router.post('/logout', authenticateToken, logout);
  * @access Private
  */
 router.get('/me', authenticateToken, getCurrentUser);
+
+/**
+ * @route PUT /api/auth/profile
+ * @description Update current user's name, email, and/or password
+ * @access Private
+ */
+router.put('/profile', authenticateToken, updateProfile);
 
 // ==========================
 // Export
