@@ -12,6 +12,7 @@ const NavBar = () => {
         { path: '/random-recipe', name: 'Random Recipe' },
         { path: '/meal-planner', name: 'Meal Planner' },
         { path: '/shopping-list', name: 'Shopping List' },
+        { path: '/profile', name: 'Profile' },
     ]
     
     return (
